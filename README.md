@@ -1,2 +1,2 @@
-# [Sweets'](http://swts.me) UI kit.
-
+# Sweet UI kit.
+[Sweets](http://swts.me)
