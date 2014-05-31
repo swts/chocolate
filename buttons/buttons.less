@@ -1,0 +1,32 @@
+.swts-button,
+.swts-add,
+.swts-remove {
+    color: @swts-color;
+    background: @swts-bg-color;
+    display: block;
+    z-index: 100;
+    text-align: center;
+    outline: none;
+    text-decoration: none;
+    font-family: @swts-font-family;
+    .transition(color, @swts-common-time);
+    &:hover {color: @swts-accent-color;}
+}
+
+.swts-button, .swts-add {
+    line-height: @swts-grid*2;
+    .circle(@swts-grid);
+}
+
+.swts-button { font-size: 1em; }
+.swts-add { font-size: 1.35*@swts-grid; }
+
+.swts-add, .swts-remove {
+    position: absolute;
+}
+
+.swts-remove {
+    font-size: @swts-grid;
+    line-height: @swts-grid;
+    .circle(@swts-grid/2);
+}

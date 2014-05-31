@@ -1,0 +1,67 @@
+@import "normalize.less";
+@import "triangle.less";
+@import "mixings.less";
+@import "icons.less";
+
+@import "ui.less";
+@import "../../buttons/buttons.less";
+@import "../../input/input.less";
+@import "../../cover/cover.less";
+@import "../../nipple/nipple.less";
+
+.font('Museo Sans', '../font/museosans100');
+.font('Museo Sans', '../font/museosans700', bold);
+
+.swts-error-keyframes() {
+  0% {.translate(-20px, 0)}
+  20% {.translate(16px, 0)}
+  40% {.translate(-12px, 0)}
+  60% {.translate(8px, 0)}
+  80% {.translate(-4px, 0)}
+  100% {.translate(0px, 0)}
+}
+
+@-webkit-keyframes errror {.swts-error-keyframes();}
+@keyframes error {.swts-error-keyframes();}
+
+.swts-error {
+	.animation(errror 0.4s @swts-common-transition-style);
+}
+
+.container {
+	width: 80%;
+	margin: 4*@swts-grid auto;
+}
+
+.ui-item {
+	width: 300px;
+	height: 260px;
+	display: inline-block;
+	vertical-align: top;
+	background: #f3f3f3;
+	padding: 10px;
+	position: relative;
+	margin-bottom: 4px;
+
+	& > h2 {
+		font:normal 1em @swts-font-family;
+	}
+
+	& > p {
+		font:normal 0.75em @swts-font-family;
+	}
+}
+
+.swts-button { left: 0; }
+.swts-add { left: 64px; top: 54px; }
+.swts-remove { left: 125px; top: 64px; }
+
+.nipple.nipple-small {left: 50px; top: 64px;}
+.nipple.nipple-medium {left: 120px;}
+.nipple.nipple-large {left: 220px;}
+
+.ui-item .swts-cover-login {
+	margin: 0;
+	position: relative;
+	left: 0;
+}

@@ -1,0 +1,23 @@
+{
+	"name": "sweet-ui",
+	"version": "0.1.0",
+	"description": "Sweets' UI kit",
+	"keywords": ["future", "web", "framework", "sweets", "ui", "interface", "kit"],
+	"author": "Alexey Novikov <v@2dubs.com> (http://2dubs.com)",
+	"preferGlobal": false,
+	"private": true,
+	"devDependencies": {
+		"fuller": "~0.2.0",
+		"fuller-less": "~0.2.0",
+		"fuller-concat": "~0.2.0",
+		"fuller-common-js": "~0.2.0",
+		"fuller-uglify": "~0.2.0"
+	},
+	"engines": {
+		"node": "~0.10.26"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:stws/ui.git"
+	}
+}

@@ -1,0 +1,63 @@
+@input-height: 		2*@swts-grid;
+@input-width: 		10*@swts-grid;
+@input-bg-color: 	@swts-input-color;
+@input-color: 		@swts-color;
+@input-label-color: @swts-accent-color;
+@input-error-color: lighten(@swts-accent-color, 30%);
+
+.swts-input {
+	// outline: 1px black solid;
+	position: relative;
+	display: block;
+	height: @input-height;
+	width: @input-width;
+	font: @swts-font-size @swts-font-family;
+	text-align: center;
+	cursor: text;
+	margin-bottom: 1px;
+
+	input { .transition(all, 2*@swts-common-time);}
+	span { .transition(all, 2*@swts-common-time);}
+
+	input {
+		font: @swts-font-size @swts-font-family;
+		background: @input-bg-color;
+		color: @input-color;
+		height: 100%;
+		width: 100%;
+		border: none;
+		outline: none;
+		text-align: center;
+		padding: @input-height/9 @input-height/4 0;
+		.box-sizing;
+	}
+
+	span {
+		top: 0;
+		position: absolute;
+		display: block;
+		width: 100%;
+		color: @input-color;
+		.translate(0, @input-height/4);
+	}
+
+	//&:hover input {background: mix(@input-bg-color, @input-color, 95%)}
+
+	input:focus {
+		background: @input-color;
+		color: @input-bg-color;
+	}
+
+	&.swts-input-val span, input:focus + span {
+		color: @input-label-color;
+		font-size: 0.5em;
+		font-weight: bold;
+		//text-transform: uppercase;
+		.translate(0, 2px);
+	}
+
+	&.swts-error input {
+		background: @input-error-color;
+		color: @input-bg-color;
+	}
+}

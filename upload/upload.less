@@ -1,0 +1,26 @@
+.swts-ui-upload {
+	// width: 100px;
+	// height: 100px;
+	background-color: @colorAccent;
+}
+
+.swts-ui-upload-drop {
+	outline: @colorAccent 15px solid !important;
+	outline-offset: -8px !important;
+}
+
+.swts-ui-upload-progress {
+	position: absolute;
+	top:0;
+	left:0;
+	width: 0;
+	height: 100%;
+	background: @colorAccent;
+	opacity: 0;
+	z-index: 100;
+	.transition(all, 300ms);
+
+	&.uploading {
+		opacity: 1;
+	}
+}

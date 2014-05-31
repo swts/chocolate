@@ -1,0 +1,156 @@
+[class^="gregory-icon-"]:before,
+[class*=" gregory-icon-"]:before {
+  font-family: "swts-ui";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none !important;
+  speak: none;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gregory-icon-left:before { content: "\e001"; }
+.gregory-icon-right:before { content: "\e002"; }
+
+.gregory {
+	display: inline-block;
+	width: 230px;
+	padding-bottom: 10px;
+	position: absolute;
+	background-color: #FFF;
+	z-index: 1000;
+	font-weight: normal;
+
+	&:after {
+		display: block;
+		content: "";
+		position: absolute;
+		left: 115px;
+		margin-left: -6px;
+
+
+		width: 0px;
+		height: 0px;
+		border-style: solid;
+	}
+
+	.gregory-active {
+		color: @colorAccent !important;
+	}
+
+	.gregory-wrapper {
+		width: 210px;
+		margin: auto;
+
+		ul {
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+		}
+
+		li {
+			display: inline-block;
+			height: 30px;
+			text-align: center;
+			vertical-align: top;
+			float: left;
+		}
+
+		a {
+			display: block;
+			background-color: #FFF;
+			color: #000;
+			text-decoration: none;
+			font: normal 14px/30px @baseFontFamily;
+		}
+
+		a:hover {
+			color: @colorAccent;
+		}
+	}
+
+	.gregory-day {
+		li, .gregory-change {
+			width: 30px;
+		}
+	}
+
+	.gregory-month, .gregory-year {
+		li, .gregory-change {
+			width: 70px;
+		}
+	}
+
+	.gregory-date-info {
+		text-align: center;
+
+		a {
+			color: #000;
+			text-transform: uppercase;
+			text-decoration: none;
+			font: normal 14px/48px @baseFontFamily;
+		}
+
+		a:hover {
+			color: @colorAccent;
+		}
+	}
+
+	.gregory-change {
+		font-size: 27px;
+	    height: 30px;
+	    position: absolute;
+	    text-decoration: none;
+		color: #000 !important;
+	}
+
+	.gregory-change.gregory-back {
+		left: 12px;
+	}
+
+	.gregory-change.gregory-forward {
+		right: 12px;
+	}
+
+	.gregory-change:hover {
+		color: @colorAccent !important;
+	}
+
+	&.gregory-endian {
+		.gregory-date-info {
+			height: 60px;
+		}
+
+		.gregory-change {
+			top: 13px;
+		}
+
+		&:after {
+			top: -6px;
+			border-width: 0 6px 7px 6px;
+			border-color: transparent transparent #FFFFFF transparent;
+		}
+	}
+
+	&.gregory-reverse {
+		.gregory-wrapper {
+			padding-top: 7px;
+		}
+
+		.gregory-date-info {
+			height: 38px;
+		}
+
+		.gregory-change {
+			bottom: 13px;
+		}
+
+		&:after {
+			bottom: -6px;
+			border-width: 6px 7px 0 7px;
+			border-color: #FFFFFF transparent transparent transparent;
+		}
+	}
+}

@@ -1,0 +1,50 @@
+.gutenberg-ctrl {
+	background-color: @gutenbergToolbarBgColor;
+	position: absolute;
+	list-style: none;
+	z-index: 6000;
+
+	li {
+		display: inline-block;
+		min-width: @gutenbergToolbarHeight;
+		height: @gutenbergToolbarHeight;
+		line-height: @gutenbergToolbarHeight;
+		text-align: center;
+		font-size: @gutenbergToolbarIconSize;
+		vertical-align: top;
+	}
+
+	a {
+		color: @gutenbergToolbarColor;
+		text-decoration: none;
+	}
+
+	input {
+		border: none;
+		margin-left: 11px;
+		background-color: @gutenbergToolbarBgColor;
+		color: @gutenbergToolbarColor;
+		outline: none;
+		font-size: 16px;
+		position: relative;
+		bottom: 2px;
+	}
+}
+
+.gutenberg-ctrl:after {
+	width: 0;
+	height: 0;
+	display: block;
+	content: "";
+	bottom: -6px;
+	position: absolute;
+	left: 50%;
+	margin-left: -6px;
+	border-style: solid;
+	border-width: 7px 6px 0 6px;
+	border-color: @gutenbergToolbarBgColor transparent transparent transparent;
+}
+
+.gutenberg-hidden {
+  display: none !important;
+}
