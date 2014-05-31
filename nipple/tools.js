@@ -5,13 +5,15 @@
 
 var $ = require('$');
 
-var NippleTools = function(tools) {
+var NippleTools = function(opts, cb) {
 	var self = this,
 		b = '<li class="nipple-tools">';
 
-	for(var t in tools) {
-		var tool = tools[t];
-		b += '<a href="#/'+ (tool.confirm ? "confirm/": "") + t +'" class="'+ tool.icon +'" '+ (tool.title ? 'title="'+ tool.title +'"' : "") +'></a>';
+	for(var t in opts) {
+		if(t !== "type") {
+			var tool = opts[t];
+			b += '<a href="#/'+ (tool.confirm ? "confirm/": "") + t +'" class="'+ tool.icon +'" '+ (tool.title ? 'title="'+ tool.title +'"' : "") +'></a>';
+		}
 	}
 
 	b += "</li>";

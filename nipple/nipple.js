@@ -21,6 +21,7 @@
 var defaults = {
 		items: {
 			"tools": {
+				type: "tools",
 				options: {
 					title: "Options",
 					icon: "swts-icon-dots",
@@ -53,7 +54,7 @@ var $ = require('$'),
 	openedNipple;
 
 var nippleItems = {
-	input: require('ui/nipple/input'),
+	//input: require('ui/nipple/input'),
 	tools: require('ui/nipple/tools')
 };
 
@@ -108,10 +109,11 @@ Nipple.prototype = {
 
 
 		for(var i in items) {
-			if( nippleItems[i] ) {
-				var item = new nippleItems[i](items[i], self.cbs[i]);
-				$ulItems.append(item.$b);
-				self.items.push(item);
+			var item = items[i];
+			if( item.type && nippleItems[item.type] ) {
+				var newItem = new nippleItems[item.type](items[i], self.cbs[i]);
+				$ulItems.append(newItem.$b);
+				self.items.push(newItem);
 			} else {
 				$ulItems.append('<li'+ itemClass +'><a href="#/'+ i +'">'+ items[i].title +'</a></li>');
 			}
