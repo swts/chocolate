@@ -1,3 +1,5 @@
+@input-font-family: @swts-font-family;
+@input-font-size: 	@swts-font-size;
 @input-height: 		2*@swts-grid;
 @input-width: 		10*@swts-grid;
 @input-bg-color: 	@swts-input-color;
@@ -6,12 +8,11 @@
 @input-error-color: lighten(@swts-accent-color, 30%);
 
 .swts-input {
-	// outline: 1px black solid;
 	position: relative;
 	display: block;
 	height: @input-height;
 	width: @input-width;
-	font: @swts-font-size @swts-font-family;
+	font: @input-font-size @input-font-family;
 	text-align: center;
 	cursor: text;
 	margin-bottom: 1px;
@@ -20,7 +21,7 @@
 	span { .transition(all, 2*@swts-common-time);}
 
 	input {
-		font: @swts-font-size @swts-font-family;
+		font: @input-font-size @input-font-family;
 		background: @input-bg-color;
 		color: @input-color;
 		height: 100%;
@@ -50,7 +51,7 @@
 
 	&.swts-input-val span, input:focus + span {
 		color: @input-label-color;
-		font-size: 0.5em;
+		font-size: 0.563em;
 		font-weight: bold;
 		//text-transform: uppercase;
 		.translate(0, 2px);

@@ -582,7 +582,7 @@ table {
 .swts-input.swts-input-val span,
 .swts-input input:focus + span {
   color: #ff4546;
-  font-size: 0.5em;
+  font-size: 0.563em;
   font-weight: bold;
   -webkit-transform: translate(0, 2px);
   -moz-transform: translate(0, 2px);
