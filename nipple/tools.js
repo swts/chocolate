@@ -5,52 +5,54 @@
 
 var $ = require('$');
 
-var NippleTools = function(opts, cb) {
+var NippleTools = function(a, opts, cb) {
 	var self = this,
-		b = '<li class="nipple-tools">';
+		b = '';
 
 	for(var t in opts) {
-		if(t !== "type") {
+		if(t !== "item") {
 			var tool = opts[t];
 			b += '<a href="#/'+ (tool.confirm ? "confirm/": "") + t +'" class="'+ tool.icon +'" '+ (tool.title ? 'title="'+ tool.title +'"' : "") +'></a>';
 		}
 	}
 
-	b += "</li>";
-
 	self.active = undefined;
 	self.confirm = undefined;
-	self.$b = $(b)
-		.on("mouseout", function() {
-			self.hideConfirm();
-		})
-		.on("click", "a", function(e) {
-			if(self.confirm && self.$b.hasClass('nipple-confirmation')) {
-				setTimeout(function () {
-					self.hideConfirm();
-				}, 0);
-			} else if(this.hash.substring(0, 9) === "#/confirm" ) {
-				e.preventDefault();
-				e.stopPropagation();
-				self.showConfirm(this);
-			}
-		});
 
-	self.$a = self.$b.find('a')
+	//start to hack to get parent li.
+	self.$b = $(b)
 		.hover(function() {
 				self.active = this.hash.split("/")[1];
-				self.$b.addClass("nipple-h-"+ self.active);
-				self.$a.not(this).addClass('nipple-hidden');
+				self.$parent.addClass("nipple-h-"+ self.active);
+				self.$b.not(this).addClass('nipple-hidden');
 			}, function() {
-				self.$b.removeClass("nipple-h-"+ self.active);
-				self.$a.removeClass('nipple-hidden');
+				self.$parent.removeClass("nipple-h-"+ self.active);
+				self.$b.removeClass('nipple-hidden');
 		});
+
+	setTimeout(function () {
+		self.$parent = self.$b.first().parent()
+			.on("mouseout.nipple-confirm", function() {
+				self.hideConfirm();
+			})
+			.on("click.nipple-confirm", "a", function(e) {
+				if(self.confirm && self.$parent.hasClass('nipple-confirmation')) {
+					setTimeout(function () {
+						self.hideConfirm();
+					}, 0);
+				} else if(this.hash.substring(0, 9) === "#/confirm" ) {
+					e.preventDefault();
+					e.stopPropagation();
+					self.showConfirm(this);
+				}
+			});
+	}, 16);
 };
 
 NippleTools.prototype = {
 	showConfirm: function(el) {
 		this.$confirm = $(el);
-		this.$b.addClass("nipple-confirmation");
+		this.$parent.addClass("nipple-confirmation");
 		this.confirm = this.$confirm.attr("href").slice(9);
 		this.$confirm.attr("href", "#"+this.confirm);
 	},
@@ -58,10 +60,16 @@ NippleTools.prototype = {
 	hideConfirm: function() {
 		if(this.confirm) {
 			this.$confirm.attr("href", "#/confirm"+this.confirm);
-			this.$b.removeClass("nipple-confirmation");
+			this.$parent.removeClass("nipple-confirmation");
 			this.confirm = undefined;
 		}
+	},
+
+	remove: function() {
+		this.$parent.off('.nipple-confirm');
 	}
 };
 
-exports("ui/nipple/tools", NippleTools);
+exports("ui/nipple/tools", function(opts, cb) {
+	return new NippleTools(opts, cb);
+});

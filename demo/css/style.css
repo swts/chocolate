@@ -630,6 +630,20 @@ table {
   margin: 20px auto 0;
   background: #29384e;
 }
+.swts-user > a:before {
+  left: 0;
+  height: 40px;
+  width: 40px;
+  content: "s";
+  font: normal normal 40px "swts-ui";
+  line-height: 43px;
+  speak: none;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  color: #ffffff;
+}
 .nipple.nipple-small {
   height: 20px;
   width: 20px;
@@ -803,13 +817,13 @@ table {
   -ms-transition: border 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   transition: border 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
 }
-.nipple-down .nipple-tools:first-child:before {
+.nipple-down .nipple-i-tools:first-child:before {
   border-bottom-color: #29384e;
 }
-.nipple-down .nipple-tools.nipple-h-confirm:first-child:before {
+.nipple-down .nipple-i-tools.nipple-h-confirm:first-child:before {
   border-bottom-color: #ff4546;
 }
-.nipple-down .nipple-tools.nipple-confirmation:first-child:before {
+.nipple-down .nipple-i-tools.nipple-confirmation:first-child:before {
   border-bottom-color: #ff0000;
 }
 .nipple-left li:first-child:before {
@@ -828,13 +842,13 @@ table {
   -ms-transition: border 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   transition: border 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
 }
-.nipple-left .nipple-tools:first-child:before {
+.nipple-left .nipple-i-tools:first-child:before {
   border-left-color: #29384e;
 }
-.nipple-left .nipple-tools.nipple-h-confirm:first-child:before {
+.nipple-left .nipple-i-tools.nipple-h-confirm:first-child:before {
   border-left-color: #ff4546;
 }
-.nipple-left .nipple-tools.nipple-confirmation:first-child:before {
+.nipple-left .nipple-i-tools.nipple-confirmation:first-child:before {
   border-left-color: #ff0000;
 }
 .nipple-right li:first-child:before {
@@ -853,13 +867,13 @@ table {
   -ms-transition: border 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   transition: border 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
 }
-.nipple-right .nipple-tools:first-child:before {
+.nipple-right .nipple-i-tools:first-child:before {
   border-right-color: #29384e;
 }
-.nipple-right .nipple-tools.nipple-h-confirm:first-child:before {
+.nipple-right .nipple-i-tools.nipple-h-confirm:first-child:before {
   border-right-color: #ff4546;
 }
-.nipple-right .nipple-tools.nipple-confirmation:first-child:before {
+.nipple-right .nipple-i-tools.nipple-confirmation:first-child:before {
   border-right-color: #ff0000;
 }
 .nipple {
@@ -886,10 +900,15 @@ table {
   text-decoration: none;
 }
 .nipple > a {
-  background: #1b2533;
   display: block;
+  background: #1b2533;
+  -webkit-transition: all 200ms linear;
+  -moz-transition: all 200ms linear;
+  -ms-transition: all 200ms linear;
+  transition: all 200ms linear;
 }
 .nipple ul {
+  z-index: 10;
   display: block;
   position: absolute;
   width: 120px;
@@ -905,6 +924,9 @@ table {
   -moz-transition: visibility 0s cubic-bezier(0.66, 0, 0.5, 1.5) 200ms, all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   -ms-transition: visibility 0s cubic-bezier(0.66, 0, 0.5, 1.5) 200ms, all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   transition: visibility 0s cubic-bezier(0.66, 0, 0.5, 1.5) 200ms, all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
+}
+.nipple ul .nipple-i-tools > a {
+  display: none;
 }
 .nipple li {
   list-style: none;
@@ -932,32 +954,35 @@ table {
   -ms-transition-delay: 0;
   transition-delay: 0;
 }
+.nipple.nipple-hot > ul .nipple-i-tools > a {
+  display: block;
+}
 .nipple-selected a {
   color: #ff4546 !important;
 }
-.nipple-tools a {
+.nipple-i-tools a {
   width: 50%;
 }
-.nipple-tools a:nth-child(1) {
+.nipple-i-tools a:nth-child(1) {
   left: 0;
 }
-.nipple-tools a:nth-child(2) {
+.nipple-i-tools a:nth-child(2) {
   left: 50%;
 }
-.nipple-tools,
-.nipple-tools a {
+.nipple-i-tools,
+.nipple-i-tools a {
   -webkit-transition: all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   -moz-transition: all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   -ms-transition: all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   transition: all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
 }
-.nipple-tools {
+.nipple-i-tools {
   padding: 0 !important;
   height: 42px !important;
   margin-bottom: 6px !important;
   background: #29384e;
 }
-.nipple-tools a {
+.nipple-i-tools a {
   display: block;
   position: absolute;
   top: 0;
@@ -973,36 +998,58 @@ table {
   -ms-transition-delay: 0s;
   transition-delay: 0s;
 }
-.nipple-tools a:first-child {
+.nipple-i-tools a:first-child {
   padding-left: 4px;
 }
-.nipple-tools a:last-child {
+.nipple-i-tools a:last-child {
   padding-right: 4px;
 }
-.nipple-tools a:hover {
+.nipple-i-tools a:hover {
   width: 100%;
   left: 0;
-  z-index: 1;
 }
-.nipple-tools.nipple-h-confirm {
+.nipple-i-tools.nipple-h-confirm {
   background: #ff4546;
 }
-.nipple-tools.nipple-h-confirm a:hover {
+.nipple-i-tools.nipple-h-confirm a:hover {
   color: #ffffff;
 }
-.nipple-tools.nipple-confirmation {
+.nipple-i-tools.nipple-confirmation {
   background: #ff0000;
 }
-.nipple-tools.nipple-confirmation a {
+.nipple-i-tools.nipple-confirmation a {
   font-size: 2.6em;
 }
-.nipple-tools a.nipple-hidden {
+.nipple-i-tools a.nipple-hidden {
   visibility: hidden;
   opacity: 0;
   -webkit-transition: visibility 0s ease-in-out 0.3s, opacity 0.3s ease-in-out;
   -moz-transition: visibility 0s ease-in-out 0.3s, opacity 0.3s ease-in-out;
   -ms-transition: visibility 0s ease-in-out 0.3s, opacity 0.3s ease-in-out;
   transition: visibility 0s ease-in-out 0.3s, opacity 0.3s ease-in-out;
+}
+.nipple-i-input {
+  height: auto !important;
+  padding: 0 5px !important;
+}
+.nipple-i-input:first-child {
+  padding-top: 5px !important;
+}
+.nipple-i-input:last-child {
+  padding-bottom: 5px !important;
+}
+.nipple-i-input .swts-input {
+  width: 110px;
+}
+.nipple.draft > a {
+  background: transparent;
+  width: 8px;
+  height: 8px;
+  border: #1b2533 solid 6px;
+}
+.nipple.published > a {
+  background: #1b2533;
+  border: #1b2533 solid 0px;
 }
 @font-face {
   font-family: 'Museo Sans';
@@ -1131,18 +1178,34 @@ table {
   left: 125px;
   top: 64px;
 }
-.nipple.nipple-small {
-  left: 50px;
+.nipple.swts-user {
+  left: 10px;
+}
+.nipple.draft,
+.nipple.published {
+  left: 80px;
   top: 64px;
 }
-.nipple.nipple-medium {
-  left: 120px;
-}
-.nipple.nipple-large {
-  left: 220px;
+.nipple.swts-options {
+  left: 130px;
+  top: 64px;
 }
 .ui-item .swts-cover-login {
   margin: 0;
   position: relative;
   left: 0;
+}
+.nipple.swts-options > a:before {
+  left: 0;
+  height: 20px;
+  width: 20px;
+  content: "\e004";
+  font: normal normal 20px "swts-ui";
+  line-height: 20px;
+  speak: none;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  color: #ffffff;
 }

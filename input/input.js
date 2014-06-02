@@ -19,9 +19,11 @@ var Input = function($b, opts, cb) {
 	}
 
 	self.$b = $b ? $b : $('<label class="swts-input"><input type="'+
-		(opts.type || "text") +'" '+
-		(opts.value ? 'value="'+opts.value+'"' : "") +'><span>'+ opts.label +'</span></label>'
-	);
+			(opts.type || "text") +'" '+
+			(opts.value ? 'value="'+opts.value+'"' : "") +'><span>'+ opts.title +'</span></label>'
+		).on("click.input", function(e) {
+			e.stopPropagation();
+		});
 
 	self.$i = self.$b.find("input")
 		.on("blur.input", function() {
@@ -30,9 +32,6 @@ var Input = function($b, opts, cb) {
 			} else {
 				self.$b.removeClass("swts-input-val");
 			}
-		})
-		.on("click.input", function(e) {
-			e.stopPropagation();
 		})
 		.on("keyup.input", function(e) {
 			if(self.transform) {
@@ -58,9 +57,13 @@ Input.prototype = {
 			return this.$i.val();
 		}
 
-		this.$i.val(val);
+		this.$i.val(val).trigger("blur");
 		this.throttledUpdate(val);
 		return this;
+	},
+
+	focus: function() {
+		this.$i.focus();
 	},
 
 	throttledUpdate: function(val) {
@@ -102,13 +105,13 @@ Input.prototype = {
 	},
 
 	prependTo: function($container) {
-		this.$b.appendTo($container);
+		this.$b.prependTo($container);
 		return this;
 	},
 
 	remove: function() {
 		this.$i.off(".input");
-		this.$b.remove();
+		this.$b.off(".input").remove();
 	}
 };
 

@@ -40,8 +40,9 @@ Cover.prototype = {
 		script.src = "/static/js/chocolate.js";
 		script.onload = function() {
 			if(window.Chocolate) {
-				self.ui.choco = new window.Chocolate(swts);
-				self.ui.choco.create();
+				self.choco = new window.Chocolate(swts);
+				self.choco.create();
+				self.edit();
 			}
 		};
 		document.body.appendChild(script);
@@ -91,7 +92,8 @@ Cover.prototype = {
 
 	showLogin: function() {
 		this.isLoginVisible = true;
-		this.$l.addClass("active").find('#swts-cover-email').focus();
+		this.$l.addClass("active");
+		this.ui.login.focus();
 	},
 
 	hideLogin: function() {
@@ -111,7 +113,7 @@ Cover.prototype = {
 			self.$l.remove();
 			self.ui.login = undefined;
 			self.ui.password = undefined;
-		}, 1000);
+		}, 650);
 	},
 
 	login: function() {
@@ -141,53 +143,54 @@ Cover.prototype = {
 			return;
 		}
 
-		var self = this,
-			block = '<div class="swts-cp">'+
-						'<div class="swts-cp-menu">'+
-							'<a id="swts-godmode">Edit</a>'+
-							'<a>' + (user.displayName ? user.displayName : user.id) + '</a>'+
-							'<a id="swts-logout" value="Logout">Log out</a>'+
-						'</div>'+
-						'<a class="swts-cp-swts">sweets</a>'+
-					'</div>';
+		var self = this;
 
-		self.$cp = $(block).on("click.swts.cp", "#swts-logout", function(e) {
-			e.preventDefault();
-			self.logout();
-		});
-
-		self.$godmode = self.$cp
-			.find("#swts-godmode")
-			.on("click.swts.cp", function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				if (self.ui) {
-					if (self.editing) {
-						self.ui.remove();
-						self.editing = false;
-						self.$cp.removeClass("editing");
-						self.$godmode.html("Edit");
-					} else {
-						self.ui.create();
-						self.editing = true;
-						self.$cp.addClass("editing");
-						self.$godmode.html("Stop editing");
-					}
-				} else {
-					self.load();
-					self.editing = true;
-					self.$cp.addClass("editing");
-					self.$godmode.html("Stop editing");
+		self.ui.user = new Nipple({
+				direction: "up",
+				size: "medium",
+				menu: true,
+				autoHide: true,
+				items: {
+					"edit": {title: "Edit"},
+					"profile": user.displayName ? user.displayName : user.id,
+					"logout": {title: "Logout"}
 				}
-			});
-		self.$parent.append(self.$cp);
+			},{
+				edit: self.edit.bind(self),
+				logout: self.logout.bind(self),
+				profile: function() {
+					console.log("User profile");
+				},
+			})
+			.addClass("swts-user")
+			.appendTo(self.$parent);
+	},
+
+	edit: function() {
+		var self = this,
+			userCp = self.ui.user;
+
+		if (userCp) {
+			if (self.editing) {
+				self.editing = false;
+				self.choco.remove();
+				userCp.removeClass("swts-editing");
+				userCp.items.edit.find('a').text("Edit");
+			} else {
+				self.choco.create();
+				userCp.addClass("swts-editing");
+				userCp.items.edit.find('a').text("Stop editing");
+				self.editing = true;
+			}
+		} else {
+			self.load();
+		}
 	},
 
 	logout: function() {
 		swts.userLogout();
-		this.$cp.off(".swts.cp").remove();
-		this.$cp = undefined;
-		this.ui && this.ui.remove();
+		this.ui.user.remove();
+		this.ui = {};
 		this.buildLogin();
 	}
 };

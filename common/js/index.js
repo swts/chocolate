@@ -12,12 +12,12 @@ $(document).ready(function() {
 
 //inputs
 	//simple input
-	var input = new Input({label: "Label"}, function(val) {
+	var input = new Input({title: "Title"}, function(val) {
 		console.log("Input", val);
 	}).appendTo("#input-fields");
 
 	//slug input
-	var slug = new Input({label: "Slug", slugify: true}, function(val) {
+	var slug = new Input({title: "Slug", slugify: true}, function(val) {
 		console.log("Slug", val);
 	}).appendTo("#input-fields");
 
@@ -25,7 +25,7 @@ $(document).ready(function() {
 	var rxVimeoId = /^\d{2,20}$/,
 		rxPaste = /^https?:\/\/(?:www\.)?vimeo.com\/(\d+)($|\/)/,
 		vimeoId = new Input({
-				label: "Vimeo id",
+				title: "Vimeo id",
 				rx: rxVimeoId,
 				onPaste: function(e) {
 					var inp = this;
@@ -44,21 +44,6 @@ $(document).ready(function() {
 	var cover = new Cover("body");
 
 	//nipple
-	var defaultNipple = new Nipple({
-			status: function(status) {
-				console.log("Nipple status", status);
-			},
-
-			remove: function() {
-				console.log("Nipple remove");
-			},
-
-			options: function() {
-				console.log("Nipple options");
-			}
-		})
-		.appendTo("#nipple");
-
 	var cpNipple = new Nipple({
 			direction: "right",
 			size: "medium",
@@ -82,5 +67,52 @@ $(document).ready(function() {
 				console.log("Logout");
 			}
 		})
+		.addClass("swts-user")
 		.appendTo("#nipple");
+
+	var defaultNipple = new Nipple({
+			status: function(status) {
+				console.log("Nipple status", status);
+				this.removeClass("draft published").addClass(status);
+			},
+
+			remove: function() {
+				console.log("Nipple remove");
+			},
+
+			options: function() {
+				console.log("Nipple options");
+			}
+		})
+		.val("status/draft")
+		.addClass("draft")
+		.appendTo("#nipple");
+
+	var optNipple = new Nipple({
+			direction: "up",
+			items: {
+				"slug": {
+					item: "input",
+					title: "Slug",
+					slugify: true
+				},
+
+				"title": {
+					item: "input",
+					title: "Title",
+					val: "Item title"
+				},
+			}
+		},{
+			slug: function(val) {
+				console.log("slug", val);
+			},
+
+			title: function(val) {
+				console.log("title", val);
+			}
+		})
+		.addClass("swts-options")
+		.appendTo("#nipple");
+
 });

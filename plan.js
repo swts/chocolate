@@ -16,8 +16,11 @@ var js = {
 
 		"input/slugify.js",
 		"input/input.js",
+
+		"nipple/input.js",
 		"nipple/tools.js",
 		"nipple/nipple.js",
+
 		"cover/cover.js",
 
 		"common/js/index.js"

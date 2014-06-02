@@ -21,7 +21,7 @@
 var defaults = {
 		items: {
 			"tools": {
-				type: "tools",
+				item: "tools",
 				options: {
 					title: "Options",
 					icon: "swts-icon-dots",
@@ -54,8 +54,13 @@ var $ = require('$'),
 	openedNipple;
 
 var nippleItems = {
-	//input: require('ui/nipple/input'),
-	tools: require('ui/nipple/tools')
+	input: require('ui/nipple/input'),
+	tools: require('ui/nipple/tools'),
+	item: function(action, opts) {
+		return {
+			$b: $('<a href="#/'+ action +'">'+ opts.title +'</a>')
+		};
+	}
 };
 
 var Nipple = function(opts, cbs) {
@@ -68,10 +73,10 @@ var Nipple = function(opts, cbs) {
 
 	self._direction = opts.direction || defaults.direction;
 	self.confirmText = opts.confirmText || defaults.confirmText;
-	self.menu = opts.menu || defaults.menu;
 	self.autoHide = opts.autoHide || defaults.autoHide;
+	self.menu = opts.menu || defaults.menu;
 	self.cbs = cbs;
-	self.items = [];
+	self.items = {};
 
 	self.active = false;
 	self.build(opts.items || defaults.items, opts.size || defaults.size || "small");
@@ -80,26 +85,38 @@ var Nipple = function(opts, cbs) {
 Nipple.prototype = {
 	build: function(items, size) {
 		var self = this,
-			toolbar = false,
-			itemClass = self.menu ? "" : ' class="nipple-item"',
-			$ulItems = $('<ul class="nipple-items"></ul>');
+			cbs = self.cbs,
+
+			$ul = $('<ul class="nipple-items"></ul>')
+				.on("click", "a", function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					var args = this.hash.split("/");
+
+					if(self.autoHide) {
+						self.hide();
+					}
+
+					if(!self.menu && $(this).parent().hasClass("nipple-i-item") ) {
+						self.val(this.hash.slice(2));
+					}
+
+					cbs[args[1]] && cbs[args[1]].apply(self, args.slice(2));
+				});
+
+		for(var i in items) {
+			var newItem, item = items[i],
+				type = item.item || "item",
+				$li = $('<li class="nipple-i-'+ type +'"></li>');
+
+			newItem = nippleItems[type](i, items[i], cbs[i] && cbs[i].bind(self));
+			$li.append(newItem.$b);
+			$ul.append($li);
+			self.items[i] = newItem;
+		}
 
 		self.$b = $('<div class="nipple nipple-'+ size +' nipple-'+ self._direction +'"><a href="#nipple-open"></a></div>')
-			.append($ulItems)
-			.on("click", "li > a", function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				var args = this.hash.split("/");
-				if(self.menu) {
-					self.hide();
-				}
-
-				if( $(this).parent().hasClass("nipple-item") ) {
-					self.val(this.hash.slice(2));
-				}
-
-				self.cbs[args[1]] && self.cbs[args[1]].apply(self, args.slice(2));
-			});
+			.append($ul);
 
 		self.$a = self.$b.children("a").on("click", function(e) {
 			e.preventDefault();
@@ -107,24 +124,7 @@ Nipple.prototype = {
 			self.toggle();
 		});
 
-
-		for(var i in items) {
-			var item = items[i];
-			if( item.type && nippleItems[item.type] ) {
-				var newItem = new nippleItems[item.type](items[i], self.cbs[i]);
-				$ulItems.append(newItem.$b);
-				self.items.push(newItem);
-			} else {
-				$ulItems.append('<li'+ itemClass +'><a href="#/'+ i +'">'+ items[i].title +'</a></li>');
-			}
-		}
-
-		// if(self.autoHide) {
-		// 	console.log("hide");
-		// 	self.$b.find("ul").on("mouseout", self.hide.bind(self));
-		// }
-
-		self.$items = self.$b.find(".nipple-item");
+		self.$items = self.$b.find(".nipple-i-item");
 
 		$d.on("click", function() {
 			self.active && self.hide();
@@ -209,13 +209,23 @@ Nipple.prototype = {
 		return this;
 	},
 
+	addClass: function(className) {
+		this.$b.addClass(className);
+		return this;
+	},
+
+	removeClass: function(className) {
+		this.$b.removeClass(className);
+		return this;
+	},
+
 	appendTo: function($container) {
 		this.$b.appendTo($container);
 		return this;
 	},
 
 	prependTo: function($container) {
-		this.$b.appendTo($container);
+		this.$b.prependTo($container);
 		return this;
 	},
 
