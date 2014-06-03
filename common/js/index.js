@@ -6,7 +6,8 @@
 var $ = require('$'),
 	Nipple = require('ui/nipple'),
 	Input = require('ui/input'),
-	Cover = require('ui/cover');
+	Cover = require('ui/cover'),
+	Selectah = require('ui/selectah');
 
 $(document).ready(function() {
 
@@ -114,5 +115,32 @@ $(document).ready(function() {
 		})
 		.addClass("swts-options")
 		.appendTo("#nipple");
+
+	//selectah
+	var singleSelectah = new Selectah([
+			{draft: "Draft"},
+			{ready: "Ready"},
+			{published: "Published"}
+		], function(val) {
+			console.log("Selectah", val);
+		})
+		.addClass("simple")
+		.appendTo("#selectah");
+
+	var multipleSelectah = new Selectah([
+			{app: "Application"},
+			{code: "Code"},
+			{design: "Design"},
+			{photography: "Photography"},
+			{web: "Web"}
+		], {
+			multiple: true,
+			keepOrder: true,
+			selected: ["app", "design"]
+		}, function(val) {
+			console.log("Selectah", val);
+		})
+		.addClass("multi")
+		.appendTo("#selectah");
 
 });

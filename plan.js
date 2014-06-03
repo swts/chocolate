@@ -23,6 +23,8 @@ var js = {
 
 		"cover/cover.js",
 
+		"selectah/selectah.js",
+
 		"common/js/index.js"
 	]
 };

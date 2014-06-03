@@ -6,8 +6,9 @@
 @import "ui.less";
 @import "../../buttons/buttons.less";
 @import "../../input/input.less";
-@import "../../cover/cover.less";
 @import "../../nipple/nipple.less";
+@import "../../cover/cover.less";
+@import "../../selectah/selectah.less";
 
 .font('Museo Sans', '../font/museosans100');
 .font('Museo Sans', '../font/museosans700', bold);
@@ -71,7 +72,7 @@
     height: 20px;
     width: 20px;
     content: "\e004";
-    font: normal normal (@swts-grid) @swts-icon-family;
+    font: normal normal @swts-grid @swts-icon-family;
     line-height: 20px;
     speak: none;
     display: inline-block;
@@ -80,3 +81,17 @@
     position: absolute;
     color: @swts-color;
 }
+
+.selectah.simple {
+	.selectah();
+
+	position: absolute;
+}
+
+.selectah.multi {
+	.selectah(1.5*@swts-grid, lighten(@swts-bg-color, 50%), #000, transparent, 1em, @selectah-font-family, center);
+
+	position: absolute;
+	left: 120px;
+}
+
