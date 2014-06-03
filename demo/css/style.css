@@ -1007,6 +1007,8 @@ table {
 .nipple-i-tools a:hover {
   width: 100%;
   left: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 .nipple-i-tools.nipple-h-confirm {
   background: #ff4546;
