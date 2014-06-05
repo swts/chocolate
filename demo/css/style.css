@@ -1169,11 +1169,11 @@ table {
 }
 .swts-input > .gregory.gregory-down {
   top: 53px;
-  -webkit-transform-origin: 50% -80px;
-  -moz-transform-origin: 50% -80px;
-  -o-transform-origin: 50% -80px;
-  -ms-transform-origin: 50% -80px;
-  transform-origin: 50% -80px;
+  -webkit-transform-origin: 50% -40px;
+  -moz-transform-origin: 50% -40px;
+  -o-transform-origin: 50% -40px;
+  -ms-transform-origin: 50% -40px;
+  transform-origin: 50% -40px;
 }
 .swts-input > .gregory.gregory-down:before {
   position: absolute;
