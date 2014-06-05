@@ -1,2 +1,2 @@
-# Sweet UI kit.
+# Chocolate UI kit.
 [Sweets](http://swts.me)

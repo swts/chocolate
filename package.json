@@ -1,8 +1,8 @@
 {
-	"name": "sweet-ui",
+	"name": "chocolate",
 	"version": "0.1.0",
 	"description": "Sweets' UI kit",
-	"keywords": ["future", "web", "framework", "sweets", "ui", "interface", "kit"],
+	"keywords": ["future", "web", "framework", "sweets", "ui", "interface", "kit", "chocolate"],
 	"author": "Alexey Novikov <v@2dubs.com> (http://2dubs.com)",
 	"preferGlobal": false,
 	"private": true,
@@ -18,6 +18,6 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:stws/ui.git"
+		"url": "git@github.com:stws/chocolate.git"
 	}
 }
