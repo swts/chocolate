@@ -593,7 +593,7 @@ table {
 }
 .swts-input.swts-input-val span,
 .swts-input input:focus + span {
-  color: #ff4546;
+  color: #abb6c7;
   font-size: 0.563em;
   font-weight: bold;
   -webkit-transform: translate(0, 2px);
@@ -1268,6 +1268,51 @@ table {
 			bottom: 5px;
 		}
 	}*/
+.gutenberg-ctrl {
+  background-color: #1b2533;
+  position: absolute;
+  list-style: none;
+  z-index: 6000;
+}
+.gutenberg-ctrl li {
+  display: inline-block;
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+  vertical-align: top;
+}
+.gutenberg-ctrl a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.gutenberg-ctrl input {
+  border: none;
+  margin-left: 11px;
+  background-color: #1b2533;
+  color: #ffffff;
+  outline: none;
+  font-size: 16px;
+  position: relative;
+  bottom: 2px;
+}
+.gutenberg-ctrl:after {
+  bottom: -6px;
+  position: absolute;
+  left: 50%;
+  margin-left: -6px;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #1b2533;
+}
+.gutenberg-hidden {
+  display: none !important;
+}
 @font-face {
   font-family: 'Museo Sans';
   src: url('../font/museosans100.eot');
@@ -1377,13 +1422,14 @@ table {
   padding: 10px;
   position: relative;
   margin-bottom: 4px;
+  font: normal 1em "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .ui-item > h2 {
-  font: normal 1em "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
   margin: 0 0 0.75em;
 }
 .ui-item > p {
-  font: normal 0.75em "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.4;
 }
 .swts-button {
   left: 0;
@@ -1443,7 +1489,7 @@ table {
   padding: 0 13.33333333px;
 }
 .selectah.simple a {
-  color: #ffffff;
+  color: #abb6c7;
 }
 .selectah.simple li.selectah-active,
 .selectah.simple:hover li {
@@ -1451,7 +1497,7 @@ table {
 }
 .selectah.simple li:hover a,
 .selectah.simple li.selectah-active a {
-  color: #ff4546;
+  color: #ffffff;
 }
 .selectah.simple li.selectah-active {
   z-index: 1;

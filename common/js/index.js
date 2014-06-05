@@ -9,7 +9,8 @@ var $ = require('$'),
 	Cover = require('ui/cover'),
 	Selectah = require('ui/selectah'),
 	Gregory = require('ui/gregory'),
-	DateInput = require('ui/gregory/dateinput');
+	DateInput = require('ui/gregory/dateinput'),
+	Gutenberg = require('ui/gutenberg');
 
 $(document).ready(function() {
 
@@ -156,5 +157,10 @@ $(document).ready(function() {
 			console.log("Date input", date);
 		})
 		.appendTo("#dateinput");
+
+	//gutenberg
+	var gutenberg = new Gutenberg("#gutenberg > p", function(text) {
+		console.log("Gutenberg", text);
+	});
 
 });

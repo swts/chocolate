@@ -10,6 +10,7 @@
 @import "../../cover/cover.less";
 @import "../../selectah/selectah.less";
 @import "../../gregory/gregory.less";
+@import "../../gutenberg/gutenberg.less";
 
 .font('Museo Sans', '../font/museosans100');
 .font('Museo Sans', '../font/museosans700', bold);
@@ -44,14 +45,15 @@
 	padding: 10px;
 	position: relative;
 	margin-bottom: 4px;
+	font:normal 1em @swts-font-family;
 
 	& > h2 {
-		font:normal 1em @swts-font-family;
+		font-size: 1em;
 		margin: 0 0 0.75em;
 	}
 
 	& > p {
-		font:normal 0.75em @swts-font-family;
+		line-height: 1.4;
 	}
 }
 

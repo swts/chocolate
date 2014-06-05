@@ -14,8 +14,8 @@ var js = {
 		"common/js/jquery.js",
 		"common/js/swts.js",
 
-		"common/js/util/extend.js",
-		"common/js/util/inherits.js",
+		"util/extend.js",
+		"util/inherits.js",
 
 		"input/slugify.js",
 		"input/input.js",
@@ -30,6 +30,8 @@ var js = {
 
 		"gregory/gregory.js",
 		"gregory/dateinput.js",
+
+		"gutenberg/gutenberg.js",
 
 		"common/js/index.js"
 	]

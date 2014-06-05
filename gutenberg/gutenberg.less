@@ -1,29 +1,46 @@
+@gutenberg-base-font-size: 			16px;
+@gutenberg-icon-font-size: 			16px;
+
+@gutenberg-triangle-size: 			@swts-grid/2;
+@gutenberg-width: 					6*@swts-grid;
+@gutenberg-height: 					1.5*@swts-grid;
+
+@gutenberg-color: 					@swts-color;
+@gutenberg-active-color: 			@swts-accent-color;
+@gutenberg-background-color: 		@swts-bg-color;
+@gutenberg-confirmation-color: 		#f00;
+@gutenberg-items-background-color: 	@swts-input-color;
+
+@gutenberg-animation-style: 		@swts-showup-transition-style;
+@gutenberg-animation-time: 			@swts-showup-time;
+
+
 .gutenberg-ctrl {
-	background-color: @gutenbergToolbarBgColor;
+	background-color: @gutenberg-background-color;
 	position: absolute;
 	list-style: none;
 	z-index: 6000;
 
 	li {
 		display: inline-block;
-		min-width: @gutenbergToolbarHeight;
-		height: @gutenbergToolbarHeight;
-		line-height: @gutenbergToolbarHeight;
+		min-width: @gutenberg-height;
+		height: @gutenberg-height;
+		line-height: @gutenberg-height;
 		text-align: center;
-		font-size: @gutenbergToolbarIconSize;
+		font-size: @gutenberg-icon-font-size;
 		vertical-align: top;
 	}
 
 	a {
-		color: @gutenbergToolbarColor;
+		color: @gutenberg-color;
 		text-decoration: none;
 	}
 
 	input {
 		border: none;
 		margin-left: 11px;
-		background-color: @gutenbergToolbarBgColor;
-		color: @gutenbergToolbarColor;
+		background-color: @gutenberg-background-color;
+		color: @gutenberg-color;
 		outline: none;
 		font-size: 16px;
 		position: relative;
@@ -32,17 +49,11 @@
 }
 
 .gutenberg-ctrl:after {
-	width: 0;
-	height: 0;
-	display: block;
-	content: "";
 	bottom: -6px;
 	position: absolute;
 	left: 50%;
 	margin-left: -6px;
-	border-style: solid;
-	border-width: 7px 6px 0 6px;
-	border-color: @gutenbergToolbarBgColor transparent transparent transparent;
+	.triangle(down, @gutenberg-triangle-size, @gutenberg-background-color);
 }
 
 .gutenberg-hidden {
