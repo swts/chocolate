@@ -8,7 +8,7 @@ var $ = require('$'),
 var Input = function($b, opts, cb) {
 	var self = this;
 
-	if(!($b instanceof $)) {
+	if(!($b instanceof $) && $b !== undefined) {
 		cb = opts;
 		opts = $b;
 		$b = undefined;
@@ -18,7 +18,7 @@ var Input = function($b, opts, cb) {
 		opts = {};
 	}
 
-	self.$b = $b ? $b : $('<label class="swts-input"><input type="'+
+	self.$b = $b || $('<label class="swts-input"><input type="'+
 			(opts.type || "text") +'" '+
 			(opts.value ? 'value="'+opts.value+'"' : "") +'><span>'+ opts.title +'</span></label>'
 		).on("click.input", function(e) {
@@ -33,6 +33,7 @@ var Input = function($b, opts, cb) {
 				self.$b.removeClass("swts-input-val");
 			}
 		})
+		.trigger("blur")
 		.on("keyup.input", function(e) {
 			if(self.transform) {
 				this.value = self.transform(this.value);
@@ -42,7 +43,14 @@ var Input = function($b, opts, cb) {
 
 	self.value = opts.value;
 	self.rx = opts.rx;
-	self.transform = opts.slugify ? slugify : opts.transform;
+
+	if(opts.slugify) {
+		self.slugify = true;
+		self.transform = slugify;
+	} else if (opts.transform) {
+		self.transform = opts.transform;
+	}
+
 	self.err = opts.errorClass || "swts-error";
 	self.cb = cb;
 
@@ -71,12 +79,6 @@ Input.prototype = {
 
 		clearTimeout(self.typingTimer);
 		self.typingTimer = setTimeout( function() {
-
-			if(self.transform) {
-				val = self.transform(val);
-				self.$i.val(val);
-			}
-
 			if(val !== self.value) {
 				if(self.rx) {
 					if(self.rx.test(val)) {
@@ -96,7 +98,18 @@ Input.prototype = {
 
 		self.$b.removeClass(self.err);
 		self.value = val;
+
 		self.cb && self.cb(val);
+	},
+
+	addClass: function(className) {
+		this.$b.addClass(className);
+		return this;
+	},
+
+	removeClass: function(className) {
+		this.$b.removeClass(className);
+		return this;
 	},
 
 	appendTo: function($container) {

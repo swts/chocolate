@@ -9,6 +9,7 @@
 @import "../../nipple/nipple.less";
 @import "../../cover/cover.less";
 @import "../../selectah/selectah.less";
+@import "../../gregory/gregory.less";
 
 .font('Museo Sans', '../font/museosans100');
 .font('Museo Sans', '../font/museosans700', bold);
@@ -46,6 +47,7 @@
 
 	& > h2 {
 		font:normal 1em @swts-font-family;
+		margin: 0 0 0.75em;
 	}
 
 	& > p {
@@ -54,12 +56,12 @@
 }
 
 .swts-button { left: 0; }
-.swts-add { left: 64px; top: 54px; }
-.swts-remove { left: 125px; top: 64px; }
+.swts-add { left: 64px; top: 40px; }
+.swts-remove { left: 125px; top: 50px; }
 
 .nipple.swts-user {left: 10px;}
-.nipple.draft, .nipple.published {left: 80px; top:64px;}
-.nipple.swts-options {left: 130px; top: 64px;}
+.nipple.draft, .nipple.published {left: 80px; top:50px;}
+.nipple.swts-options {left: 130px; top: 50px;}
 
 .ui-item .swts-cover-login {
 	margin: 0;
@@ -89,7 +91,7 @@
 }
 
 .selectah.multi {
-	.selectah(1.5*@swts-grid, lighten(@swts-bg-color, 50%), #000, transparent, 1em, @selectah-font-family, center);
+	.selectah(1.5*@swts-grid, lighten(#000, 50%), #000, transparent, 1em, @selectah-font-family, center);
 
 	position: absolute;
 	left: 120px;

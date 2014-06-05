@@ -7,167 +7,206 @@
 
 var $ = require('$'),
 	daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-	defaultStartDay = "MON",
-	defaultMessages = {
-		year: "",
-		months: {
-			0: {
-				s: "Jan",
-				f: "January"
-			},
-			1: {
-				s: "Feb",
-				f: "February"
-			},
-			2: {
-				s: "Mar",
-				f: "March"
-			},
-			3: {
-				s: "Apr",
-				f: "April"
-			},
-			4: {
-				s: "May",
-				f: "May"
-			},
-			5: {
-				s: "Jun",
-				f: "June"
-			},
-			6: {
-				s: "Jul",
-				f: "July"
-			},
-			7: {
-				s: "Aug",
-				f: "August"
-			},
-			8: {
-				s: "Sep",
-				f: "September"
-			},
-			9: {
-				s: "Oct",
-				f: "October"
-			},
-			10: {
-				s: "Nov",
-				f: "November"
-			},
-			11: {
-				s: "Dec",
-				f: "December"
-			},
+	defaults = {
+		startDay: "MON",
+		messages: {
+			year: "",
+			months: {
+				0: {
+					s: "Jan",
+					f: "January"
+				},
+				1: {
+					s: "Feb",
+					f: "February"
+				},
+				2: {
+					s: "Mar",
+					f: "March"
+				},
+				3: {
+					s: "Apr",
+					f: "April"
+				},
+				4: {
+					s: "May",
+					f: "May"
+				},
+				5: {
+					s: "Jun",
+					f: "June"
+				},
+				6: {
+					s: "Jul",
+					f: "July"
+				},
+				7: {
+					s: "Aug",
+					f: "August"
+				},
+				8: {
+					s: "Sep",
+					f: "September"
+				},
+				9: {
+					s: "Oct",
+					f: "October"
+				},
+				10: {
+					s: "Nov",
+					f: "November"
+				},
+				11: {
+					s: "Dec",
+					f: "December"
+				},
+			}
 		}
 	};
 
-var Gregory = function (opts) {
+var Gregory = function (opts, cb) {
+	if(typeof opts === "function") {
+		cb = opts;
+		opts = {};
+	}
+
 	var self = this;
 
 	self.$b = $("<div class='gregory'></div>");
-	self.$calendarWrapper;
-	self.$dateInfo;
-	self.$changeBack;
-	self.$changeForward;
+
 	self.modes = {
 		day: "day",
 		month: "month",
 		year: "year"
 	};
+
 	self.displayState = {}; // {twelfth: 0..2013, year: 0..2013, month: 0..11, day: 1..31, mode: self.modes.month}
 	self.selectedState = {}; // {year: 0..2013, month: 0..11, day: 1..31}
 	self.prevFullState = {};
-	self.weekStartDay = opts.weekStartDay || defaultStartDay;
-	self.onDateSelect = opts.onDateSelect;
-	self.messages = opts.messages || defaultMessages;
-	self.viewReverse = opts.flip;
+	self.weekStartDay = opts.weekStartDay || defaults.startDay;
+	self.messages = opts.messages || defaults.messages;
+	self.flip = opts.flip;
+	self.cb = cb;
 
-	self.generateDOM();
+	self.build();
 
 	self.prevFullState.mode = self.modes.day;
-
-	self.$b.on("mousedown.gregory", function(e) {
-		e.stopPropagation();
-	});
-
-	self.$b.on("click.gregory", "a.gregory-change", function(e) {
-		e.preventDefault();
-
-		var $self = $(this),
-			hash = this.hash.split("/"),
-			year = parseInt(hash[1], 10),
-			month = hash[2] ? parseInt(hash[2], 10) : null;
-
-		var displayState = {};
-
-		displayState.year = year;
-
-		if (month === 0 || month) {
-			displayState.month = month;
-		}
-
-		self.changeDisplayState(displayState, "dateChange");
-	});
-
-	self.$calendarWrapper.on("click.gregory", "a", function(e) {
-		e.preventDefault();
-
-		var $self = $(this),
-			hash = this.hash.split("/"),
-			year = parseInt(hash[1], 10),
-			month = hash[2] ? parseInt(hash[2], 10) : null,
-			day = hash[3] ? parseInt(hash[3], 10) : null;
-
-		self.changeSelectedState({
-			year: year,
-			month: month,
-			day: day
-		}, $self);
-
-		self.onDateSelect && self.onDateSelect(self.selectedState);
-	});
-
-	self.$dateInfo.on("click.gregory", function(e) {
-		e.preventDefault();
-
-		var displayState = {};
-
-		displayState.mode = this.hash.split('/')[1];
-
-		if (displayState.mode === self.modes.day) {
-			self.changeSelectedState(self.prevFullState);
-		} else {
-			if (self.displayState.month === null) {
-				displayState.month = self.selectedState.month;
-			} else {
-				displayState.month = self.displayState.month;
-			}
-
-			if (!self.isYearActive(self.displayState.year) && self.displayState.mode === self.modes.month) {
-				displayState.year = self.selectedState.year;
-			}
-
-			self.changeDisplayState(displayState);
-		}
-	});
 };
 
 Gregory.prototype = {
-	init: function(state) {
-		var self = this;
+	build: function() {
+		var self = this,
+			flip = self.flip,
+			header = '<div class="gregory-header"><a class="gregory-change gregory-back" href="#"></a><a class="gregory-info" href="#/"></a><a class="gregory-change gregory-forward" href="#"></a></div>',
+			b = '<div class="gregory '+ (flip ? "gregory-up" : "gregory-down") +'">';
 
-		if (state.date) {
-			state.year = state.date.getFullYear();
-			state.month = state.date.getMonth();
-			state.day = state.date.getDate();
+		if(!flip) {
+			b += header;
 		}
 
-		state.mode = state.day ? self.modes.day : self.modes.month;
+		b += '<div class="gregory-wrapper"></div>';
 
-		self.changeDisplayState(state);
-		self.changeSelectedState(state);
+		if(flip) {
+			b += header;
+		}
+
+		b += '</div>';
+
+		self.$b = $(b)
+			.on("mousedown.gregory", function(e) {
+				e.stopPropagation();
+			})
+			.on("click.gregory", "a.gregory-change", function(e) {
+				e.preventDefault();
+
+				var hash = this.hash.split("/"),
+					year = parseInt(hash[1], 10),
+					month = hash[2] ? parseInt(hash[2], 10) : null;
+
+				var displayState = {};
+
+				displayState.year = year;
+
+				if (month === 0 || month) {
+					displayState.month = month;
+				}
+
+				self.changeDisplayState(displayState, "dateChange");
+			});
+
+		self.$wrapper = self.$b.find(".gregory-wrapper")
+			.on("click.gregory", "a", function(e) {
+				e.preventDefault();
+
+				var $self = $(this),
+					hash = this.hash.split("/"),
+					year = parseInt(hash[1], 10),
+					month = hash[2] ? parseInt(hash[2], 10) : null,
+					day = hash[3] ? parseInt(hash[3], 10) : null;
+
+				self.changeSelectedState({
+					year: year,
+					month: month,
+					day: day
+				}, $self);
+
+				self.cb && self.cb( new Date(year, month, day), !!day );
+			});
+
+		self.$date = self.$b.find(".gregory-info")
+			.on("click.gregory", function(e) {
+				e.preventDefault();
+
+				var displayState = {};
+
+				displayState.mode = this.hash.split('/')[1];
+
+				if (displayState.mode === self.modes.day) {
+					self.changeSelectedState(self.prevFullState);
+				} else {
+					if (self.displayState.month === null) {
+						displayState.month = self.selectedState.month;
+					} else {
+						displayState.month = self.displayState.month;
+					}
+
+					if (!self.isYearActive(self.displayState.year) && self.displayState.mode === self.modes.month) {
+						displayState.year = self.selectedState.year;
+					}
+
+					self.changeDisplayState(displayState);
+				}
+			});
+
+		self.$back = self.$b.find(".gregory-back");
+		self.$forward = self.$b.find(".gregory-forward");
 	},
+
+	val: function(state) {
+		if(state === undefined) {
+			var s = this.selectedState;
+			return new Date(s.year, s.month, s.day);
+		}
+
+		var newState;
+
+		if (state instanceof Date) {
+			newState = {
+				year: state.getFullYear(),
+				month: state.getMonth(),
+				day: state.getDate()
+			};
+		} else {
+			newState = state;
+		}
+
+		newState.mode = newState.day ? this.modes.day : this.modes.month;
+
+		this.changeDisplayState(newState);
+		this.changeSelectedState(newState);
+		return this;
+	},
+
 	changeDisplayState: function(displayState) {
 		var self = this;
 
@@ -175,16 +214,17 @@ Gregory.prototype = {
 		self.generateCalendar();
 		self.updateInfo();
 	},
+
 	changeSelectedState: function(selectedState, $d) {
 		var self = this;
 
 		if (self.displayState.mode === self.modes.day) {
-			self.$calendarWrapper.find(".gregory-active").removeClass("gregory-active");
+			self.$wrapper.find(".gregory-active").removeClass("gregory-active");
 
 			if (!$d) {
 				var selector = "a[href='#/" + selectedState.year + (selectedState.month === 0 || selectedState.month ? ("/" + selectedState.month + (selectedState.day ? "/" + selectedState.day : "")) : "") + "']";
 
-				$d = self.$calendarWrapper.find(selector);
+				$d = self.$wrapper.find(selector);
 			}
 
 			$d.addClass("gregory-active");
@@ -202,38 +242,6 @@ Gregory.prototype = {
 		}
 
 		self.changeDisplayState(selectedState);
-	},
-	generateDOM: function() {
-		var self = this,
-			$dateInfoWrapper = $("<div class='gregory-date-info'><a href='#/'></a></div>");
-
-		if (self.viewReverse) {
-			self.$b.addClass("gregory-reverse");
-		} else {
-			self.$b.addClass("gregory-endian");
-		}
-
-		self.$calendarWrapper = $("<div class='gregory-wrapper'></div>");
-		self.$dateInfo = $dateInfoWrapper.find("a");
-		self.$changeBack = $("<a class='gregory-change gregory-back gregory-icon-left' href='#'></a>");
-		self.$changeForward = $("<a class='gregory-change gregory-forward gregory-icon-right' href='#'></a>");
-
-		self.$b.append(self.$calendarWrapper);
-		self.$b.prepend($dateInfoWrapper);
-		self.$b.prepend(self.$changeBack);
-		self.$b.prepend(self.$changeForward);
-
-		if (self.viewReverse) {
-			self.$b.prepend(self.$calendarWrapper);
-			self.$b.append($dateInfoWrapper);
-			self.$b.append(self.$changeBack);
-			self.$b.append(self.$changeForward);
-		} else {
-			self.$b.append(self.$calendarWrapper);
-			self.$b.prepend($dateInfoWrapper);
-			self.$b.prepend(self.$changeBack);
-			self.$b.prepend(self.$changeForward);
-		}
 	},
 	generateCalendar: function() {
 		var self = this;
@@ -279,7 +287,7 @@ Gregory.prototype = {
 
 		html += '</ul>';
 
-		self.$calendarWrapper.html(html);
+		self.$wrapper.html(html);
 	},
 	generateMonthCalendar: function() {
 		var self = this,
@@ -301,7 +309,7 @@ Gregory.prototype = {
 
 		html += '</ul>';
 
-		self.$calendarWrapper.html(html);
+		self.$wrapper.html(html);
 	},
 	generateYearCalendar: function() {
 		var self = this,
@@ -323,18 +331,18 @@ Gregory.prototype = {
 
 		html += '</ul>';
 
-		self.$calendarWrapper.html(html);
+		self.$wrapper.html(html);
 	},
 	setChange: function(back, future) {
 		var self = this;
 
-		self.$changeBack.attr("href", "#/" + back);
-		self.$changeForward.attr("href", "#/" + future);
+		self.$back.attr("href", "#/" + back);
+		self.$forward.attr("href", "#/" + future);
 	},
 	setDateActive: function() {
 		var self = this;
 
-		self.$calendarWrapper.find("a[href='#/" + self.formUrl + "']").addClass("gregory-active");
+		self.$wrapper.find("a[href='#/" + self.formUrl + "']").addClass("gregory-active");
 	},
 	decrementMonth: function(year, month) {
 		var self = this,
@@ -372,48 +380,52 @@ Gregory.prototype = {
 		}
 		return daysInMonth[self.displayState.month];
 	},
+
 	updateInfo: function() {
 		var self = this,
+			sds = self.displayState,
 			mode;
 
-		if (self.displayState.mode === self.modes.day) {
-			self.$dateInfo.html(self.messages.months[self.displayState.month].f + ", " + self.displayState.year);
-		} else if (self.displayState.mode === self.modes.month) {
-			self.$dateInfo.html(self.displayState.year + " " + self.messages.year);
+		if (sds.mode === self.modes.day) {
+			self.$date.html(self.messages.months[sds.month].f + " " + sds.year);
+		} else if (sds.mode === self.modes.month) {
+			self.$date.html(sds.year + " " + self.messages.year);
 		} else {
-			self.$dateInfo.html(self.prevFullState.day + "." + (self.prevFullState.month + 1) + "." + self.prevFullState.year);
+			self.$date.html(self.prevFullState.day + "." + (self.prevFullState.month + 1) + "." + self.prevFullState.year);
 		}
 
-		if (self.displayState.mode === self.modes.day) {
+		if (sds.mode === self.modes.day) {
 			mode = self.modes.month;
-		} else if (self.displayState.mode === self.modes.month) {
+		} else if (sds.mode === self.modes.month) {
 			mode = self.modes.year;
-		} else if (self.displayState.mode === self.modes.year) {
+		} else if (sds.mode === self.modes.year) {
 			mode = self.modes.day;
 		}
 
-		self.$dateInfo.attr("href", "#/" + mode);
+		self.$date.attr("href", "#/" + mode);
 	},
+
 	setDisplayState: function(displayState) {
-		var self = this;
+		var self = this,
+			sds = self.displayState;
 
 		if (displayState.year) {
-			self.displayState.year = displayState.year;
-			self.displayState.twelfth = displayState.year;
+			sds.year = displayState.year;
+			sds.twelfth = displayState.year;
 		}
 
 		if (displayState.month === 0 || displayState.month) {
-			self.displayState.month = displayState.month;
+			sds.month = displayState.month;
 		} else {
-			self.displayState.month = null;
+			sds.month = null;
 		}
 
 		if (displayState.mode) {
-			self.displayState.mode = displayState.mode;
+			sds.mode = displayState.mode;
 		}
 
-		if (!self.displayState.mode) {
-			self.displayState.mode = displayState.month === 0 || displayState.month ? self.modes.day : self.modes.month;
+		if (!sds.mode) {
+			sds.mode = displayState.month === 0 || displayState.month ? self.modes.day : self.modes.month;
 		}
 	},
 	setSelectedState: function(selectedState) {
@@ -447,12 +459,37 @@ Gregory.prototype = {
 
 		return year === self.selectedState.year;
 	},
+
+	addClass: function(className) {
+		this.$b.addClass(className);
+		return this;
+	},
+
+	removeClass: function(className) {
+		this.$b.removeClass(className);
+		return this;
+	},
+
+	appendTo: function($container) {
+		this.$b.appendTo($container);
+		return this;
+	},
+
+	prependTo: function($container) {
+		this.$b.prependTo($container);
+		return this;
+	},
+
 	remove: function() {
 		var self = this;
 
 		self.$b.off(".gregory");
 		self.$b.remove();
 	}
+};
+
+Gregory.defaults = function(opts) {
+	defaults = opts;
 };
 
 exports("ui/gregory", Gregory);

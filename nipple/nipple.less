@@ -156,14 +156,7 @@
 		width: @nipple-width;
 		color: @nipple-color;
 		background: @nipple-background-color;
-		visibility:hidden;
-		opacity:0;
-		.transform( rotateX(45deg) scale(0.8) );
-		-webkit-transition:visibility 0s @nipple-animation-style @nipple-animation-time, all @nipple-animation-time @nipple-animation-style;
-		-moz-transition:visibility 0s @nipple-animation-style @nipple-animation-time, all @nipple-animation-time @nipple-animation-style;
-		-ms-transition:visibility 0s @nipple-animation-style @nipple-animation-time, all @nipple-animation-time @nipple-animation-style;
-		transition:visibility 0s @nipple-animation-style @nipple-animation-time, all @nipple-animation-time @nipple-animation-style;
-
+		.swts-showup-out(@nipple-animation-time, @nipple-animation-style);
 		.nipple-i-tools > a {display: none;}
 	}
 
@@ -180,11 +173,7 @@
 	}
 
 	&.nipple-hot > ul {
-		visibility:visible;
-  		opacity:1;
-  		.transform( rotateX(0) scale(1));
-  		.transition-delay(0);
-
+		.swts-showup-in();
   		.nipple-i-tools > a {display: block;}
 	}
 }

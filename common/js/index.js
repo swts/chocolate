@@ -7,7 +7,9 @@ var $ = require('$'),
 	Nipple = require('ui/nipple'),
 	Input = require('ui/input'),
 	Cover = require('ui/cover'),
-	Selectah = require('ui/selectah');
+	Selectah = require('ui/selectah'),
+	Gregory = require('ui/gregory'),
+	DateInput = require('ui/gregory/dateinput');
 
 $(document).ready(function() {
 
@@ -101,7 +103,7 @@ $(document).ready(function() {
 				"title": {
 					item: "input",
 					title: "Title",
-					val: "Item title"
+					value: "Item title"
 				},
 			}
 		},{
@@ -142,5 +144,17 @@ $(document).ready(function() {
 		})
 		.addClass("multi")
 		.appendTo("#selectah");
+
+	//gregory
+	var gregory = new Gregory(function(date) {
+			console.log("Gregory", date);
+		})
+		.val(new Date())
+		.appendTo("#gregory");
+
+	var dateInput = new DateInput({title: "Publication date"}, function(date) {
+			console.log("Date input", date);
+		})
+		.appendTo("#dateinput");
 
 });
