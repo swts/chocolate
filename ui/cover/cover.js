@@ -6,6 +6,7 @@
 var $ = require('$'),
 	$w = $(window),
     swts = require("swts"),
+
     Nipple = require('ui/nipple'),
 	Input = require('ui/input');
 
@@ -15,13 +16,18 @@ var loginTepmlate = '<div class="swts-cover-login">'+
         '<a href="#/login" class="swts-button">Go</a>'+
     '</div>';
 
-var Cover = function(selector) {
+var Cover = function(opts) {
 	var self = this;
 
-	self.$parent = $(selector || "body");
+	if(!opts) {
+		opts = {};
+	}
+
+	self.$parent = $(opts.parent || "body");
 	self.isLoginVisible = false;
 
 	self.editing = false;
+	self.popup = opts.popup || "n";
 	self.ui = {};
 
 	if(swts.u) {
@@ -143,15 +149,16 @@ Cover.prototype = {
 		}
 
 		var self = this;
+		console.log(user);
 
 		self.ui.user = new Nipple({
-				direction: "up",
+				direction: self.popup,
 				size: "medium",
 				menu: true,
 				autoHide: true,
 				items: {
 					"edit": {title: "Edit"},
-					"profile": user.displayName ? user.displayName : user.id,
+					"profile": {title: user.name || user.id},
 					"logout": {title: "Logout"}
 				}
 			},{
