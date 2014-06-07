@@ -48,8 +48,8 @@ $(document).ready(function() {
 	var cover = new Cover("body");
 
 	//nipple
-	var cpNipple = new Nipple({
-			direction: "right",
+	var userNipple = new Nipple({
+			popup: "e",
 			size: "medium",
 			menu: true,
 			autoHide: true,
@@ -93,7 +93,7 @@ $(document).ready(function() {
 		.appendTo("#nipple");
 
 	var optNipple = new Nipple({
-			direction: "up",
+			popup: "n",
 			items: {
 				"slug": {
 					item: "input",

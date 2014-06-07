@@ -1,9 +1,10 @@
-@museo: "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@swtsui: "swts-ui";
+@import "common/less/triangle.less";
+@import "common/less/mixings.less";
+@import "common/less/icons.less";
 
 @swts-grid: 					20px;
 
-@swts-icon-family: 				@swtsui;
+@swts-icon-family: 				@swts-icon-font;
 @swts-font-family: 				@museo;
 @swts-font-size:          		16px;
 @swts-line-height:        		1.5em;
@@ -13,7 +14,7 @@
 @swts-accent-color: 			#FF4546;
 @swts-warning-color: 			#FF4546;
 @swts-bg-color: 				#1B2533;
-@swts-input-color: 				lighten(@swts-bg-color, 8%);
+@swts-input-color: 				lighten(@swts-bg-color, 7%);
 
 @swts-common-transition-style:	cubic-bezier(0.660, 0.000, 0.070, 1.000);
 @swts-common-time: 				150ms;
@@ -40,3 +41,29 @@
 	.transform(rotateX(0) scale(1));
 	.transition-delay(0);
 }
+
+
+.swts-error-keyframes() {
+  0% {.translate(-20px, 0)}
+  20% {.translate(16px, 0)}
+  40% {.translate(-12px, 0)}
+  60% {.translate(8px, 0)}
+  80% {.translate(-4px, 0)}
+  100% {.translate(0px, 0)}
+}
+
+@-webkit-keyframes errror {.swts-error-keyframes();}
+@keyframes error {.swts-error-keyframes();}
+
+.swts-error {
+	.animation(errror 0.4s @swts-common-transition-style);
+}
+
+//components
+@import "buttons/buttons.less";
+@import "input/input.less";
+@import "nipple/nipple.less";
+@import "cover/cover.less";
+@import "selectah/selectah.less";
+@import "gregory/gregory.less";
+@import "gutenberg/gutenberg.less";

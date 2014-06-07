@@ -771,8 +771,7 @@ var defaults = {
 				title: "Published"
 			}
 		},
-		direction: "down",
-		confirmText: "Sure?",
+		popup: "s",
 		menu: false,
 		autoHide: false,
 		size: "small"
@@ -800,8 +799,7 @@ var Nipple = function(opts, cbs) {
 		opts = {};
 	}
 
-	self._direction = opts.direction || defaults.direction;
-	self.confirmText = opts.confirmText || defaults.confirmText;
+	self._popup = opts.popup || defaults.popup;
 	self.autoHide = opts.autoHide || defaults.autoHide;
 	self.menu = opts.menu || defaults.menu;
 	self.cbs = cbs;
@@ -844,7 +842,7 @@ Nipple.prototype = {
 			self.items[i] = newItem;
 		}
 
-		self.$b = $('<div class="nipple nipple-'+ size +' nipple-'+ self._direction +'"><a href="#nipple-open"></a></div>')
+		self.$b = $('<div class="nipple nipple-'+ size +' nipple-'+ self._popup +'"><a href="#nipple-open"></a></div>')
 			.append($ul);
 
 		self.$a = self.$b.children("a").on("click", function(e) {
@@ -885,13 +883,13 @@ Nipple.prototype = {
 
 	direction: function(dir) {
 		if(dir === undefined) {
-			return this._direction;
+			return this._popup;
 		}
 
-		if(this._direction !== dir) {
-			this.$b.removeClass("nipple-"+this._direction)
+		if(this._popup !== dir) {
+			this.$b.removeClass("nipple-"+this._popup)
 				.addClass("nipple-"+dir);
-			this._direction = dir;
+			this._popup = dir;
 		}
 
 		return this;
@@ -978,7 +976,6 @@ exports("ui/nipple", Nipple);
 var $ = require('$'),
 	$w = $(window),
     swts = require("swts"),
-
     Nipple = require('ui/nipple'),
 	Input = require('ui/input');
 
@@ -991,7 +988,7 @@ var loginTepmlate = '<div class="swts-cover-login">'+
 var Cover = function(selector) {
 	var self = this;
 
-	self.$parent = $(selector);
+	self.$parent = $(selector || "body");
 	self.isLoginVisible = false;
 
 	self.editing = false;
@@ -2489,8 +2486,8 @@ $(document).ready(function() {
 	var cover = new Cover("body");
 
 	//nipple
-	var cpNipple = new Nipple({
-			direction: "right",
+	var userNipple = new Nipple({
+			popup: "e",
 			size: "medium",
 			menu: true,
 			autoHide: true,
@@ -2534,7 +2531,7 @@ $(document).ready(function() {
 		.appendTo("#nipple");
 
 	var optNipple = new Nipple({
-			direction: "up",
+			popup: "n",
 			items: {
 				"slug": {
 					item: "input",

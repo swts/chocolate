@@ -2,38 +2,38 @@
 
 var options = {
 	src: "./",
-	dst: "./demo"
+	dst: "./"
 };
 
 var less = {
-	"style.css": "style.less"
+	"style.css": "demo/less/style.less"
 };
 
 var js = {
 	"script.js": [
-		"common/js/jquery.js",
-		"common/js/swts.js",
+		"demo/js/jquery.js",
+		"demo/js/swts.js",
 
-		"util/extend.js",
-		"util/inherits.js",
+		"ui/util/extend.js",
+		"ui/util/inherits.js",
 
-		"input/slugify.js",
-		"input/input.js",
+		"ui/input/slugify.js",
+		"ui/input/input.js",
 
-		"nipple/input.js",
-		"nipple/tools.js",
-		"nipple/nipple.js",
+		"ui/nipple/input.js",
+		"ui/nipple/tools.js",
+		"ui/nipple/nipple.js",
 
-		"cover/cover.js",
+		"ui/cover/cover.js",
 
-		"selectah/selectah.js",
+		"ui/selectah/selectah.js",
 
-		"gregory/gregory.js",
-		"gregory/dateinput.js",
+		"ui/gregory/gregory.js",
+		"ui/gregory/dateinput.js",
 
-		"gutenberg/gutenberg.js",
+		"ui/gutenberg/gutenberg.js",
 
-		"common/js/index.js"
+		"demo/js/index.js"
 	]
 };
 
@@ -47,15 +47,14 @@ module.exports = {
 
 	"belt:js": {
 		options: {
-			dst: "js",
+			dst: "demo/js",
 		},
 		tools: ["concat", "common-js", "uglify"]
 	},
 
 	"belt:css": {
 		options: {
-			src: "common/less",
-			dst: "css",
+			dst: "demo/css",
 		},
 
 		tools: ["less"]

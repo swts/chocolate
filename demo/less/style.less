@@ -1,35 +1,11 @@
-@import "normalize.less";
-@import "triangle.less";
-@import "mixings.less";
-@import "icons.less";
-
-@import "ui.less";
-@import "../../buttons/buttons.less";
-@import "../../input/input.less";
-@import "../../nipple/nipple.less";
-@import "../../cover/cover.less";
-@import "../../selectah/selectah.less";
-@import "../../gregory/gregory.less";
-@import "../../gutenberg/gutenberg.less";
+@import "demo/less/normalize.less";
+@import "ui/common/less/mixings.less";
 
 .font('Museo Sans', '../font/museosans100');
 .font('Museo Sans', '../font/museosans700', bold);
+@museo: "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-.swts-error-keyframes() {
-  0% {.translate(-20px, 0)}
-  20% {.translate(16px, 0)}
-  40% {.translate(-12px, 0)}
-  60% {.translate(8px, 0)}
-  80% {.translate(-4px, 0)}
-  100% {.translate(0px, 0)}
-}
-
-@-webkit-keyframes errror {.swts-error-keyframes();}
-@keyframes error {.swts-error-keyframes();}
-
-.swts-error {
-	.animation(errror 0.4s @swts-common-transition-style);
-}
+@import "ui/ui.less";
 
 .container {
 	width: 80%;

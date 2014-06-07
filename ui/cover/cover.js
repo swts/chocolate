@@ -6,7 +6,6 @@
 var $ = require('$'),
 	$w = $(window),
     swts = require("swts"),
-
     Nipple = require('ui/nipple'),
 	Input = require('ui/input');
 
@@ -19,7 +18,7 @@ var loginTepmlate = '<div class="swts-cover-login">'+
 var Cover = function(selector) {
 	var self = this;
 
-	self.$parent = $(selector);
+	self.$parent = $(selector || "body");
 	self.isLoginVisible = false;
 
 	self.editing = false;
