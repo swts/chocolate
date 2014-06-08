@@ -14,7 +14,34 @@ var $ = require('$'),
 
 $(document).ready(function() {
 
-//inputs
+
+	Nipple.defaults({
+	    items: {
+	        "tools": {
+	            item: "tools",
+
+	            options: {
+	            	title: "Options",
+	            	icon: "swts-icon-dots"
+	            },
+
+	            remove: {
+	                confirm: true,
+	                title: "Удалить",
+	                icon: "swts-icon-trash"
+	            }
+	        },
+
+	        "status/draft": {
+	            title: "Draft"
+	        },
+
+	        "status/published": {
+	            title: "Published"
+	        }
+	    }
+	});
+
 	//simple input
 	var input = new Input({title: "Title"}, function(val) {
 		console.log("Input", val);

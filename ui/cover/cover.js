@@ -6,7 +6,6 @@
 var $ = require('$'),
 	$w = $(window),
     swts = require("swts"),
-
     Nipple = require('ui/nipple'),
 	Input = require('ui/input');
 
@@ -149,10 +148,8 @@ Cover.prototype = {
 		}
 
 		var self = this;
-		console.log(user);
-
 		self.ui.user = new Nipple({
-				direction: self.popup,
+				popup: self.popup,
 				size: "medium",
 				menu: true,
 				autoHide: true,
@@ -174,18 +171,18 @@ Cover.prototype = {
 
 	edit: function() {
 		var self = this,
-			userCp = self.ui.user;
+			cp = self.ui.user;
 
-		if (userCp) {
+		if (self.choco) {
 			if (self.editing) {
 				self.editing = false;
 				self.choco.remove();
-				userCp.removeClass("swts-editing");
-				userCp.items.edit.find('a').text("Edit");
+				cp.removeClass("swts-editing")
+					.items.edit.$b.text("Edit");
 			} else {
 				self.choco.create();
-				userCp.addClass("swts-editing");
-				userCp.items.edit.find('a').text("Stop editing");
+				cp.addClass("swts-editing")
+					.items.edit.$b.text("Stop editing");
 				self.editing = true;
 			}
 		} else {

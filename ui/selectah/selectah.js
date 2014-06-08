@@ -35,7 +35,7 @@ var Selectah = function(items, opts, cb) {
     self.items = items;
     self.order = [];
 
-    self.build(opts.class);
+    self.build();
 };
 
 Selectah.prototype = {
@@ -73,9 +73,9 @@ Selectah.prototype = {
 		return b;
 	},
 
-	build: function(addClass) {
+	build: function() {
 		var self = this,
-			block = '<ul class="selectah'+ (addClass ? ' '+addClass : '') +'">';
+			block = '<ul class="selectah">';
 
 		block += self.buildItems(self.items);
 		block += "</ul>";

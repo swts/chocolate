@@ -659,11 +659,13 @@ var $ = require('$');
 
 var NippleTools = function(a, opts, cb) {
 	var self = this,
+		toolsNum = 0,
 		b = '';
 
 	for(var t in opts) {
 		if(t !== "item") {
 			var tool = opts[t];
+			toolsNum++;
 			b += '<a href="#/'+ (tool.confirm ? "confirm/": "") + t +'" class="'+ tool.icon +'" '+ (tool.title ? 'title="'+ tool.title +'"' : "") +'></a>';
 		}
 	}
@@ -684,6 +686,7 @@ var NippleTools = function(a, opts, cb) {
 
 	setTimeout(function () {
 		self.$parent = self.$b.first().parent()
+			.addClass("nipple-i-tools-"+toolsNum)
 			.on("mouseout.nipple-confirm", function() {
 				self.hideConfirm();
 			})
@@ -698,7 +701,7 @@ var NippleTools = function(a, opts, cb) {
 					self.showConfirm(this);
 				}
 			});
-	}, 16);
+	}, 0);
 };
 
 NippleTools.prototype = {
@@ -747,39 +750,13 @@ exports("ui/nipple/tools", function(opts, cb) {
 
 */
 
-var defaults = {
-		items: {
-			"tools": {
-				item: "tools",
-				options: {
-					title: "Options",
-					icon: "swts-icon-dots",
-				},
-
-				remove: {
-					confirm: true,
-					title: "Remove",
-					icon: "swts-icon-trash"
-				},
-			},
-
-			"status/draft": {
-				title: "Draft"
-			},
-
-			"status/published": {
-				title: "Published"
-			}
-		},
-		popup: "s",
-		menu: false,
-		autoHide: false,
-		size: "small"
-	};
-
 var $ = require('$'),
-	$d = $(document),
-	openedNipple;
+	openedNipple,
+	defaults;
+
+$(document).on("click.nipple", function() {
+	openedNipple && openedNipple.hide();
+});
 
 var nippleItems = {
 	input: require('ui/nipple/input'),
@@ -799,7 +776,7 @@ var Nipple = function(opts, cbs) {
 		opts = {};
 	}
 
-	self._popup = opts.popup || defaults.popup;
+	self._popup = opts.popup || defaults.popup || "s";
 	self.autoHide = opts.autoHide || defaults.autoHide;
 	self.menu = opts.menu || defaults.menu;
 	self.cbs = cbs;
@@ -815,7 +792,7 @@ Nipple.prototype = {
 			cbs = self.cbs,
 
 			$ul = $('<ul class="nipple-items"></ul>')
-				.on("click", "a", function(e) {
+				.on("click.nipple", "a", function(e) {
 					e.preventDefault();
 					e.stopPropagation();
 					var args = this.hash.split("/");
@@ -845,17 +822,13 @@ Nipple.prototype = {
 		self.$b = $('<div class="nipple nipple-'+ size +' nipple-'+ self._popup +'"><a href="#nipple-open"></a></div>')
 			.append($ul);
 
-		self.$a = self.$b.children("a").on("click", function(e) {
+		self.$a = self.$b.children("a").on("click.nipple", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
 			self.toggle();
 		});
 
 		self.$items = self.$b.find(".nipple-i-item");
-
-		$d.on("click", function() {
-			self.active && self.hide();
-		});
 	},
 
 	val: function(val) {
@@ -957,7 +930,7 @@ Nipple.prototype = {
 	},
 
 	remove: function() {
-		console.log("nipple remove");
+		this.$b.remove();
 	}
 };
 
@@ -985,13 +958,18 @@ var loginTepmlate = '<div class="swts-cover-login">'+
         '<a href="#/login" class="swts-button">Go</a>'+
     '</div>';
 
-var Cover = function(selector) {
+var Cover = function(opts) {
 	var self = this;
 
-	self.$parent = $(selector || "body");
+	if(!opts) {
+		opts = {};
+	}
+
+	self.$parent = $(opts.parent || "body");
 	self.isLoginVisible = false;
 
 	self.editing = false;
+	self.popup = opts.popup || "n";
 	self.ui = {};
 
 	if(swts.u) {
@@ -1113,15 +1091,14 @@ Cover.prototype = {
 		}
 
 		var self = this;
-
 		self.ui.user = new Nipple({
-				direction: "up",
+				popup: self.popup,
 				size: "medium",
 				menu: true,
 				autoHide: true,
 				items: {
 					"edit": {title: "Edit"},
-					"profile": user.displayName ? user.displayName : user.id,
+					"profile": {title: user.name || user.id},
 					"logout": {title: "Logout"}
 				}
 			},{
@@ -1137,18 +1114,18 @@ Cover.prototype = {
 
 	edit: function() {
 		var self = this,
-			userCp = self.ui.user;
+			cp = self.ui.user;
 
-		if (userCp) {
+		if (self.choco) {
 			if (self.editing) {
 				self.editing = false;
 				self.choco.remove();
-				userCp.removeClass("swts-editing");
-				userCp.items.edit.find('a').text("Edit");
+				cp.removeClass("swts-editing")
+					.items.edit.$b.text("Edit");
 			} else {
 				self.choco.create();
-				userCp.addClass("swts-editing");
-				userCp.items.edit.find('a').text("Stop editing");
+				cp.addClass("swts-editing")
+					.items.edit.$b.text("Stop editing");
 				self.editing = true;
 			}
 		} else {
@@ -1204,7 +1181,7 @@ var Selectah = function(items, opts, cb) {
     self.items = items;
     self.order = [];
 
-    self.build(opts.class);
+    self.build();
 };
 
 Selectah.prototype = {
@@ -1242,9 +1219,9 @@ Selectah.prototype = {
 		return b;
 	},
 
-	build: function(addClass) {
+	build: function() {
 		var self = this,
-			block = '<ul class="selectah'+ (addClass ? ' '+addClass : '') +'">';
+			block = '<ul class="selectah">';
 
 		block += self.buildItems(self.items);
 		block += "</ul>";
@@ -2452,7 +2429,34 @@ var $ = require('$'),
 
 $(document).ready(function() {
 
-//inputs
+
+	Nipple.defaults({
+	    items: {
+	        "tools": {
+	            item: "tools",
+
+	            options: {
+	            	title: "Options",
+	            	icon: "swts-icon-dots"
+	            },
+
+	            remove: {
+	                confirm: true,
+	                title: "Удалить",
+	                icon: "swts-icon-trash"
+	            }
+	        },
+
+	        "status/draft": {
+	            title: "Draft"
+	        },
+
+	        "status/published": {
+	            title: "Published"
+	        }
+	    }
+	});
+
 	//simple input
 	var input = new Input({title: "Title"}, function(val) {
 		console.log("Input", val);

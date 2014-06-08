@@ -7,11 +7,13 @@ var $ = require('$');
 
 var NippleTools = function(a, opts, cb) {
 	var self = this,
+		toolsNum = 0,
 		b = '';
 
 	for(var t in opts) {
 		if(t !== "item") {
 			var tool = opts[t];
+			toolsNum++;
 			b += '<a href="#/'+ (tool.confirm ? "confirm/": "") + t +'" class="'+ tool.icon +'" '+ (tool.title ? 'title="'+ tool.title +'"' : "") +'></a>';
 		}
 	}
@@ -32,6 +34,7 @@ var NippleTools = function(a, opts, cb) {
 
 	setTimeout(function () {
 		self.$parent = self.$b.first().parent()
+			.addClass("nipple-i-tools-"+toolsNum)
 			.on("mouseout.nipple-confirm", function() {
 				self.hideConfirm();
 			})
@@ -46,7 +49,7 @@ var NippleTools = function(a, opts, cb) {
 					self.showConfirm(this);
 				}
 			});
-	}, 16);
+	}, 0);
 };
 
 NippleTools.prototype = {

@@ -1204,14 +1204,29 @@ table {
 .nipple-selected a {
   color: #ff4546 !important;
 }
-.nipple-i-tools a {
+.nipple-i-tools-1 a {
+  width: 100%;
+}
+.nipple-i-tools-2 a {
   width: 50%;
 }
-.nipple-i-tools a:nth-child(1) {
+.nipple-i-tools-2 a:nth-child(1) {
   left: 0;
 }
-.nipple-i-tools a:nth-child(2) {
+.nipple-i-tools-2 a:nth-child(2) {
   left: 50%;
+}
+.nipple-i-tools-3 a {
+  width: 33.3%;
+}
+.nipple-i-tools-3 a:nth-child(1) {
+  left: 0;
+}
+.nipple-i-tools-3 a:nth-child(2) {
+  left: 33.3%;
+}
+.nipple-i-tools-3 a:nth-child(3) {
+  left: 66.6%;
 }
 .nipple-i-tools,
 .nipple-i-tools a {
@@ -1287,6 +1302,9 @@ table {
 .nipple-i-input .swts-input {
   width: 150px;
 }
+.nipple.draft {
+  outline: none !important;
+}
 .nipple.draft > a {
   background: transparent;
   width: 8px;
@@ -1346,7 +1364,9 @@ table {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: absolute;
-  color: #ffffff;
+}
+.swts-editing > a {
+  color: #ff4546 !important;
 }
 .selectah {
   -webkit-transform: translateZ(0);

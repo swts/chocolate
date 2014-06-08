@@ -18,39 +18,13 @@
 
 */
 
-var defaults = {
-		items: {
-			"tools": {
-				item: "tools",
-				options: {
-					title: "Options",
-					icon: "swts-icon-dots",
-				},
-
-				remove: {
-					confirm: true,
-					title: "Remove",
-					icon: "swts-icon-trash"
-				},
-			},
-
-			"status/draft": {
-				title: "Draft"
-			},
-
-			"status/published": {
-				title: "Published"
-			}
-		},
-		popup: "s",
-		menu: false,
-		autoHide: false,
-		size: "small"
-	};
-
 var $ = require('$'),
-	$d = $(document),
-	openedNipple;
+	openedNipple,
+	defaults;
+
+$(document).on("click.nipple", function() {
+	openedNipple && openedNipple.hide();
+});
 
 var nippleItems = {
 	input: require('ui/nipple/input'),
@@ -70,7 +44,7 @@ var Nipple = function(opts, cbs) {
 		opts = {};
 	}
 
-	self._popup = opts.popup || defaults.popup;
+	self._popup = opts.popup || defaults.popup || "s";
 	self.autoHide = opts.autoHide || defaults.autoHide;
 	self.menu = opts.menu || defaults.menu;
 	self.cbs = cbs;
@@ -86,7 +60,7 @@ Nipple.prototype = {
 			cbs = self.cbs,
 
 			$ul = $('<ul class="nipple-items"></ul>')
-				.on("click", "a", function(e) {
+				.on("click.nipple", "a", function(e) {
 					e.preventDefault();
 					e.stopPropagation();
 					var args = this.hash.split("/");
@@ -116,17 +90,13 @@ Nipple.prototype = {
 		self.$b = $('<div class="nipple nipple-'+ size +' nipple-'+ self._popup +'"><a href="#nipple-open"></a></div>')
 			.append($ul);
 
-		self.$a = self.$b.children("a").on("click", function(e) {
+		self.$a = self.$b.children("a").on("click.nipple", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
 			self.toggle();
 		});
 
 		self.$items = self.$b.find(".nipple-i-item");
-
-		$d.on("click", function() {
-			self.active && self.hide();
-		});
 	},
 
 	val: function(val) {
@@ -228,7 +198,7 @@ Nipple.prototype = {
 	},
 
 	remove: function() {
-		console.log("nipple remove");
+		this.$b.remove();
 	}
 };
 
