@@ -221,9 +221,9 @@
 	display: block;
 
 	.a(@nipple-color, @nipple-active-color);
+	a {display: block;}
 
 	& > a {
-		display: block;
 		background: @nipple-background-color;
 		.transition(all, @nipple-animation-time, linear);
 	}
@@ -301,7 +301,6 @@
 	background: @nipple-items-background-color;
 
 	a {
-		display: block;
 		position: absolute;
 		top: 0;
 		padding-top: @nipple-item-height/6;

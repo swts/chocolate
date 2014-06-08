@@ -1129,8 +1129,10 @@ table {
   color: #ff4546;
   text-decoration: none;
 }
-.nipple > a {
+.nipple a {
   display: block;
+}
+.nipple > a {
   background: #1b2533;
   -webkit-transition: all 200ms linear;
   -moz-transition: all 200ms linear;
@@ -1242,7 +1244,6 @@ table {
   background: #27364a;
 }
 .nipple-i-tools a {
-  display: block;
   position: absolute;
   top: 0;
   padding-top: 5px;
