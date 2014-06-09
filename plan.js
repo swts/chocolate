@@ -33,6 +33,8 @@ var js = {
 
 		"ui/gutenberg/gutenberg.js",
 
+		"ui/upload/upload.js",
+
 		"demo/js/index.js"
 	]
 };

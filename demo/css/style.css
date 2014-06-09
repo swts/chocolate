@@ -589,7 +589,7 @@ table {
 .swts-button,
 .swts-add,
 .swts-remove {
-  color: #ffffff;
+  color: #ffffff !important;
   background: #1b2533;
   display: block;
   z-index: 100;
@@ -605,7 +605,7 @@ table {
 .swts-button:hover,
 .swts-add:hover,
 .swts-remove:hover {
-  color: #ff4546;
+  color: #ff4546 !important;
 }
 .swts-button,
 .swts-add {
@@ -1616,6 +1616,30 @@ table {
 }
 .gutenberg-hidden {
   display: none !important;
+}
+.swts-upload {
+  background: #ff4546;
+}
+.swts-upload-drop {
+  outline: #ff4546 15px solid !important;
+  outline-offset: -7.5px !important;
+}
+.swts-upload-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #ff4546;
+  opacity: 0;
+  z-index: 100;
+  -webkit-transition: all 200ms cubic-bezier(0.66, 0, 0.07, 1);
+  -moz-transition: all 200ms cubic-bezier(0.66, 0, 0.07, 1);
+  -ms-transition: all 200ms cubic-bezier(0.66, 0, 0.07, 1);
+  transition: all 200ms cubic-bezier(0.66, 0, 0.07, 1);
+}
+.swts-upload-progress.uploading {
+  opacity: 1;
 }
 .container {
   width: 80%;

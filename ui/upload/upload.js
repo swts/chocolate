@@ -6,14 +6,15 @@
 /*global escape*/
 
 var $ = require('$'),
-	swts = require('swts');
+	swts = require('swts'),
+	$active;
 
 var Upload = function($b, resource, options) {
 	var self = this;
 
-	self.$b = $b;
-	self.$progress = $('<div class="swts-ui-upload-progress"></div>');
-	self.delay = options.progressDelay || 300;
+	self.$b = $($b);
+	self.$progress = $('<div class="swts-upload-progress"></div>');
+	self.delay = options.progressDelay || 500;
 	self.resource = resource;
 	self.start = options.start;
 	self.done = options.done;
@@ -22,12 +23,14 @@ var Upload = function($b, resource, options) {
 
 	self.$b.on({
 		"dragover.upload": function () {
-			self.$b.addClass("swts-ui-upload-drop");
+			$active && $active.removeClass("swts-upload-drop");
+			$active = self.$b.addClass("swts-upload-drop");
 			return false;
 		},
 		"drop.upload": function (e) {
 			e.preventDefault();
-			self.$b.removeClass("swts-ui-upload-drop");
+			self.$b.removeClass("swts-upload-drop");
+			$active = undefined;
 
 			var files = e.originalEvent.dataTransfer.files;
 
@@ -36,7 +39,8 @@ var Upload = function($b, resource, options) {
 			}
 		},
 		"mouseout.upload": function () {
-			self.$b.removeClass("swts-ui-upload-drop");
+			self.$b.removeClass("swts-upload-drop");
+			$active = undefined;
 		}
 	});
 };

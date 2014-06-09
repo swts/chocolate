@@ -10,10 +10,10 @@ var $ = require('$'),
 	Selectah = require('ui/selectah'),
 	Gregory = require('ui/gregory'),
 	DateInput = require('ui/gregory/dateinput'),
-	Gutenberg = require('ui/gutenberg');
+	Gutenberg = require('ui/gutenberg'),
+	Upload = require('ui/upload');
 
 $(document).ready(function() {
-
 
 	Nipple.defaults({
 	    items: {
@@ -180,6 +180,7 @@ $(document).ready(function() {
 		.val(new Date())
 		.appendTo("#gregory");
 
+	//gregory + date input
 	var dateInput = new DateInput({title: "Publication date"}, function(date) {
 			console.log("Date input", date);
 		})
@@ -188,6 +189,22 @@ $(document).ready(function() {
 	//gutenberg
 	var gutenberg = new Gutenberg("#gutenberg > p", function(text) {
 		console.log("Gutenberg", text);
+	});
+
+	//upload
+	var upload = new Upload("#upload", "sponsor", {
+		maxFiles: 1,
+		start: function() {
+			console.log("Upload start");
+		},
+
+		progress: function(e, pc) {
+			console.log("Upload progress", pc);
+		},
+
+		done: function(err, data, target) {
+			console.log("Upload done", err, data, target);
+		}
 	});
 
 });

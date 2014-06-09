@@ -2418,6 +2418,94 @@ exports('ui/gutenberg', Gutenberg);
     strict: false
 */
 
+/*global escape*/
+
+var $ = require('$'),
+	swts = require('swts'),
+	$active;
+
+var Upload = function($b, resource, options) {
+	var self = this;
+
+	self.$b = $($b);
+	self.$progress = $('<div class="swts-upload-progress"></div>');
+	self.delay = options.progressDelay || 500;
+	self.resource = resource;
+	self.start = options.start;
+	self.done = options.done;
+	self.progress = options.progress;
+	self.maxFiles = options.maxFiles || 1;
+
+	self.$b.on({
+		"dragover.upload": function () {
+			$active && $active.removeClass("swts-upload-drop");
+			$active = self.$b.addClass("swts-upload-drop");
+			return false;
+		},
+		"drop.upload": function (e) {
+			e.preventDefault();
+			self.$b.removeClass("swts-upload-drop");
+			$active = undefined;
+
+			var files = e.originalEvent.dataTransfer.files;
+
+			if(files.length && files.length <= self.maxFiles) {
+				self.upload(files, e.target);
+			}
+		},
+		"mouseout.upload": function () {
+			self.$b.removeClass("swts-upload-drop");
+			$active = undefined;
+		}
+	});
+};
+
+Upload.prototype.upload = function(files, target) {
+	var self = this,
+		r = {
+			resource: "file",
+			method: "create",
+			body: {resource: self.resource},
+			files: files,
+			onprogress: function(e) {
+				var pc = e.loaded / e.total * 100;
+				self.$progress.css("width", pc+"%");
+				self.progress && self.progress(e, pc);
+			}
+		};
+	self.$b.append(self.$progress);
+	self.startTimeout = setTimeout(function() {
+		self.$progress.addClass('uploading');
+	}, self.delay);
+
+	self.start && self.start();
+
+	swts.c(r, function(err, result) {
+		clearTimeout(self.startTimeout);
+
+		self.$progress.removeClass('uploading');
+		setTimeout(function() {
+			self.$progress.detach();
+		}, self.delay);
+
+		self.done(err, result, target);
+	});
+};
+
+Upload.prototype.remove = function() {
+	var self = this;
+
+	self.$b.off(".upload");
+};
+
+exports("ui/upload", Upload);
+})(window, document);
+(function(window, document, undefined){
+/*jshint
+    browser:true,
+    strict: false
+*/
+
 var $ = require('$'),
 	Nipple = require('ui/nipple'),
 	Input = require('ui/input'),
@@ -2425,10 +2513,10 @@ var $ = require('$'),
 	Selectah = require('ui/selectah'),
 	Gregory = require('ui/gregory'),
 	DateInput = require('ui/gregory/dateinput'),
-	Gutenberg = require('ui/gutenberg');
+	Gutenberg = require('ui/gutenberg'),
+	Upload = require('ui/upload');
 
 $(document).ready(function() {
-
 
 	Nipple.defaults({
 	    items: {
@@ -2595,6 +2683,7 @@ $(document).ready(function() {
 		.val(new Date())
 		.appendTo("#gregory");
 
+	//gregory + date input
 	var dateInput = new DateInput({title: "Publication date"}, function(date) {
 			console.log("Date input", date);
 		})
@@ -2603,6 +2692,22 @@ $(document).ready(function() {
 	//gutenberg
 	var gutenberg = new Gutenberg("#gutenberg > p", function(text) {
 		console.log("Gutenberg", text);
+	});
+
+	//upload
+	var upload = new Upload("#upload", "sponsor", {
+		maxFiles: 1,
+		start: function() {
+			console.log("Upload start");
+		},
+
+		progress: function(e, pc) {
+			console.log("Upload progress", pc);
+		},
+
+		done: function(err, data, target) {
+			console.log("Upload done", err, data, target);
+		}
 	});
 
 });
