@@ -316,9 +316,7 @@ Gutenberg.prototype.onTextSelect = function(e) {
 };
 
 Gutenberg.prototype.onToolClick = function(tool) {
-	var self = this;
-
-	availableCommands[tool].command(self);
+	availableCommands[tool].command(this);
 };
 
 Gutenberg.prototype.onTextEdit = function(val) {
@@ -331,11 +329,9 @@ Gutenberg.prototype.onTextEdit = function(val) {
 };
 
 Gutenberg.prototype.updateContent = function(html) {
-	var self = this;
-
-	if (self.tempVal !== html) {
-		self.onChange(html);
-		self.tempVal = html;
+	if (this.tempVal !== html) {
+		this.onChange(html);
+		this.tempVal = html;
 	}
 };
 
@@ -344,6 +340,10 @@ Gutenberg.prototype.restoreText = function() {
 
 	self.$b.html(self.initialVal);
 	self.onTextEdit(self.initialVal);
+};
+
+Gutenberg.prototype.val = function(val) {
+	this.$b.html(val);
 };
 
 Gutenberg.prototype.getRange = function() {

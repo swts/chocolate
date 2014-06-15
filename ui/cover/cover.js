@@ -45,7 +45,7 @@ Cover.prototype = {
 		script.onload = function() {
 			if(window.Chocolate) {
 				self.choco = new window.Chocolate(swts);
-				self.choco.create();
+				self.choco.on();
 				self.edit();
 			}
 		};
@@ -176,11 +176,11 @@ Cover.prototype = {
 		if (self.choco) {
 			if (self.editing) {
 				self.editing = false;
-				self.choco.remove();
+				self.choco.off();
 				cp.removeClass("swts-editing")
 					.items.edit.$b.text("Edit");
 			} else {
-				self.choco.create();
+				self.choco.on();
 				cp.addClass("swts-editing")
 					.items.edit.$b.text("Stop editing");
 				self.editing = true;

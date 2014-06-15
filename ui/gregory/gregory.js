@@ -113,7 +113,7 @@ Gregory.prototype = {
 		b += '</div>';
 
 		self.$b = $(b)
-			.on("mousedown.gregory", function(e) {
+			.on("click.gregory", function(e) {
 				e.stopPropagation();
 			})
 			.on("click.gregory", "a.gregory-change", function(e) {
@@ -467,6 +467,11 @@ Gregory.prototype = {
 
 	removeClass: function(className) {
 		this.$b.removeClass(className);
+		return this;
+	},
+
+	toggleClass: function(className) {
+		this.$b.toggleClass(className);
 		return this;
 	},
 

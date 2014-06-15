@@ -59,3 +59,14 @@
 .gutenberg-hidden {
   display: none !important;
 }
+
+[contenteditable=true] {
+	min-width: 1em;
+	min-height: 1em;
+
+    &:focus, &:hover {
+        outline: 1px @gutenberg-active-color solid;
+        outline-offset: 5px;
+    }
+}
+
