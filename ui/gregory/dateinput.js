@@ -41,7 +41,7 @@ var DateInput = function($b, opts, cb) {
 
 	this.active = false;
 
-	self.gregory = new Gregory({ flip: self.flip }, function(date, dateSelected) {
+	self.gregory = new Gregory({ flip: self.flip, popup: true }, function(date, dateSelected) {
 			dateSelected && self.update(date);
 		})
 		.appendTo(self.$b);
@@ -84,14 +84,14 @@ DateInput.prototype.val2date = function(val) {
 
 DateInput.prototype.show = function() {
 	openedCalendar && openedCalendar.hide();
-	openedCalendar = this.gregory.addClass("gregory-hot");
+	openedCalendar = this.gregory.show();
 	this.active = true;
 	return this;
 };
 
 DateInput.prototype.hide = function() {
 	openedCalendar = undefined;
-	this.gregory.removeClass("gregory-hot");
+	this.gregory.hide();
 	this.active = false;
 	return this;
 };

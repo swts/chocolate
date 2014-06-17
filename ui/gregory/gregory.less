@@ -41,14 +41,14 @@
 	line-height: @gregory-cell-size;
 }
 
-.swts-input > .gregory, .swts-calendar > .gregory {
+.gregory-popup {
 	position: absolute;
 	left: 50%;
 	margin-left: -@gregory-width/2;
 	.swts-showup-out(@gregory-animation-time, @gregory-animation-style);
 
 	&.gregory-hot {
-		.swts-showup-in();
+		.swts-showup-in;
 	}
 
 	&.gregory-up {

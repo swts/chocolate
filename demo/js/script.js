@@ -988,7 +988,7 @@ Cover.prototype = {
 		script.onload = function() {
 			if(window.Chocolate) {
 				self.choco = new window.Chocolate(swts);
-				self.choco.create();
+				self.choco.on();
 				self.edit();
 			}
 		};
@@ -1119,11 +1119,11 @@ Cover.prototype = {
 		if (self.choco) {
 			if (self.editing) {
 				self.editing = false;
-				self.choco.remove();
+				self.choco.off();
 				cp.removeClass("swts-editing")
 					.items.edit.$b.text("Edit");
 			} else {
-				self.choco.create();
+				self.choco.on();
 				cp.addClass("swts-editing")
 					.items.edit.$b.text("Stop editing");
 				self.editing = true;
@@ -1456,17 +1456,17 @@ var Gregory = function (opts, cb) {
 	self.flip = opts.flip;
 	self.cb = cb;
 
-	self.build();
+	self.build(opts.popup);
 
 	self.prevFullState.mode = self.modes.day;
 };
 
 Gregory.prototype = {
-	build: function() {
+	build: function(popup) {
 		var self = this,
 			flip = self.flip,
 			header = '<div class="gregory-header"><a class="gregory-change gregory-back" href="#"></a><a class="gregory-info" href="#/"></a><a class="gregory-change gregory-forward" href="#"></a></div>',
-			b = '<div class="gregory '+ (flip ? "gregory-up" : "gregory-down") +'">';
+			b = '<div class="gregory'+ (popup ? " gregory-popup" : "") + (flip ? " gregory-up" : " gregory-down") +'">';
 
 		if(!flip) {
 			b += header;
@@ -1481,7 +1481,7 @@ Gregory.prototype = {
 		b += '</div>';
 
 		self.$b = $(b)
-			.on("mousedown.gregory", function(e) {
+			.on("click.gregory", function(e) {
 				e.stopPropagation();
 			})
 			.on("click.gregory", "a.gregory-change", function(e) {
@@ -1797,35 +1797,45 @@ Gregory.prototype = {
 		}
 	},
 	setSelectedState: function(selectedState) {
-		var self = this;
+		var ss = this.selectedState;
 
-		self.selectedState.year = selectedState.year;
-		self.selectedState.month = selectedState.month;
-		self.selectedState.day = selectedState.day ? selectedState.day : null;
+		ss.year = selectedState.year;
+		ss.month = selectedState.month;
+		ss.day = selectedState.day ? selectedState.day : null;
 	},
 	updatePrevFullState: function() {
-		var self = this;
+		var ss = this.selectedState,
+			pfs = this.prevFullState;
 
-		if (self.selectedState.day && (self.selectedState.month || self.selectedState.month === 0) && self.selectedState.year) {
-			self.prevFullState.day = self.selectedState.day;
-			self.prevFullState.month = self.selectedState.month;
-			self.prevFullState.year = self.selectedState.year;
+		if (ss.day && (ss.month || ss.month === 0) && ss.year) {
+			pfs.day = ss.day;
+			pfs.month = ss.month;
+			pfs.year = ss.year;
 		}
 	},
 	isDayActive: function(day) {
-		var self = this;
-
-		return day === self.selectedState.day && self.displayState.month === self.selectedState.month && self.displayState.year === self.selectedState.year;
+		return day === this.selectedState.day && this.displayState.month === this.selectedState.month && this.displayState.year === this.selectedState.year;
 	},
 	isMonthActive: function(month) {
-		var self = this;
-
-		return month === self.selectedState.month && self.displayState.year === self.selectedState.year;
+		return month === this.selectedState.month && this.displayState.year === this.selectedState.year;
 	},
 	isYearActive: function(year) {
-		var self = this;
+		return year === this.selectedState.year;
+	},
 
-		return year === self.selectedState.year;
+	show: function() {
+		this.$b.addClass("gregory-hot");
+		return this;
+	},
+
+	hide: function() {
+		this.$b.removeClass("gregory-hot");
+		return this;
+	},
+
+	toggle: function() {
+		this.$b.toggleClass("gregory-hot");
+		return this;
 	},
 
 	addClass: function(className) {
@@ -1906,7 +1916,7 @@ var DateInput = function($b, opts, cb) {
 
 	this.active = false;
 
-	self.gregory = new Gregory({ flip: self.flip }, function(date, dateSelected) {
+	self.gregory = new Gregory({ flip: self.flip, popup: true }, function(date, dateSelected) {
 			dateSelected && self.update(date);
 		})
 		.appendTo(self.$b);
@@ -1949,14 +1959,14 @@ DateInput.prototype.val2date = function(val) {
 
 DateInput.prototype.show = function() {
 	openedCalendar && openedCalendar.hide();
-	openedCalendar = this.gregory.addClass("gregory-hot");
+	openedCalendar = this.gregory.show();
 	this.active = true;
 	return this;
 };
 
 DateInput.prototype.hide = function() {
 	openedCalendar = undefined;
-	this.gregory.removeClass("gregory-hot");
+	this.gregory.hide();
 	this.active = false;
 	return this;
 };
@@ -2334,9 +2344,7 @@ Gutenberg.prototype.onTextSelect = function(e) {
 };
 
 Gutenberg.prototype.onToolClick = function(tool) {
-	var self = this;
-
-	availableCommands[tool].command(self);
+	availableCommands[tool].command(this);
 };
 
 Gutenberg.prototype.onTextEdit = function(val) {
@@ -2349,11 +2357,9 @@ Gutenberg.prototype.onTextEdit = function(val) {
 };
 
 Gutenberg.prototype.updateContent = function(html) {
-	var self = this;
-
-	if (self.tempVal !== html) {
-		self.onChange(html);
-		self.tempVal = html;
+	if (this.tempVal !== html) {
+		this.onChange(html);
+		this.tempVal = html;
 	}
 };
 
@@ -2362,6 +2368,10 @@ Gutenberg.prototype.restoreText = function() {
 
 	self.$b.html(self.initialVal);
 	self.onTextEdit(self.initialVal);
+};
+
+Gutenberg.prototype.val = function(val) {
+	this.$b.html(val);
 };
 
 Gutenberg.prototype.getRange = function() {

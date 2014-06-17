@@ -1424,7 +1424,7 @@ table {
   font: normal 1em "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 30px;
 }
-.swts-input > .gregory {
+.gregory-popup {
   position: absolute;
   left: 50%;
   margin-left: -115px;
@@ -1439,7 +1439,7 @@ table {
   -ms-transition: visibility 0s cubic-bezier(0.66, 0, 0.5, 1.5) 200ms, all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
   transition: visibility 0s cubic-bezier(0.66, 0, 0.5, 1.5) 200ms, all 200ms cubic-bezier(0.66, 0, 0.5, 1.5);
 }
-.swts-input > .gregory.gregory-hot {
+.gregory-popup.gregory-hot {
   visibility: visible;
   opacity: 1;
   -webkit-transform: rotateX(0) scale(1);
@@ -1451,7 +1451,7 @@ table {
   -ms-transition-delay: 0;
   transition-delay: 0;
 }
-.swts-input > .gregory.gregory-up {
+.gregory-popup.gregory-up {
   bottom: 53px;
   -webkit-transform-origin: 50% 100%;
   -moz-transform-origin: 50% 100%;
@@ -1459,7 +1459,7 @@ table {
   -ms-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
 }
-.swts-input > .gregory.gregory-up:before {
+.gregory-popup.gregory-up:before {
   position: absolute;
   bottom: -9px;
   left: 105px;
@@ -1471,7 +1471,7 @@ table {
   border-right: 10px solid transparent;
   border-top: 10px solid #27364a;
 }
-.swts-input > .gregory.gregory-down {
+.gregory-popup.gregory-down {
   top: 53px;
   -webkit-transform-origin: 50% -40px;
   -moz-transform-origin: 50% -40px;
@@ -1479,7 +1479,7 @@ table {
   -ms-transform-origin: 50% -40px;
   transform-origin: 50% -40px;
 }
-.swts-input > .gregory.gregory-down:before {
+.gregory-popup.gregory-down:before {
   position: absolute;
   top: -9px;
   left: 105px;
@@ -1616,6 +1616,15 @@ table {
 }
 .gutenberg-hidden {
   display: none !important;
+}
+[contenteditable=true] {
+  min-width: 1em;
+  min-height: 1em;
+}
+[contenteditable=true]:focus,
+[contenteditable=true]:hover {
+  outline: 1px #ff4546 solid;
+  outline-offset: 5px;
 }
 .swts-upload {
   background: #ff4546;
