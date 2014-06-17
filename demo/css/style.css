@@ -1559,19 +1559,6 @@ table {
   height: 40px;
   line-height: 40px;
 }
-/*	&.gregory-reverse {
-		.gregory-wrapper {
-			padding-top: 7px;
-		}
-
-		.gregory-header {
-			height: @gregory-header-height;
-		}
-
-		.gregory-change {
-			bottom: 5px;
-		}
-	}*/
 .gutenberg-ctrl {
   background-color: #1b2533;
   position: absolute;
