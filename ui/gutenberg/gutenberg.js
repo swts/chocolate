@@ -176,6 +176,7 @@ var Gutenberg = function(selector, opts, cb) {
 	self.commands = opts.commands;
 	self.onChange = cb;
 	self.onChangeDelay = opts.onChangeDelay || 1000;
+	self.stopLinks = opts.stopLinks;
 	self.typingTimer;
 
 	self.init();
@@ -221,37 +222,44 @@ Gutenberg.prototype.initListeners = function() {
 	var self = this;
 
 	self.$b
-	.on("paste.gutenberg", function(e) {
-		self.onPaste(this, e);
-	})
-	.on("keydown.gutenberg", function(e) {
-		if (e.which === 27) {
-			self.restoreText();
-		} else if (e.which === 8) {
-			setTimeout(function() {
-				self.sanitizeBackspace();
-			}, 2);
-		}
-	})
-	.on("keyup.gutenberg", function(e) {
-		self.onTextEdit(self.$b.html());
-	})
-	.on("mousedown.gutenberg", function(e) {
-		self.clicked = true;
+		.on("paste.gutenberg", function(e) {
+			self.onPaste(this, e);
+		})
+		.on("keydown.gutenberg", function(e) {
+			if (e.which === 27) {
+				self.restoreText();
+			} else if (e.which === 8) {
+				setTimeout(function() {
+					self.sanitizeBackspace();
+				}, 2);
+			}
+		})
+		.on("keyup.gutenberg", function(e) {
+			self.onTextEdit(self.$b.html());
+		})
+		.on("mousedown.gutenberg", function(e) {
+			self.clicked = true;
 
-		e.stopPropagation();
+			e.stopPropagation();
 
-		hideInstances();
-
-		$(document).one("mousedown.gutenberg", function(e) {
 			hideInstances();
-		}).one("mouseup.gutenberg", function(e) {
-			self.onTextSelect(e);
+
+			$(document).one("mousedown.gutenberg", function(e) {
+				hideInstances();
+			}).one("mouseup.gutenberg", function(e) {
+				self.onTextSelect(e);
+			});
+		})
+		.on("focus.gutenberg", function(e) {
+			self.tempVal = self.$b.html();
 		});
-	})
-	.on("focus.gutenberg", function(e) {
-		self.tempVal = self.$b.html();
-	});
+
+	if(self.stopLinks) {
+		self.$b.on("click", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
+	}
 
 	if (self.$controlsWrapper) {
 		self.$controlsWrapper

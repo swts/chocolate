@@ -47,7 +47,7 @@
 
 // Transitions
 
-.transition (@property, @duration, @style: @base-transition-style ) {
+.transition (@property, @duration, @style: @swts-common-transition-style ) {
   -webkit-transition: @property @duration @style;
   -moz-transition: @property @duration @style;
   -ms-transition: @property @duration @style;
@@ -61,7 +61,7 @@
   transition-delay:@delay;
 }
 
-.transition-transform (@duration, @style: @baseTransitionStyle) {
+.transition-transform (@duration, @style: @swts-common-transition-style) {
   -webkit-transition: -webkit-transform @duration @style;
   -moz-transition: -moz-transform @duration @style;
   -ms-transition: -ms-transform @duration @style;

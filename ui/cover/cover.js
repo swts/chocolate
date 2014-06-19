@@ -65,7 +65,8 @@ Cover.prototype = {
 					self.login();
 				}
 			})
-			.find(".swts-button").on("click.swts.login", function() {
+			.find(".swts-button").on("click.swts.login", function(e) {
+				e.preventDefault();
 				self.login();
 			})
 			.end();
