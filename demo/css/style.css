@@ -593,14 +593,14 @@ table {
   background: #1b2533;
   display: block;
   z-index: 100;
-  text-align: center;
+  text-align: center !important;
   outline: none;
   text-decoration: none !important;
   font-family: "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  -webkit-transition: color 150ms cubic-bezier(0.66, 0, 0.07, 1);
-  -moz-transition: color 150ms cubic-bezier(0.66, 0, 0.07, 1);
-  -ms-transition: color 150ms cubic-bezier(0.66, 0, 0.07, 1);
-  transition: color 150ms cubic-bezier(0.66, 0, 0.07, 1);
+  -webkit-transition: all 75ms cubic-bezier(0.66, 0, 0.5, 1.5);
+  -moz-transition: all 75ms cubic-bezier(0.66, 0, 0.5, 1.5);
+  -ms-transition: all 75ms cubic-bezier(0.66, 0, 0.5, 1.5);
+  transition: all 75ms cubic-bezier(0.66, 0, 0.5, 1.5);
 }
 .swts-button:hover,
 .swts-add:hover,
@@ -634,6 +634,17 @@ table {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+}
+.swts-button-confirm {
+  font-size: 1em;
+  background: #ff4546;
+  -webkit-transform: scale(2);
+  -moz-transform: scale(2);
+  -ms-transform: scale(2);
+  transform: scale(2);
+}
+.swts-button-confirm:hover {
+  color: #ffffff !important;
 }
 .swts-input {
   position: relative;

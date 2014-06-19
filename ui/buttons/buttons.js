@@ -1,16 +1,26 @@
 /*jshint browser:true, strict: false*/
 
-var add = function(id) {
-    return '<a href="#/add'+ (id ? "/"+id : "") +'" class="swts-add swts-icon-plus"></a>';
+var $ = require('$'),
+	Confirm = require('ui/buttons/confirm');
+
+var button = function(action, cb) {
+    return $('<a href="#/'+ action +'" class="swts-button"></a>').on("click", function(e) {
+    	e.preventDefault();
+    	e.stopPropagation();
+    	cb(action);
+    });
 },
 
-remove = function(id) {
-    return '<a href="#/remove'+ (id ? "/"+id : "") +'" class="swts-remove swts-icon-trash"></a>';
+add = function(id, cb) {
+	return button("add"+ (id ? "/"+id : ""), function(id) {
+		cb(id.split("/")[1]);
+	}).addClass("swts-add swts-icon-plus");
 },
 
-button = function(action) {
-    return '<a href="#/'+ action +'" class="swts-button"></a>';
+remove = function(id, cb) {
+	return new Confirm("remove", id, cb).addClass("swts-remove swts-icon-trash");
 };
+
 
 exports("ui/buttons",  {
 	add: add,

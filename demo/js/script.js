@@ -79,6 +79,94 @@ var inherits = function(ctor, superCtor) {
 exports('util/inherits', inherits);
 })(window, document);
 (function(window, document, undefined){
+/*jshint browser:true, strict: false*/
+
+var $ = require('$');
+
+var Confirm = function(action, id, cb) {
+	var self = this;
+
+	if(cb === undefined) {
+		cb = id;
+		id = undefined;
+	}
+	self.confirm = false;
+
+	self.$b = $('<a href="#/'+ action + (id ? "/"+id : "") +'" class="swts-button"></a>').on("click", function(e) {
+		e.preventDefault();
+    	e.stopPropagation();
+
+		if(!self.confirm) {
+			self.confirm = true;
+			self.$b.addClass("swts-button-confirm");
+		} else {
+			self.$b.removeClass("swts-button-confirm");
+			self.confirm = false;
+			cb(id);
+		}
+	});
+};
+
+Confirm.prototype = {
+	addClass: function(className) {
+		this.$b.addClass(className);
+		return this;
+	},
+
+	removeClass: function(className) {
+		this.$b.removeClass(className);
+		return this;
+	},
+
+	appendTo: function($container) {
+		this.$b.appendTo($container);
+		return this;
+	},
+
+	prependTo: function($container) {
+		this.$b.prependTo($container);
+		return this;
+	},
+
+	remove: function() {
+		this.$b.remove();
+	}
+};
+
+exports("ui/buttons/confirm", Confirm);
+})(window, document);
+(function(window, document, undefined){
+/*jshint browser:true, strict: false*/
+
+var $ = require('$'),
+	Confirm = require('ui/buttons/confirm');
+
+var button = function(action, cb) {
+    return $('<a href="#/'+ action +'" class="swts-button"></a>').on("click", function(e) {
+    	e.preventDefault();
+    	e.stopPropagation();
+    	cb(action);
+    });
+},
+
+add = function(id, cb) {
+	return button("add"+ (id ? "/"+id : ""), function(id) {
+		cb(id.split("/")[1]);
+	}).addClass("swts-add swts-icon-plus");
+},
+
+remove = function(id, cb) {
+	return new Confirm("remove", id, cb).addClass("swts-remove swts-icon-trash");
+};
+
+
+exports("ui/buttons",  {
+	add: add,
+    remove: remove,
+	button: button
+});
+})(window, document);
+(function(window, document, undefined){
 /*jshint
 	browser:true,
 	strict: false
@@ -2526,6 +2614,7 @@ exports("ui/upload", Upload);
 */
 
 var $ = require('$'),
+	buttons = require('ui/buttons'),
 	Nipple = require('ui/nipple'),
 	Input = require('ui/input'),
 	Cover = require('ui/cover'),
@@ -2563,6 +2652,15 @@ $(document).ready(function() {
 	        }
 	    }
 	});
+
+	//buttons
+	var addButton = buttons.add("id", function(id) {
+		console.log("add button", id);
+	}).appendTo("#simple-buttons");
+
+	var removeButton = buttons.remove("id", function(id) {
+		console.log("remove button", id);
+	}).appendTo("#simple-buttons");
 
 	//simple input
 	var input = new Input({title: "Title"}, function(val) {

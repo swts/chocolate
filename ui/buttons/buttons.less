@@ -5,11 +5,11 @@
     background: @swts-bg-color;
     display: block;
     z-index: 100;
-    text-align: center;
+    text-align: center !important;
     outline: none;
     text-decoration: none !important;
     font-family: @swts-font-family;
-    .transition(color, @swts-common-time);
+    .transition(all, 75ms, @swts-showup-transition-style);
     &:hover {color: @swts-accent-color !important;}
 }
 
@@ -29,4 +29,11 @@
     font-size: @swts-grid;
     line-height: @swts-grid;
     .circle(@swts-grid/2);
+}
+
+.swts-button-confirm {
+    font-size: 1em;
+    background: @swts-warning-color;
+    &:hover {color: @swts-color !important;}
+    .scale(2.0);
 }

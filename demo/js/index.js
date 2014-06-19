@@ -4,6 +4,7 @@
 */
 
 var $ = require('$'),
+	buttons = require('ui/buttons'),
 	Nipple = require('ui/nipple'),
 	Input = require('ui/input'),
 	Cover = require('ui/cover'),
@@ -41,6 +42,15 @@ $(document).ready(function() {
 	        }
 	    }
 	});
+
+	//buttons
+	var addButton = buttons.add("id", function(id) {
+		console.log("add button", id);
+	}).appendTo("#simple-buttons");
+
+	var removeButton = buttons.remove("id", function(id) {
+		console.log("remove button", id);
+	}).appendTo("#simple-buttons");
 
 	//simple input
 	var input = new Input({title: "Title"}, function(val) {

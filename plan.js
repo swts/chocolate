@@ -17,6 +17,9 @@ var js = {
 		"ui/util/extend.js",
 		"ui/util/inherits.js",
 
+		"ui/buttons/confirm.js",
+		"ui/buttons/buttons.js",
+
 		"ui/input/slugify.js",
 		"ui/input/input.js",
 
