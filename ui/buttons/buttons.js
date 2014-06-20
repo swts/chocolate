@@ -12,18 +12,32 @@ var button = function(action, cb) {
 },
 
 add = function(id, cb) {
+	if(typeof id === "function") {
+		cb = id;
+		id = undefined;
+	}
+
 	return button("add"+ (id ? "/"+id : ""), function(id) {
-		cb(id.split("/")[1]);
+		cb(id ? id.split("/")[1] : id);
 	}).addClass("swts-add swts-icon-plus");
 },
 
 remove = function(id, cb) {
+	if(typeof id === "function") {
+		cb = id;
+		id = undefined;
+	}
 	return new Confirm("remove", id, cb).addClass("swts-remove swts-icon-trash");
-};
+},
 
+removeTemplate = function(id) {
+	return '<a href="#/remove'+ (id ? "/"+id : "") +'" class="swts-button swts-remove swts-icon-trash"></a>';
+};
 
 exports("ui/buttons",  {
 	add: add,
     remove: remove,
-	button: button
+	button: button,
+
+	removeTemplate: removeTemplate
 });

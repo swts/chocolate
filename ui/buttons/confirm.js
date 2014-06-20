@@ -16,6 +16,10 @@ var Confirm = function(action, id, cb) {
     	e.stopPropagation();
 
 		if(!self.confirm) {
+			self.$b.one("mouseout", function(e) {
+				self.$b.removeClass("swts-button-confirm");
+				self.confirm = false;
+			});
 			self.confirm = true;
 			self.$b.addClass("swts-button-confirm");
 		} else {

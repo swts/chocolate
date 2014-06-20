@@ -1,0 +1,37 @@
+.nipple.nipple-dots, .nipple.nipple-plus {
+    &.nipple-small > a:before {
+        width: 2*@nipple-radius-small;
+        height: 2*@nipple-radius-small;
+        line-height: 2*@nipple-radius-small;
+        font-size: 1.85*@nipple-radius-small;
+    }
+
+    &.nipple-medium > a:before {
+        width: 2*@nipple-radius-medium;
+        height: 2*@nipple-radius-medium;
+        line-height: 2*@nipple-radius-medium;
+        font-size: 1.85*@nipple-radius-medium;
+    }
+
+    &.nipple-large > a:before {
+        width: 2*@nipple-radius-large;
+        height: 2*@nipple-radius-large;
+        line-height: 2*@nipple-radius-large;
+        font-size: 1.85*@nipple-radius-large;
+    }
+
+    & > a:before {
+        left: 0;
+    	position: absolute;
+        font: normal normal @swts-grid @swts-icon-family;
+        speak: none;
+        display: inline-block;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: absolute;
+        color: @swts-color;
+    }
+}
+
+.nipple.nipple-dots > a:before {content: "\e004";}
+.nipple.nipple-plus > a:before {content: "+";}
