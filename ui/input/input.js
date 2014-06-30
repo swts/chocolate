@@ -60,13 +60,13 @@ var Input = function($b, opts, cb) {
 };
 
 Input.prototype = {
-	val: function(val) {
+	val: function(val, silent) {
 		if(val === undefined) {
 			return this.$i.val();
 		}
 
 		this.$i.val(val).trigger("blur");
-		this.throttledUpdate(val);
+		this.throttledUpdate(val, silent);
 		return this;
 	},
 
@@ -74,7 +74,7 @@ Input.prototype = {
 		this.$i.focus();
 	},
 
-	throttledUpdate: function(val) {
+	throttledUpdate: function(val, silent) {
 		var self = this;
 
 		clearTimeout(self.typingTimer);
@@ -82,24 +82,24 @@ Input.prototype = {
 			if(val !== self.value) {
 				if(self.rx) {
 					if(self.rx.test(val)) {
-						self.update(val);
+						self.update(val, silent);
 					} else {
 						self.$b.addClass(self.err);
 					}
 				} else {
-					self.update(val);
+					self.update(val, silent);
 				}
 			}
 		}, 300);
 	},
 
-	update: function(val) {
+	update: function(val, silent) {
 		var self = this;
 
 		self.$b.removeClass(self.err);
 		self.value = val;
 
-		self.cb && self.cb(val);
+		!silent && self.cb && self.cb(val);
 	},
 
 	addClass: function(className) {

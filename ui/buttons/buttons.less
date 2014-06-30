@@ -1,3 +1,8 @@
+@button-normal-size:        2*@swts-grid;
+@button-normal-font-size:   @swts-grid;
+@button-small-size:         @swts-grid;
+@button-small-font-size:    @swts-grid;
+
 .swts-button,
 .swts-add,
 .swts-remove {
@@ -14,25 +19,25 @@
 }
 
 .swts-button, .swts-add {
-    line-height: @swts-grid*2;
-    .circle(@swts-grid);
+    line-height: @button-normal-size;
+    .circle(@button-normal-size/2);
 }
 
-.swts-button { font-size: 1em; }
-.swts-add { font-size: 1.35*@swts-grid; }
+.swts-button { font-size: @button-normal-font-size; }
+.swts-add { font-size: 1.35*@button-normal-font-size; }
 
 .swts-add, .swts-remove {
     position: absolute;
 }
 
 .swts-remove {
-    font-size: @swts-grid;
-    line-height: @swts-grid;
-    .circle(@swts-grid/2);
+    font-size: @button-small-font-size;
+    line-height: @button-small-size;
+    .circle(@button-small-size/2);
 }
 
 .swts-button-confirm {
-    font-size: 0.9*@swts-grid;
+    font-size: 0.9*@button-small-size;
     background: @swts-warning-color;
     &:hover {color: @swts-color !important;}
     .scale(2.0);

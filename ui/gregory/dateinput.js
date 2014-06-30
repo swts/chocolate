@@ -54,10 +54,11 @@ var DateInput = function($b, opts, cb) {
 		self.active && self.hide();
 	});
 
-	var val = parseInt(self.$i.val(), 10) * 1000;
+	var val = parseInt(self.$i.val(), 10);
+	self.value = undefined;
 
 	if(val === val) { //checking for NaN
-		self.val(val, true);
+		self.update(val, true);
 	} else {
 		self.gregory.val(new Date());
 	}

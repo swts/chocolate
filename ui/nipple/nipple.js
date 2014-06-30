@@ -177,6 +177,11 @@ Nipple.prototype = {
 		return this;
 	},
 
+	css: function() {
+		this.$b.css.apply(this.$b, arguments);
+		return this;
+	},
+
 	addClass: function(className) {
 		this.$b.addClass(className);
 		return this;
