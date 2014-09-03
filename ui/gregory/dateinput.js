@@ -147,6 +147,9 @@ DateInput.prototype.remove = function() {
 	self.gregory.remove();
 	self.$i.off(".input");
 	self.$b.off(".input").remove();
+
+	self.$b = undefined;
+	self.$i = undefined;
 };
 
 exports("ui/gregory/dateinput", DateInput);

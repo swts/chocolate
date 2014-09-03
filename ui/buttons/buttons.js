@@ -30,6 +30,10 @@ remove = function(id, cb) {
 	return new Confirm("remove", id, cb).addClass("swts-remove swts-icon-trash");
 },
 
+addTemplate = function(id) {
+	return '<a href="#/add'+ (id ? "/"+id : "") +'" class="swts-button swts-add swts-icon-plus"></a>';
+},
+
 removeTemplate = function(id) {
 	return '<a href="#/remove'+ (id ? "/"+id : "") +'" class="swts-button swts-remove swts-icon-trash"></a>';
 };
@@ -39,5 +43,8 @@ exports("ui/buttons",  {
     remove: remove,
 	button: button,
 
-	removeTemplate: removeTemplate
+	template: {
+		add: addTemplate,
+		remove: removeTemplate
+	}
 });

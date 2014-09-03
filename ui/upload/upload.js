@@ -78,9 +78,10 @@ Upload.prototype.upload = function(files, target) {
 };
 
 Upload.prototype.remove = function() {
-	var self = this;
-
-	self.$b.off(".upload");
+	this.$b.off(".upload");
+	this.$progress.remove();
+	this.$progress = undefined;
+	this.$b = undefined;
 };
 
 exports("ui/upload", Upload);

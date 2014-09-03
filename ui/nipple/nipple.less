@@ -17,7 +17,7 @@
 	.nipple.nipple-@{name} {
 		height: 2*@size;
 		width: 2*@size;
-		& > a {.circle(@size);}
+		& > a {.circle(2*@size);}
 
 		&.nipple-n {
 			ul {
@@ -254,9 +254,12 @@
 		// a {display: block;}
 	}
 
-	&.nipple-hot > ul {
-		.swts-showup-in();
-  		.nipple-i-tools > a {display: block;}
+	&.nipple-hot {
+		z-index: 1000;
+		& > ul {
+			.swts-showup-in();
+  			.nipple-i-tools > a {display: block;}
+  		}
 	}
 }
 

@@ -1,7 +1,9 @@
 .swts-overlay {
 	position: absolute;
 	display: block;
-	right: 0;
 	.fadeout;
-	&.swts-visible {.fadein;}
+
+	&.swts-overlay-v {width: 0;}
+	&.swts-overlay-h {height: 0;}
+	&.swts-visible, &.swts-freeze {.fadein;}
 }

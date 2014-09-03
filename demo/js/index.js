@@ -197,8 +197,10 @@ $(document).ready(function() {
 		.appendTo("#dateinput");
 
 	//gutenberg
-	var gutenberg = new Gutenberg("#gutenberg > p", function(text) {
-		console.log("Gutenberg", text);
+	var gutenberg = new Gutenberg("#gutenberg > p", {
+			tools: ["bold", "italic", "orderedList"]
+		},function(text) {
+			console.log("Gutenberg", text);
 	});
 
 	//upload

@@ -9,6 +9,7 @@ var $ = require("$"),
 	$w = $(window),
 	$b = $("body"),
 	$instances = [],
+	rxNoTags = /<[^>]*>/ig,
 
 	hideInstances = function() {
 		for (var i in $instances) {
@@ -24,11 +25,46 @@ var $ = require("$"),
 		}
 	},
 
+	getRange = function() {
+		var range;
+
+		if (window.getSelection) {
+	        var sel = window.getSelection();
+	        if (sel.rangeCount) {
+	            range = sel.getRangeAt(0);
+	        }
+	    } else if (document.selection && document.selection.createRange) {
+	        range = document.selection.createRange();
+	    }
+
+	    return range;
+	},
+
+	wrapWithTag = function(tag) {
+	    var range = getRange(),
+	    	newNode = document.createElement(tag);
+
+	    range.surroundContents(newNode);
+	},
+
 	availableCommands = {
+		"orderedList": {
+			icon: "swts-icon-ol",
+			command: function(ctx) {
+				// body...
+			}
+		},
 		"bold": {
 			icon: "swts-icon-bold",
 			command: function(ctx) {
-				document.execCommand("bold");
+				wrapWithTag("strong");
+				ctx.onTextEdit(ctx.$b.html());
+			}
+		},
+		"italic": {
+			icon: "swts-icon-italic",
+			command: function(ctx) {
+				wrapWithTag("em");
 				ctx.onTextEdit(ctx.$b.html());
 			}
 		},
@@ -36,13 +72,6 @@ var $ = require("$"),
 			icon: "swts-icon-clean",
 			command: function(ctx) {
 				document.execCommand("removeFormat");
-				ctx.onTextEdit(ctx.$b.html());
-			}
-		},
-		"italic": {
-			icon: "swts-icon-italic",
-			command: function(ctx) {
-				document.execCommand("italic");
 				ctx.onTextEdit(ctx.$b.html());
 			}
 		},
@@ -149,7 +178,6 @@ var $ = require("$"),
 				if (ctx.selectionIsLink()) {
 					document.execCommand("unlink");
 					ctx.$link.removeClass("swts-icon-unlink").addClass("swts-icon-link");
-
 					ctx.onTextEdit(ctx.$b.html());
 				} else {
 					ctx.$linkInput.data('selection', window.getSelection().getRangeAt(0));
@@ -169,22 +197,15 @@ var Gutenberg = function(selector, opts, cb) {
 	}
 
 	self.$b = $(selector);
-	self.$controlsWrapper;
-	self.$links;
 	self.initialVal = self.$b.html();
-	self.tempVal;
+	self.curVal;
 	self.commands = opts.commands;
 	self.onChange = cb;
-	self.onChangeDelay = opts.onChangeDelay || 1000;
+	self.onChangeDelay = opts.onChangeDelay || 500;
 	self.stopLinks = opts.stopLinks;
+	self.allowNewLine = opts.allowNewLine;
+	self.allowTags = self.allowNewLine ? true : opts.allowTags;
 	self.typingTimer;
-
-	self.init();
-};
-
-Gutenberg.prototype.init = function() {
-	var self = this;
-
 	self.$b.attr("contenteditable", true);
 	self.buildDOM();
 	self.initListeners();
@@ -200,9 +221,6 @@ Gutenberg.prototype.buildDOM = function() {
 
 	self.$controlsWrapper = $('<ul class="gutenberg-ctrl gutenberg-hidden">');
 
-	$b.append(self.$controlsWrapper);
-	$instances.push(self.$controlsWrapper);
-
 	for (var i in self.commands) {
 		var cmdName = self.commands[i],
 			cmdObj = availableCommands[cmdName];
@@ -216,6 +234,8 @@ Gutenberg.prototype.buildDOM = function() {
 	}
 
 	self.$links = self.$controlsWrapper.find("a");
+	$instances.push(self.$controlsWrapper);
+	$b.append(self.$controlsWrapper);
 };
 
 Gutenberg.prototype.initListeners = function() {
@@ -226,12 +246,20 @@ Gutenberg.prototype.initListeners = function() {
 			self.onPaste(this, e);
 		})
 		.on("keydown.gutenberg", function(e) {
-			if (e.which === 27) {
-				self.restoreText();
-			} else if (e.which === 8) {
-				setTimeout(function() {
-					self.sanitizeBackspace();
-				}, 2);
+			switch(e.which) {
+				case 8:
+					setTimeout(function() {
+						self.sanitizeBackspace();
+					}, 0);
+					break;
+
+				case 13:
+					!self.allowNewLine && e.preventDefault();
+					break;
+
+				case 27:
+					self.restoreText();
+					break;
 			}
 		})
 		.on("keyup.gutenberg", function(e) {
@@ -239,9 +267,7 @@ Gutenberg.prototype.initListeners = function() {
 		})
 		.on("mousedown.gutenberg", function(e) {
 			self.clicked = true;
-
 			e.stopPropagation();
-
 			hideInstances();
 
 			$(document).one("mousedown.gutenberg", function(e) {
@@ -251,7 +277,7 @@ Gutenberg.prototype.initListeners = function() {
 			});
 		})
 		.on("focus.gutenberg", function(e) {
-			self.tempVal = self.$b.html();
+			self.curVal = self.$b.html();
 		});
 
 	if(self.stopLinks) {
@@ -278,18 +304,14 @@ Gutenberg.prototype.initListeners = function() {
 };
 
 Gutenberg.prototype.onPaste = function(elem, e) {
-	var self = this;
-
 	document.execCommand("insertText", false, e.originalEvent.clipboardData.getData('text/plain'));
 	e.preventDefault();
 	e.stopPropagation();
-	self.onTextEdit(self.$b.html());
+	this.onTextEdit(this.$b.html());
 };
 
 Gutenberg.prototype.sanitizeBackspace = function() {
-	var self = this;
-
-	self.$b.find("span").each(function() {
+	this.$b.find("span").each(function() {
 		if (this.style) {
 			$(this).contents().unwrap();
 		}
@@ -337,17 +359,19 @@ Gutenberg.prototype.onTextEdit = function(val) {
 };
 
 Gutenberg.prototype.updateContent = function(html) {
-	if (this.tempVal !== html) {
+	if(!this.allowTags) {
+		html = html.replace(rxNoTags, "");
+	}
+
+	if (this.curVal !== html) {
 		this.onChange(html);
-		this.tempVal = html;
+		this.curVal = html;
 	}
 };
 
 Gutenberg.prototype.restoreText = function() {
-	var self = this;
-
-	self.$b.html(self.initialVal);
-	self.onTextEdit(self.initialVal);
+	this.$b.html(this.initialVal);
+	this.onTextEdit(this.initialVal);
 };
 
 Gutenberg.prototype.val = function(val) {
@@ -377,7 +401,6 @@ Gutenberg.prototype.getSelectionPosition = function(e) {
 	}
 
 	var top = scrollTop + rect.top - self.$controlsWrapper.height() - 10;
-
 	return {left: left, top: top};
 };
 

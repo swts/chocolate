@@ -3,6 +3,9 @@
     strict: false
 */
 var $ = require('$'),
+    inherits = require('util/inherits'),
+    Bar = require('ui/bar'),
+
 	slugify = require('ui/input/slugify');
 
 var Input = function($b, opts, cb) {
@@ -58,74 +61,54 @@ var Input = function($b, opts, cb) {
 		self.$i.on("paste", opts.onPaste);
 	}
 };
+inherits(Input, Bar);
 
-Input.prototype = {
-	val: function(val, silent) {
-		if(val === undefined) {
-			return this.$i.val();
-		}
-
-		this.$i.val(val).trigger("blur");
-		this.throttledUpdate(val, silent);
-		return this;
-	},
-
-	focus: function() {
-		this.$i.focus();
-	},
-
-	throttledUpdate: function(val, silent) {
-		var self = this;
-
-		clearTimeout(self.typingTimer);
-		self.typingTimer = setTimeout( function() {
-			if(val !== self.value) {
-				if(self.rx) {
-					if(self.rx.test(val)) {
-						self.update(val, silent);
-					} else {
-						self.$b.addClass(self.err);
-					}
-				} else {
-					self.update(val, silent);
-				}
-			}
-		}, 300);
-	},
-
-	update: function(val, silent) {
-		var self = this;
-
-		self.$b.removeClass(self.err);
-		self.value = val;
-
-		!silent && self.cb && self.cb(val);
-	},
-
-	addClass: function(className) {
-		this.$b.addClass(className);
-		return this;
-	},
-
-	removeClass: function(className) {
-		this.$b.removeClass(className);
-		return this;
-	},
-
-	appendTo: function($container) {
-		this.$b.appendTo($container);
-		return this;
-	},
-
-	prependTo: function($container) {
-		this.$b.prependTo($container);
-		return this;
-	},
-
-	remove: function() {
-		this.$i.off(".input");
-		this.$b.off(".input").remove();
+Input.prototype.val = function(val, silent) {
+	if(val === undefined) {
+		return this.$i.val();
 	}
+
+	this.$i.val(val).trigger("blur");
+	this.throttledUpdate(val, silent);
+	return this;
+};
+
+Input.prototype.focus = function() {
+	this.$i.focus();
+};
+
+Input.prototype.throttledUpdate = function(val, silent) {
+	var self = this;
+
+	clearTimeout(self.typingTimer);
+	self.typingTimer = setTimeout( function() {
+		if(val !== self.value) {
+			if(self.rx) {
+				if(self.rx.test(val)) {
+					self.update(val, silent);
+				} else {
+					self.$b.addClass(self.err);
+				}
+			} else {
+				self.update(val, silent);
+			}
+		}
+	}, 300);
+};
+
+Input.prototype.update = function(val, silent) {
+	var self = this;
+
+	self.$b.removeClass(self.err);
+	self.value = val;
+
+	!silent && self.cb && self.cb(val);
+};
+
+Input.prototype.remove = function() {
+	this.$i.off(".input");
+	this.$i = undefined;
+	Input.super_.prototype.remove.call(this, ".input");
 };
 
 exports("ui/input", Input);
