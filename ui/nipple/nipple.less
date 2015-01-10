@@ -9,7 +9,6 @@
 @nipple-active-color: 			@swts-accent-color;
 @nipple-background-color: 		@swts-bg-color;
 @nipple-confirmation-color: 	#f00;
-@nipple-items-background-color: @swts-input-color;
 @nipple-animation-style: 		@swts-showup-transition-style;
 @nipple-animation-time: 		@swts-showup-time;
 
@@ -155,7 +154,7 @@
 	}
 
 	.nipple-i-tools:first-child:before {
-		border-bottom-color: @nipple-items-background-color;
+		border-bottom-color: @nipple-background-color;
 	}
 
 	.nipple-i-tools.nipple-h-confirm:first-child:before {
@@ -178,7 +177,7 @@
 	}
 
 	.nipple-i-tools:first-child:before  {
-		border-left-color: @nipple-items-background-color;
+		border-left-color: @nipple-background-color;
 	}
 
 	.nipple-i-tools.nipple-h-confirm:first-child:before {
@@ -200,7 +199,7 @@
 	}
 
 	.nipple-i-tools:first-child:before {
-		border-right-color: @nipple-items-background-color;
+		border-right-color: @nipple-background-color;
 	}
 
 	.nipple-i-tools.nipple-h-confirm:first-child:before {
@@ -220,8 +219,10 @@
 	text-align: center;
 	display: block;
 
-	.a(@nipple-color, @nipple-active-color);
-	a {display: block;}
+	a {
+		display: block;
+		.a(@nipple-color, @nipple-active-color);
+	}
 
 	& > a {
 		// display: block;
@@ -233,9 +234,10 @@
 		z-index: 10;
 		display: block;
 		position: absolute;
+		margin: 0;
+		padding: 0;
 		width: @nipple-width;
 		color: @nipple-color;
-		background: @nipple-background-color;
 		.swts-showup-out(@nipple-animation-time, @nipple-animation-style);
 		.nipple-i-tools > a {display: none;}
 	}
@@ -247,12 +249,14 @@
 		position: relative;
 		height: @nipple-item-height;
 		line-height: @nipple-item-height;
-
-		&:first-child {padding-top: @nipple-item-height/5;}
-		&:last-child {padding-bottom: @nipple-item-height/4;}
+		background: @nipple-background-color;
 
 		// a {display: block;}
 	}
+
+	.nipple-i-item:first-child, .nipple-i-tools + .nipple-i-item {padding-top: @nipple-item-height/4;}
+	.nipple-i-item:last-child {padding-bottom: @nipple-item-height/4;}
+
 
 	&.nipple-hot {
 		z-index: 1000;
@@ -303,14 +307,14 @@
 .nipple-i-tools {
 	padding: 0 !important;
 	height: 1.4*@nipple-item-height !important;
-	margin-bottom: @nipple-item-height/5 !important;
-	background: @nipple-items-background-color;
+	margin-bottom: 1px !important;
+	background: @nipple-background-color;
 
 	a {
 		// display: block;
 		position: absolute;
 		top: 0;
-		padding-top: @nipple-item-height/6;
+		padding-top: @nipple-item-height/5;
 		font-size: 1.8em;
 		.box-sizing;
 		.fadein;
@@ -343,9 +347,9 @@
 
 .nipple-i-input {
 	height: auto !important;
-	padding: 0 @swts-grid/4 !important;
-	&:first-child {padding-top: @swts-grid/4 !important;}
-	&:last-child {padding-bottom: @swts-grid/4 !important;}
+	padding: 0.5px @swts-grid/4 !important;
+	&:first-child {padding-top: @swts-grid/4 - 0.5 !important;}
+	&:last-child {padding-bottom: @swts-grid/4 - 0.5 !important;}
 
 	.swts-input { width: @nipple-width - @swts-grid/2; }
 }

@@ -25,6 +25,7 @@ var Input = function($b, opts, cb) {
 			(opts.type || "text") +'" '+
 			(opts.value ? 'value="'+opts.value+'"' : "") +'><span>'+ opts.title +'</span></label>'
 		).on("click.input", function(e) {
+			e.preventDefault();
 			e.stopPropagation();
 		});
 

@@ -1,11 +1,13 @@
-@input-font-family: @swts-font-family;
-@input-font-size: 	@swts-font-size;
-@input-height: 		2*@swts-grid;
-@input-width: 		10*@swts-grid;
-@input-bg-color: 	@swts-input-color;
-@input-color: 		@swts-color;
-@input-label-color: @swts-selected-color;
-@input-error-color: lighten(@swts-accent-color, 30%);
+@input-font-family: 	@swts-font-family;
+@input-font-size: 		@swts-font-size;
+@input-height: 			2*@swts-grid;
+@input-width: 			10*@swts-grid;
+@input-bg-color: 		@swts-input-bg-color;
+@input-bg-focus-color: 	@swts-input-bg-focus-color;
+@input-color: 			@swts-input-color;
+@input-focus-color: 	@swts-input-focus-color;
+@input-label-color: 	@swts-selected-color;
+@input-error-color: 	lighten(@swts-accent-color, 30%);
 
 .swts-input {
 	position: relative;
@@ -45,15 +47,15 @@
 	//&:hover input {background: mix(@input-bg-color, @input-color, 95%)}
 
 	input:focus {
-		background: @input-color;
-		color: @input-bg-color;
+		background: @input-bg-focus-color;
+		color: @input-focus-color;
 	}
 
 	&.swts-input-val span, input:focus + span {
 		color: @input-label-color;
 		font-size: 0.563em;
 		font-weight: bold;
-		//text-transform: uppercase;
+		// text-transform: uppercase;
 		.translate(0, 2px);
 	}
 

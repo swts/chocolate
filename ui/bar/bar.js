@@ -14,6 +14,14 @@ var exposeToPrototype = [
 var Bar = function() {};
 
 Bar.prototype = {
+	error: function(errorClass) {
+		var $b = this.$b.addClass(errorClass || "swts-error");
+
+		setTimeout(function () {
+			$b.removeClass(errorClass || "swts-error");
+		}, 600);
+	},
+
 	remove: function(eventNs) {
 		if(eventNs) {
 			this.$b.off(eventNs);

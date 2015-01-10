@@ -41,7 +41,10 @@ Overlay.prototype.move = function(node, index) {
 		node = this.node;
 	}
 
-	var pos = node.$b.position();
+	var pos = node.$b.position(),
+		cs = window.getComputedStyle(node.$b[0], null);
+
+	pos.top += parseInt(cs.getPropertyValue("margin-top"), 10);
 
 	if(this.orientation === "vertical") {
 		pos.height = node.$b.outerHeight();

@@ -1,4 +1,4 @@
-@selectah-font-size: 				1em;
+@selectah-font-size: 				@swts-font-size;
 @selectah-font-family: 				@swts-font-family;
 @selectah-text-align: 				left;
 @selectah-height: 					2*@swts-grid;
@@ -12,15 +12,15 @@
 			@color: @selectah-color,
 			@active-color: @selectah-active-color,
 			@bg-color: @selectah-background-color,
-			@font-size: @selectah-font-size,
-			@font-family: @selectah-font-family,
+			@base-font-size: @selectah-font-size,
+			@base-font-family: @selectah-font-family,
 			@text-align: @selectah-text-align
 ) {
 	li {
 		background: @bg-color;
 		text-align: @text-align;
-		font-size: @font-size;
-		font-family: @font-family;
+		font-size: @base-font-size;
+		font-family: @base-font-family;
 		line-height: @height;
 		padding: 0 @height/3;
 	}

@@ -13,7 +13,7 @@
 			{draft: "Draft"},
 			{published: "Published"}
 		],
-		direction: "down | up | left | right",
+		direction: "n | ne | e | se | e | we | w | nw",
 	}
 
 */
@@ -181,6 +181,10 @@ Nipple.prototype.hide = function() {
 };
 
 Nipple.prototype.remove = function() {
+	if(openedNipple === this) {
+		openedNipple = undefined;
+	}
+
 	this.$a.off(".nipple");
 	this.$a = undefined;
 	Nipple.super_.prototype.remove.call(this);

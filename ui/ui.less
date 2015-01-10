@@ -14,7 +14,10 @@
 @swts-accent-color: 			#FF4546;
 @swts-warning-color: 			#FF4546;
 @swts-bg-color: 				#1B2533;
-@swts-input-color: 				lighten(@swts-bg-color, 7%);
+@swts-input-color: 				@swts-color;
+@swts-input-focus-color: 	    @swts-input-bg-color;
+@swts-input-bg-color: 			lighten(@swts-bg-color, 7%);
+@swts-input-bg-focus-color: 	@swts-color;
 
 @swts-common-transition-style:	cubic-bezier(0.660, 0.000, 0.070, 1.000);
 @swts-common-time: 				150ms;

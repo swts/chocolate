@@ -9,9 +9,9 @@
 }
 
 .a(@color, @hover, @text-decoration: none, @text-decoration-hover: none) {
-  a {.transition(all, 150ms, ) }
-  a:link, a:visited { color: @color; text-decoration: @text-decoration;}
-  a:hover, a:focus { color: @hover; text-decoration: @text-decoration-hover;}
+  & {.transition(all, 150ms, ) }
+  &:link, &:visited { color: @color; text-decoration: @text-decoration;}
+  &:hover, &:focus { color: @hover; text-decoration: @text-decoration-hover;}
 }
 
 .font (@font-name, @font-file, @font-weight: normal, @font-style: normal) {
