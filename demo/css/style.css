@@ -1197,6 +1197,7 @@ table {
   height: 30px;
   line-height: 30px;
   background: #1b2533;
+  text-overflow: clip;
 }
 .nipple .nipple-i-item:first-child,
 .nipple .nipple-i-tools + .nipple-i-item {
@@ -1496,7 +1497,6 @@ table {
   display: inline-block;
   width: 230px;
   position: relative;
-  background: #1b2533;
   z-index: 1000;
   font: normal 1em "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 30px;
@@ -1546,7 +1546,7 @@ table {
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 10px solid #27364a;
+  border-top: 10px solid #1b2533;
 }
 .gregory-popup.gregory-down {
   top: 53px;
@@ -1566,15 +1566,16 @@ table {
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #27364a;
+  border-bottom: 10px solid #1b2533;
 }
 .gregory-active {
   color: #ff4546 !important;
 }
 .gregory-wrapper {
+  background: #1b2533;
   width: 210px;
-  padding-top: 10px;
-  margin: auto;
+  padding: 10px 10px 0;
+  margin-top: 1px;
 }
 .gregory-wrapper ul {
   display: inline-block;
@@ -1608,7 +1609,7 @@ table {
 }
 .gregory-header {
   text-align: center;
-  background: #27364a;
+  background: #1b2533;
 }
 .gregory-header a {
   color: #ffffff;

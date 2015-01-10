@@ -4,7 +4,6 @@
 @gregory-color: 				@swts-color;
 @gregory-active-color: 			@swts-accent-color;
 @gregory-bg-color: 				@swts-bg-color;
-@gregory-header-bg-color: 		@swts-input-bg-color;
 @gregory-triangle-size: 		@swts-grid/2;
 @gregory-cell-size: 			1.5*@swts-grid;
 @gregory-padding: 				@swts-grid/2;
@@ -35,7 +34,6 @@
 	display: inline-block;
 	width: @gregory-width;
 	position: relative;
-	background: @gregory-bg-color;
 	z-index: 1000;
 	font: normal 1em @gregory-font-family;
 	line-height: @gregory-cell-size;
@@ -59,7 +57,7 @@
 			position: absolute;
 			bottom: -@nipple-triangle-size + 1;
 			left: @gregory-width/2 - @nipple-triangle-size;
-			.triangle(down, @gregory-triangle-size, @gregory-header-bg-color);
+			.triangle(down, @gregory-triangle-size, @gregory-bg-color);
 		}
 	}
 
@@ -71,7 +69,7 @@
 			position: absolute;
 			top: -@nipple-triangle-size + 1;
 			left: @gregory-width/2 - @nipple-triangle-size;
-			.triangle(up, @gregory-triangle-size, @gregory-header-bg-color);
+			.triangle(up, @gregory-triangle-size, @gregory-bg-color);
 		}
 	}
 }
@@ -81,9 +79,10 @@
 }
 
 .gregory-wrapper {
+	background: @gregory-bg-color;
 	width: 7*@gregory-cell-size;
-	padding-top: @gregory-padding;
-	margin: auto;
+	padding: @gregory-padding @gregory-padding 0;
+	margin-top: 1px;
 
 	ul {
 		display: inline-block;
@@ -124,7 +123,7 @@
 
 .gregory-header {
 	text-align: center;
-	background: @gregory-header-bg-color;
+	background: @gregory-bg-color;
 
 	a {
 		color: @gregory-color;
