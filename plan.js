@@ -27,6 +27,7 @@ var js = {
 
 		"ui/nipple/input.js",
 		"ui/nipple/tools.js",
+		"ui/nipple/toggle.js",
 		"ui/nipple/nipple.js",
 
 		"ui/cover/cover.js",

@@ -33,6 +33,14 @@ $(document).ready(function() {
 	            }
 	        },
 
+	        "active": {
+				item: "toggle",
+				title: {
+					on: "Important",
+					off: "Not important"
+				}
+	        },
+
 	        "status/draft": {
 	            title: "Draft"
 	        },
@@ -123,11 +131,17 @@ $(document).ready(function() {
 
 			options: function() {
 				console.log("Nipple options");
+			},
+
+			active: function(state) {
+				console.log("Nipple toggle state", state);
 			}
 		})
 		.val("status/draft")
 		.addClass("draft")
 		.appendTo("#nipple");
+
+	defaultNipple.items.active.val(true);
 
 	var optNipple = new Nipple({
 			popup: "n",

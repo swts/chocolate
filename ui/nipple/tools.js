@@ -5,7 +5,7 @@
 
 var $ = require('$');
 
-var NippleTools = function(a, opts, cb) {
+var NippleTools = function($parent, opts, cb) {
 	var self = this,
 		toolsNum = 0,
 		b = '';
@@ -21,7 +21,6 @@ var NippleTools = function(a, opts, cb) {
 	self.active = undefined;
 	self.confirm = undefined;
 
-	//start to hack to get parent li.
 	self.$b = $(b)
 		.hover(function() {
 				self.active = this.hash.split("/")[1];
@@ -32,24 +31,22 @@ var NippleTools = function(a, opts, cb) {
 				self.$b.removeClass('nipple-hidden');
 		});
 
-	setTimeout(function () {
-		self.$parent = self.$b.first().parent()
-			.addClass("nipple-i-tools-"+toolsNum)
-			.on("mouseout.nipple-confirm", function() {
-				self.hideConfirm();
-			})
-			.on("click.nipple-confirm", "a", function(e) {
-				if(self.confirm && self.$parent.hasClass('nipple-confirmation')) {
-					setTimeout(function () {
-						self.hideConfirm();
-					}, 0);
-				} else if(this.hash.substring(0, 9) === "#/confirm" ) {
-					e.preventDefault();
-					e.stopPropagation();
-					self.showConfirm(this);
-				}
-			});
-	}, 0);
+	self.$parent = $parent
+		.addClass("nipple-i-tools-"+toolsNum)
+		.on("mouseout.nipple-confirm", function() {
+			self.hideConfirm();
+		})
+		.on("click.nipple-confirm", "a", function(e) {
+			if(self.confirm && self.$parent.hasClass('nipple-confirmation')) {
+				setTimeout(function () {
+					self.hideConfirm();
+				}, 0);
+			} else if(this.hash.substring(0, 9) === "#/confirm" ) {
+				e.preventDefault();
+				e.stopPropagation();
+				self.showConfirm(this);
+			}
+		});
 };
 
 NippleTools.prototype = {
@@ -73,6 +70,6 @@ NippleTools.prototype = {
 	}
 };
 
-exports("ui/nipple/tools", function(opts, cb) {
-	return new NippleTools(opts, cb);
+exports("ui/nipple/tools", function($parent, a, opts, cb) {
+	return new NippleTools($parent, opts, cb);
 });

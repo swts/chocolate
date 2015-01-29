@@ -32,7 +32,8 @@ $(document).on("click.nipple", function() {
 var nippleItems = {
 	input: require('ui/nipple/input'),
 	tools: require('ui/nipple/tools'),
-	item: function(action, opts) {
+	toggle: require('ui/nipple/toggle'),
+	item: function($parent, action, opts) {
 		return {
 			$b: $('<a href="#/'+ action +'">'+ opts.title +'</a>')
 		};
@@ -84,7 +85,7 @@ Nipple.prototype.build = function(items, size) {
 			type = item.item || "item",
 			$li = $('<li class="nipple-i-'+ type +'"></li>');
 
-		newItem = nippleItems[type](i, items[i], cbs[i] && cbs[i].bind(self));
+		newItem = nippleItems[type]($li, i, items[i], cbs[i] && cbs[i].bind(self));
 		$li.append(newItem.$b);
 		$ul.append($li);
 		self.items[i] = newItem;
