@@ -41,17 +41,25 @@ Overlay.prototype.move = function(node, index) {
 	}
 
 	var pos = node.$b.position(),
-		cs = window.getComputedStyle(node.$b[0], null);
-
-	pos.top += parseInt(cs.getPropertyValue("margin-top"), 10);
+		type = node.type(),
+		cs = window.getComputedStyle(node.$b[0], null),
+		css = {};
 
 	if(this.orientation === "vertical") {
-		pos.height = node.$b.outerHeight();
+		css.height = node.$b.outerHeight();
+		css.top = pos.top + parseInt(cs.getPropertyValue("margin-top"), 10);
 	} else {
-		pos.width = node.$b.outerWidth();
+		css.width = node.$b.outerWidth();
+		css.left = pos.left + parseInt(cs.getPropertyValue("margin-left"), 10);
 	}
 
 	this.$b.css(pos);
+	this.$b
+		.css(css)
+		.removeClass("swts-overlay-"+this.type)
+		.addClass("swts-overlay-"+type);
+
+	this.type = type;
 	this.frozen && this.unfreeze();
 	return this;
 };
