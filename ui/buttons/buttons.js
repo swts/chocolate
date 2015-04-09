@@ -1,14 +1,13 @@
-/*jshint browser:true, strict: false*/
-
-var $ = require('$'),
-	Confirm = require('ui/buttons/confirm');
+/*eslint-disable strict */
+var $ = require("$"),
+	Confirm = require("ui/buttons/confirm");
 
 var button = function(action, cb) {
-    return $('<a href="#/'+ action +'" class="swts-button"></a>').on("click", function(e) {
-    	e.preventDefault();
-    	e.stopPropagation();
-    	cb(action);
-    });
+	return $('<a href="#/' + action + '" class="swts-button"></a>').on( "click", function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		cb(action);
+	});
 },
 
 add = function(id, cb) {
@@ -17,8 +16,8 @@ add = function(id, cb) {
 		id = undefined;
 	}
 
-	return button("add"+ (id ? "/"+id : ""), function(id) {
-		cb(id ? id.split("/")[1] : id);
+	return button("add" + (id ? "/" + id : ""), function(action) {
+		cb(action ? action.split("/")[1] : action);
 	}).addClass("swts-add swts-icon-plus");
 },
 
@@ -31,14 +30,14 @@ remove = function(id, cb) {
 },
 
 addTemplate = function(id) {
-	return '<a href="#/add'+ (id ? "/"+id : "") +'" class="swts-button swts-add swts-icon-plus"></a>';
+	return '<a href="#/add' + (id ? "/" + id : "") + '" class="swts-button swts-add swts-icon-plus"></a>';
 },
 
 removeTemplate = function(id) {
-	return '<a href="#/remove'+ (id ? "/"+id : "") +'" class="swts-button swts-remove swts-icon-trash"></a>';
+	return '<a href="#/remove' + (id ? "/" + id : "") + '" class="swts-button swts-remove swts-icon-trash"></a>';
 };
 
-exports("ui/buttons",  {
+exports("ui/buttons", {
 	add: add,
     remove: remove,
 	button: button,

@@ -1,13 +1,9 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
+/*eslint-disable strict */
 
-/*global escape*/
+var $ = require("$"),
+	swts = require("swts");
 
-var $ = require('$'),
-	swts = require('swts'),
-	$active;
+var $active;
 
 var Upload = function($b, resource, options) {
 	var self = this;
@@ -54,13 +50,13 @@ Upload.prototype.upload = function(files, target) {
 			files: files,
 			onprogress: function(e) {
 				var pc = e.loaded / e.total * 100;
-				self.$progress.css("width", pc+"%");
+				self.$progress.css("width", pc + "%");
 				self.progress && self.progress(e, pc);
 			}
 		};
 	self.$b.append(self.$progress);
 	self.startTimeout = setTimeout(function() {
-		self.$progress.addClass('uploading');
+		self.$progress.addClass("swts-upload-uploading");
 	}, self.delay);
 
 	self.start && self.start();
@@ -68,7 +64,7 @@ Upload.prototype.upload = function(files, target) {
 	swts.c(r, function(err, result) {
 		clearTimeout(self.startTimeout);
 
-		self.$progress.removeClass('uploading');
+		self.$progress.removeClass("swts-upload-uploading");
 		setTimeout(function() {
 			self.$progress.detach();
 		}, self.delay);

@@ -1,15 +1,9 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
+/*eslint-disable strict */
+var $ = require("$"),
+    inherits = require("util/inherits"),
+    Bar = require("ui/bar");
 
-/*global jQuery*/
-
-var $ = require('$'),
-    inherits = require('util/inherits'),
-    Bar = require('ui/bar'),
-
-	daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+var	daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 	defaults = {
 		startDay: "MON",
 		messages: {
@@ -62,7 +56,7 @@ var $ = require('$'),
 				11: {
 					s: "Dec",
 					f: "December"
-				},
+				}
 			}
 		}
 	};
@@ -101,7 +95,7 @@ Gregory.prototype.build = function(popup) {
 	var self = this,
 		flip = self.flip,
 		header = '<div class="gregory-header"><a class="gregory-change gregory-back" href="#"></a><a class="gregory-info" href="#/"></a><a class="gregory-change gregory-forward" href="#"></a></div>',
-		b = '<div class="gregory'+ (popup ? " gregory-popup" : "") + (flip ? " gregory-up" : " gregory-down") +'">';
+		b = '<div class="gregory' + (popup ? " gregory-popup" : "") + (flip ? " gregory-up" : " gregory-down") + '">';
 
 	if(!flip) {
 		b += header;
@@ -113,7 +107,7 @@ Gregory.prototype.build = function(popup) {
 		b += header;
 	}
 
-	b += '</div>';
+	b += "</div>";
 
 	self.$b = $(b)
 		.on("click.gregory", function(e) {
@@ -162,7 +156,7 @@ Gregory.prototype.build = function(popup) {
 
 			var displayState = {};
 
-			displayState.mode = this.hash.split('/')[1];
+			displayState.mode = this.hash.split("/")[1];
 
 			if (displayState.mode === self.modes.day) {
 				self.changeSelectedState(self.prevFullState);
@@ -290,7 +284,7 @@ Gregory.prototype.buildDays = function() {
 		}
 	}
 
-	html += '</ul>';
+	html += "</ul>";
 
 	self.$wrapper.html(html);
 };
@@ -313,7 +307,7 @@ Gregory.prototype.buildMonths = function() {
 		}
 	}
 
-	html += '</ul>';
+	html += "</ul>";
 
 	self.$wrapper.html(html);
 };
@@ -336,7 +330,7 @@ Gregory.prototype.buildYears = function() {
 		}
 	}
 
-	html += '</ul>';
+	html += "</ul>";
 
 	self.$wrapper.html(html);
 };
@@ -355,8 +349,7 @@ Gregory.prototype.setDateActive = function() {
 };
 
 Gregory.prototype.prevMonth = function(year, month) {
-	var self = this,
-		result = {};
+	var result = {};
 
 	if (month === 0) {
 		result.year = year - 1;
@@ -370,8 +363,7 @@ Gregory.prototype.prevMonth = function(year, month) {
 };
 
 Gregory.prototype.nextMonth = function(year, month) {
-	var self = this,
-		result = {};
+	var result = {};
 
 	if (month === 11) {
 		result.year = year + 1;
@@ -385,12 +377,10 @@ Gregory.prototype.nextMonth = function(year, month) {
 };
 
 Gregory.prototype.getDaysInMonth = function(year, month) {
-	var self = this;
-
-	if(self.displayState.month === 1 && ((self.displayState.year % 4 === 0 && self.displayState.year % 100 !== 0) || self.displayState.year % 400 === 0)) {
+	if(month === 1 && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) {
 		return 29;
 	}
-	return daysInMonth[self.displayState.month];
+	return daysInMonth[month];
 };
 
 Gregory.prototype.updateInfo = function() {

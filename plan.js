@@ -55,16 +55,17 @@ module.exports = {
 
 	"belt:js": {
 		options: {
-			dst: "demo/js",
+			dst: "demo/js"
 		},
-		tools: ["concat", "common-js", "uglify"]
+		tools: ["src-files", "common-js", "uglify", "dst-file"]
 	},
 
 	"belt:css": {
 		options: {
 			dst: "demo/css",
+			browsers: "last 2 versions"
 		},
 
-		tools: ["less"]
+		tools: ["src-file", "less", "autoprefixer", "dst-file"]
 	}
 };

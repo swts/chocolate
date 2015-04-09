@@ -1,5 +1,4 @@
-/*jshint browser:true, strict: false */
-
+/*eslint-disable strict */
 var exposeToPrototype = [
 	"css",
 	"addClass",
@@ -8,7 +7,7 @@ var exposeToPrototype = [
 	"appendTo",
 	"prependTo",
 	"insertBefore",
-	"insertAfter",
+	"insertAfter"
 ];
 
 var Bar = function() {};

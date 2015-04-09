@@ -1,8 +1,7 @@
-/*jshint browser:true, strict: false */
-
-var $ = require('$'),
-    inherits = require('util/inherits'),
-    Bar = require('ui/bar');
+/*eslint-disable strict */
+var $ = require("$"),
+    inherits = require("util/inherits"),
+    Bar = require("ui/bar");
 
 var Overlay = function(template, orientation, actions) {
 	if(typeof orientation !== "string") {
@@ -19,15 +18,15 @@ var Overlay = function(template, orientation, actions) {
 
 	self.$b = $(template)
 		.addClass(orientation === "vertical" ? "swts-overlay-v" : "swts-overlay-h")
-		.on('click.overlay', 'a', function(e) {
+		.on("click.overlay", "a", function(e) {
 			e.preventDefault();
-			var action = this.hash.split('/');
+			var action = this.hash.split("/");
 			self.cb[action[1]].call(self, self.node || action[2]);
 		})
-		.on('mouseover.overlay', function() {
+		.on("mouseover.overlay", function() {
 			self.mouseOver = true;
 		})
-		.on('mouseleave.overlay', function() {
+		.on("mouseleave.overlay", function() {
 			self.mouseOver = false;
 		});
 };
@@ -59,25 +58,25 @@ Overlay.prototype.move = function(node, index) {
 
 Overlay.prototype.freeze = function() {
 	this.$b
-		.addClass('swts-freeze')
+		.addClass("swts-freeze")
 		.attr("style", "");
 	this.frozen = true;
 	return this;
 };
 
 Overlay.prototype.unfreeze = function() {
-	this.$b.removeClass('swts-freeze');
+	this.$b.removeClass("swts-freeze");
 	this.frozen = false;
 	return this;
 };
 
 Overlay.prototype.show = function() {
-	this.$b.addClass('swts-visible');
+	this.$b.addClass("swts-visible");
 	return this;
 };
 
 Overlay.prototype.hide = function() {
-	this.$b.removeClass('swts-visible');
+	this.$b.removeClass("swts-visible");
 	return this;
 };
 
@@ -91,4 +90,4 @@ Overlay.prototype.remove = function() {
 	Overlay.super_.prototype.remove.call(this, ".overlay");
 };
 
-exports('ui/overlay', Overlay);
+exports("ui/overlay", Overlay);

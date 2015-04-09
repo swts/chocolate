@@ -1,8 +1,4 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
-
+/*eslint-disable strict */
 /*
 	opts: {
 		items: [
@@ -18,11 +14,11 @@
 
 */
 
-var $ = require('$'),
-	inherits = require('util/inherits'),
-    Bar = require('ui/bar'),
+var $ = require("$"),
+	inherits = require("util/inherits"),
+    Bar = require("ui/bar");
 
-	openedNipple,
+var openedNipple,
 	defaults;
 
 $(document).on("click.nipple", function() {
@@ -30,12 +26,12 @@ $(document).on("click.nipple", function() {
 });
 
 var nippleItems = {
-	input: require('ui/nipple/input'),
-	tools: require('ui/nipple/tools'),
-	toggle: require('ui/nipple/toggle'),
+	input: require("ui/nipple/input"),
+	tools: require("ui/nipple/tools"),
+	toggle: require("ui/nipple/toggle"),
 	item: function($parent, action, opts) {
 		return {
-			$b: $('<a href="#/'+ action +'">'+ opts.title +'</a>')
+			$b: $('<a href="#/' + action + '">' + opts.title + "</a>")
 		};
 	}
 };
@@ -83,7 +79,7 @@ Nipple.prototype.build = function(items, size) {
 	for(var i in items) {
 		var newItem, item = items[i],
 			type = item.item || "item",
-			$li = $('<li class="nipple-i-'+ type +'"></li>');
+			$li = $('<li class="nipple-i-' + type + '"></li>');
 
 		newItem = nippleItems[type]($li, i, items[i], cbs[i] && cbs[i].bind(self));
 		$li.append(newItem.$b);
@@ -91,7 +87,7 @@ Nipple.prototype.build = function(items, size) {
 		self.items[i] = newItem;
 	}
 
-	self.$b = $('<div class="nipple nipple-'+ size +' nipple-'+ self._popup +'"><a href="#nipple-open"></a></div>')
+	self.$b = $('<div class="nipple nipple-' + size + " nipple-" + self._popup + '"><a href="#nipple-open"></a></div>')
 		.append($ul);
 
 	self.$a = self.$b.children("a").on("click.nipple", function(e) {
@@ -111,12 +107,12 @@ Nipple.prototype.val = function(val) {
 	if(this._val !== val) {
 		if(!this.menu) {
 			this.$items
-				.find('[href="#/'+ this._val +'"]')
+				.find('[href="#/' + this._val + '"]')
 					.parent()
 						.removeClass("nipple-selected")
 						.end()
 					.end()
-				.find('[href="#/'+ val +'"]')
+				.find('[href="#/' + val + '"]')
 					.parent()
 					.addClass("nipple-selected");
 		}
@@ -132,8 +128,8 @@ Nipple.prototype.direction = function(dir) {
 	}
 
 	if(this._popup !== dir) {
-		this.$b.removeClass("nipple-"+this._popup)
-			.addClass("nipple-"+dir);
+		this.$b.removeClass("nipple-" + this._popup)
+			.addClass("nipple-" + dir);
 		this._popup = dir;
 	}
 

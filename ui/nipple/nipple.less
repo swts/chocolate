@@ -22,7 +22,7 @@
 			ul {
 				left: -@nipple-width/2 + @size;
 				bottom: 2*@size + 1.3*@nipple-triangle-size;
-				.transform-origin(50% 100%);
+				transform-origin: 50% 100%;
 			}
 		}
 
@@ -30,7 +30,7 @@
 			ul {
 				right: 2*@size + 1.3*@nipple-triangle-size;
 				bottom: @size - @nipple-item-height/2 - @nipple-item-height/8;
-				.transform-origin(125% 90%);
+				transform-origin: 125% 90%;
 			}
 		}
 
@@ -38,7 +38,7 @@
 			ul {
 				left: 2*@size + 1.3*@nipple-triangle-size;
 				bottom: @size - @nipple-item-height/2 - @nipple-item-height/8;
-				.transform-origin(-2*@size 90%);
+				transform-origin: -2*@size 90%;
 			}
 		}
 
@@ -46,7 +46,7 @@
 			ul {
 				left: 2*@size + 1.3*@nipple-triangle-size;
 				top: @size;
-				.transform-origin(-2*@size 50%);
+				transform-origin: -2*@size 50%;
 			}
 		}
 
@@ -54,7 +54,7 @@
 			ul {
 				right: 2*@size + 1.3*@nipple-triangle-size;
 				top: @size;
-				.transform-origin(125% 50%);
+				transform-origin: 125% 50%;
 			}
 		}
 
@@ -62,7 +62,7 @@
 			ul {
 				left: -@nipple-width/2 + @size;
 				top: 2*@size + 1.3*@nipple-triangle-size;
-				.transform-origin(50% -2*@size);
+				transform-origin: 50% -2*@size;
 			}
 		}
 
@@ -70,7 +70,7 @@
 			ul {
 				right: 2*@size + 1.3*@nipple-triangle-size;
 				top: @size - @nipple-item-height/2 - @nipple-item-height/8;
-				.transform-origin(100% (@nipple-item-height/2 + @nipple-item-height/8));
+				transform-origin: 100% (@nipple-item-height/2 + @nipple-item-height/8);
 			}
 		}
 
@@ -78,7 +78,7 @@
 			ul {
 				left: 2*@size + 1.3*@nipple-triangle-size;
 				top: @size - @nipple-item-height/2 - @nipple-item-height/8;
-				.transform-origin(0 (@nipple-item-height/2 + @nipple-item-height/8) );
+				transform-origin: 0 (@nipple-item-height/2 + @nipple-item-height/8);
 			}
 		}
 	}
@@ -334,7 +334,7 @@
 		top: 0;
 		padding-top: @nipple-item-height/5;
 		font-size: 1.8em;
-		.box-sizing;
+		box-sizing: border-box;
 		.fadein;
 
 		&:first-child {padding-left: 4px;}

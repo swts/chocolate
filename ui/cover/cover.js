@@ -1,22 +1,19 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
-
-var $ = require('$'),
-	$w = $(window),
+/*eslint-disable strict */
+var $ = require("$"),
     swts = require("swts"),
-    inherits = require('util/inherits'),
+    inherits = require("util/inherits"),
 
-    Bar = require('ui/bar'),
-    Nipple = require('ui/nipple'),
-	Input = require('ui/input');
+    Bar = require("ui/bar"),
+    Nipple = require("ui/nipple"),
+	Input = require("ui/input");
 
-var loginTepmlate = '<div class="swts-cover-login">'+
-        '<label class="swts-input" id="swts-cover-email"><input type="text"><span>Email</span></label>'+
-        '<label class="swts-input" id="swts-cover-password"><input type="password"><span>Password</span></label>'+
-        '<a href="#/login" class="swts-button-m">Go</a>'+
-    '</div>';
+var loginTepmlate = '<div class="swts-cover-login">' +
+        '<label class="swts-input" id="swts-cover-email"><input type="text"><span>Email</span></label>' +
+        '<label class="swts-input" id="swts-cover-password"><input type="password"><span>Password</span></label>' +
+        '<a href="#/login" class="swts-button-m">Go</a>' +
+    "</div>";
+
+var $w = $(window);
 
 var Cover = function(opts) {
 	var self = this;
@@ -42,7 +39,7 @@ inherits(Cover, Bar);
 
 Cover.prototype.load = function() {
 	var self = this,
-		script = document.createElement('script');
+		script = document.createElement("script");
 	exports("swts", swts, true);
 	script.src = "/static/js/chocolate.js";
 	script.onload = function() {
@@ -60,7 +57,7 @@ Cover.prototype.buildLogin = function() {
 
 	self.$l = $(loginTepmlate)
 		.appendTo(self.$parent)
-		.on('click.swts.login', function(e){
+		.on("click.swts.login", function(e){
 			e.stopPropagation();
 		})
 		.on("keypress.swts.login", function(e) {
@@ -92,7 +89,7 @@ Cover.prototype.buildLogin = function() {
 			}
 		},
 
-		"click.swts.login": function(e) {
+		"click.swts.login": function() {
 			self.isLoginVisible && self.hideLogin();
 		}
 	});
@@ -107,8 +104,8 @@ Cover.prototype.showLogin = function() {
 Cover.prototype.hideLogin = function() {
 	this.$l.removeClass("active");
 
-	this.ui.login.val('');
-	this.ui.password.val('');
+	this.ui.login.val("");
+	this.ui.password.val("");
 	this.isLoginVisible = false;
 };
 
@@ -162,12 +159,12 @@ Cover.prototype.showUser = function(user) {
 				"profile": {title: user.name || user.id},
 				"logout": {title: "Logout"}
 			}
-		},{
+		}, {
 			edit: self.edit.bind(self),
 			logout: self.logout.bind(self),
 			profile: function() {
 				console.log("User profile");
-			},
+			}
 		})
 		.addClass("swts-user")
 		.appendTo(self.$parent);

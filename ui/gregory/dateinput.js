@@ -1,17 +1,10 @@
-/*
-	Gutenberg - edit like no one has ever edited before
-*/
+/*eslint-disable strict */
+var $ = require("$"),
+	inherits = require("util/inherits"),
+	Input = require("ui/input"),
+	Gregory = require("ui/gregory");
 
-/*jshint
-	browser:true,
-	strict: false
-*/
-
-var $ = require('$'),
-	inherits = require('util/inherits'),
-	Input = require('ui/input'),
-	Gregory = require("ui/gregory"),
-	$d = $(document),
+var $d = $(document),
 	rxDate = /^\d{1,2}.\d{1,2}.\d{4}$/,
 	openedCalendar;
 
@@ -46,7 +39,7 @@ var DateInput = function($b, opts, cb) {
 		})
 		.appendTo(self.$b);
 
-	self.$i.on("click.input", function(e) {
+	self.$i.on("click.input", function() {
 		self.toggle();
 	});
 
@@ -74,7 +67,7 @@ DateInput.prototype.val2date = function(val) {
 			break;
 		case "string":
 			val = val.split(".");
-			result =  new Date(val[2], val[1]-1, val[0]);
+			result = new Date(val[2], val[1] - 1, val[0]);
 			break;
 		default:
 			result = val;
@@ -119,21 +112,15 @@ DateInput.prototype.val = function(val) {
 };
 
 DateInput.prototype.update = function(val, noUpdate) {
-	var self = this,
-
-		doUpdate = function(val) {
-			self.$b.removeClass(self.err);
-			self.gregory.val(val);
-			self.value = self.gregory.val();
-			self.$i.val( self.formatDate(val) ).trigger("blur");
-			!noUpdate && self.cb && self.cb(val);
-		};
+	var self = this;
 
 	val = self.val2date(val);
-	if(self.value === undefined && val) {
-		doUpdate(val);
-	} else if (val && self.value.getTime() !== val.getTime()) {
-		doUpdate(val);
+	if( (self.value === undefined && val) || (val && self.value.getTime() !== val.getTime()) ) {
+		self.$b.removeClass(self.err);
+		self.gregory.val(val);
+		self.value = self.gregory.val();
+		self.$i.val( self.formatDate(val) ).trigger("blur");
+		!noUpdate && self.cb && self.cb(val);
 	}
 };
 

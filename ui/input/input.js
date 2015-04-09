@@ -1,12 +1,8 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
-var $ = require('$'),
-    inherits = require('util/inherits'),
-    Bar = require('ui/bar'),
-
-	slugify = require('ui/input/slugify');
+/*eslint-disable strict */
+var $ = require("$"),
+    inherits = require("util/inherits"),
+    Bar = require("ui/bar"),
+	slugify = require("ui/input/slugify");
 
 var Input = function($b, opts, cb) {
 	var self = this;
@@ -21,9 +17,9 @@ var Input = function($b, opts, cb) {
 		opts = {};
 	}
 
-	self.$b = $b || $('<label class="swts-input"><input type="'+
-			(opts.type || "text") +'" '+
-			(opts.value ? 'value="'+opts.value+'"' : "") +'><span>'+ opts.title +'</span></label>'
+	self.$b = $b || $('<label class="swts-input"><input type="' +
+			(opts.type || "text") + '" ' +
+			(opts.value ? 'value="' + opts.value + '"' : "") + "><span>" + opts.title + "</span></label>"
 		).on("click.input", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -38,7 +34,7 @@ var Input = function($b, opts, cb) {
 			}
 		})
 		.trigger("blur")
-		.on("keyup.input", function(e) {
+		.on("keyup.input", function() {
 			if(self.transform) {
 				this.value = self.transform(this.value);
 			}

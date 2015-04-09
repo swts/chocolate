@@ -1,13 +1,9 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
+/*eslint-disable strict */
+var $ = require("$"),
+	inherits = require("util/inherits"),
+	Bar = require("ui/bar");
 
-var $ = require('$'),
-    inherits = require('util/inherits'),
-    Bar = require('ui/bar'),
-
-	rxChild = /(\/)/g;
+var rxChild = /(\/)/g;
 
 var Selectah = function(items, opts, cb) {
 	var self = this;
@@ -18,13 +14,13 @@ var Selectah = function(items, opts, cb) {
 	}
 
 	self.keepOrder = opts.keepOrder;
-    self.isMultiple = opts.multiple;
-    self.selected = opts.selected || (self.isMultiple ? [] : "");
-    self.cb = cb;
-    self.items = items;
-    self.order = [];
+	self.isMultiple = opts.multiple;
+	self.selected = opts.selected || (self.isMultiple ? [] : "");
+	self.cb = cb;
+	self.items = items;
+	self.order = [];
 
-    self.build();
+	self.build();
 };
 inherits(Selectah, Bar);
 
@@ -40,22 +36,21 @@ Selectah.prototype.buildItems = function(items) {
 		isSelected = (selected && selected.length);
 
 	for (var i = 0, l = items.length; i < l; i++) {
-		var subItems,
-			activeClass = "",
+		var activeClass = "",
 			item = items[i],
 			value = Object.keys(item)[0];
 
 		self.order.push(value);
 		if(isSelected) {
 			if(value === selected || (self.isMultiple && selected.indexOf(value) !== -1)) {
-				activeClass = ' selectah-active';
+				activeClass = " selectah-active";
 			}
 		} else if(i === 0) {
-			activeClass = ' selectah-active';
+			activeClass = " selectah-active";
 		}
 
 		var match = value.match(rxChild);
-		b += '<li class="selectah-level-'+ (match ? match.length : 0) + activeClass + '"><a href="#:' + value + '">' +
+		b += '<li class="selectah-level-' + (match ? match.length : 0) + activeClass + '"><a href="#:' + value + '">' +
 			item[value] +
 			"</a></li>";
 	}
@@ -87,7 +82,7 @@ Selectah.prototype.pushInOrder = function(slug) {
 	while(slug.length) {
 		var val = slug.join("/");
 		selected.push(val);
-		this.$b.find('a[href="#:'+val+'"]')
+		this.$b.find('a[href="#:' + val + '"]')
 			.parent().addClass("selectah-active");
 		slug.pop();
 	}
@@ -105,14 +100,14 @@ Selectah.prototype.set = function(val) {
 	var self = this;
 
 	self.selected = val;
-	self.$b.addClass('no-transition');
-	self.$li.removeClass('selectah-active');
-	self.$b.find('a[href="#:'+val+'"]')
+	self.$b.addClass("no-transition");
+	self.$li.removeClass("selectah-active");
+	self.$b.find('a[href="#:' + val + '"]')
 			.parent()
-			.addClass('selectah-active');
+			.addClass("selectah-active");
 
 	setTimeout(function () {
-		self.$b.removeClass('no-transition');
+		self.$b.removeClass("no-transition");
 	}, 10);
 	return this;
 };
@@ -122,7 +117,7 @@ Selectah.prototype.val = function(val) {
 		return this.selected;
 	}
 
-	this.check( this.$b.find('a[href="#:'+val+'"]' )[0]);
+	this.check( this.$b.find('a[href="#:' + val + '"]' )[0]);
 	return this;
 };
 

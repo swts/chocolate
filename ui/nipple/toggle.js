@@ -1,9 +1,5 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
-
-var $ = require('$');
+/*eslint-disable strict */
+var $ = require("$");
 
 var NippleToggle = function($parent, a, opts, cb) {
 	var self = this;
@@ -11,7 +7,7 @@ var NippleToggle = function($parent, a, opts, cb) {
 	self.state = opts.state !== undefined ? opts.state : false;
 	self.title = opts.title;
 	self.cb = cb;
-	self.$b = $('<a href="#/toggle/' + a +'"'+ (opts.class ? ' class="'+ opts.class +'"' : "") + ' title="'+ opts.title[self.state] +'">'+ opts.title[self.state] +'</a>')
+	self.$b = $('<a href="#/toggle/' + a + '"' + (opts.class ? ' class="' + opts.class + '"' : "") + ' title="' + opts.title[self.state] + '">' + opts.title[self.state] + "</a>")
 		.on("click", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -28,7 +24,7 @@ NippleToggle.prototype = {
 				var self = this,
 					title = self.title[ (state ? "on" : "off") ];
 				self.$b.text(title).attr("title", title);
-				self.$parent.removeClass( "nipple-state-" + (self.state ? "on" : "off") ).addClass("nipple-state-"+(state ? "on" : "off"));
+				self.$parent.removeClass( "nipple-state-" + (self.state ? "on" : "off") ).addClass("nipple-state-" + (state ? "on" : "off"));
 				self.state = state;
 			}
 		} else {

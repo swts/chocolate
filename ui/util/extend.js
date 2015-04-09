@@ -1,30 +1,25 @@
+/*eslint-disable strict */
 var extend = function () {
-  var args = Array.prototype.slice.call(arguments),
-      deep = false,
-      org = args.shift(),
-      type = '';
+	var args = Array.prototype.slice.call(arguments),
+	deep = false,
+	org = args.shift();
 
-  if (typeof org === 'string' || typeof org === 'boolean') {
-    type = (org === true)?'deep':org;
-    org = args.shift();
+	if (typeof org === "boolean") {
+		deep = org;
+		org = args.shift();
+	}
 
-    if (type == 'defaults') {
-      org = extend({}, org); //clone defaults into new object
-      type = 'strict';
-    }
-  }
-
-  for (var i = 0, c = args.length; i < c; i++) {
-    var prop = args[i];
-    for (var name in prop) {
-      if (type == 'deep' && typeof prop[name] === 'object' && typeof org[name] !== 'undefined') {
-        extend(type, org[name], prop[name]);
-      } else if (type != 'strict' || (type == 'strict' && typeof org[name] !== 'undefined')) {
-        org[name] = prop[name];
-      }
-    }
-  }
-  return org;
+	for (var i = 0, c = args.length; i < c; i++) {
+		var prop = args[i];
+		for (var name in prop) {
+			if (deep && typeof prop[name] === "object" && typeof org[name] !== "undefined") {
+				extend(deep, org[name], prop[name]);
+			} else {
+				org[name] = prop[name];
+			}
+		}
+	}
+	return org;
 };
 
-exports('util/extend', extend);
+exports("util/extend", extend);
