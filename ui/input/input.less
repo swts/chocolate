@@ -1,13 +1,14 @@
-@input-font-family: 	@swts-font-family;
-@input-font-size: 		@swts-font-size;
-@input-height: 			2*@swts-grid;
-@input-width: 			10*@swts-grid;
+@input-font-family: 	@swts-input-font-family;
+@input-font-size: 		@swts-input-font-size;
+@input-height: 			@swts-input-height;
+@input-width: 			@swts-input-width;
 @input-bg-color: 		@swts-input-bg-color;
 @input-bg-focus-color: 	@swts-input-bg-focus-color;
 @input-color: 			@swts-input-color;
 @input-focus-color: 	@swts-input-focus-color;
-@input-label-color: 	@swts-selected-color;
-@input-error-color: 	lighten(@swts-accent-color, 30%);
+@input-label-color: 	@swts-input-label-color;
+@input-error-color: 	@swts-input-error-color;
+@input-uppercase: 		@swts-input-uppercase;
 
 .swts-input {
 	position: relative;
@@ -19,8 +20,7 @@
 	cursor: text;
 	margin-bottom: 1px;
 
-	input { .transition(all, 2*@swts-common-time);}
-	span { .transition(all, 2*@swts-common-time);}
+	input, span { .transition(all, 2*@swts-common-time);}
 
 	input {
 		font: @input-font-size @input-font-family;
@@ -41,10 +41,11 @@
 		display: block;
 		width: 100%;
 		color: @input-color;
-		.translate(0, @input-height/4);
+		.translate(0, @input-height / 2 - @input-font-size / 2);
+		.uppercase(@input-uppercase);
 	}
 
-	//&:hover input {background: mix(@input-bg-color, @input-color, 95%)}
+	&:hover input {background: mix(@input-bg-color, @input-bg-focus-color, 50%)}
 
 	input:focus {
 		background: @input-bg-focus-color;
@@ -52,11 +53,18 @@
 	}
 
 	&.swts-input-val span, input:focus + span {
-		color: @input-label-color;
 		font-size: 0.563em;
 		font-weight: bold;
-		// text-transform: uppercase;
 		.translate(0, 2px);
+		.uppercase(@input-uppercase);
+	}
+
+	&.swts-input-val span {
+		color: mix(@input-color, @input-bg-color, 25%);
+	}
+
+	input:focus + span {
+		color: @input-label-color;
 	}
 
 	&.swts-error input {

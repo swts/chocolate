@@ -673,11 +673,7 @@ var Input = function($b, opts, cb) {
 
 	self.$i = self.$b.find("input")
 		.on("blur.input", function() {
-			if(this.value !== "") {
-				self.$b.addClass("swts-input-val");
-			} else {
-				self.$b.removeClass("swts-input-val");
-			}
+			self.$b.toggleClass("swts-input-val", this.value !== "");
 		})
 		.trigger("blur")
 		.on("keyup.input", function() {

@@ -3,30 +3,39 @@
 @import "common/less/icons.less";
 @import "common/less/animations.less";
 
+//base
 @swts-grid: 					20px;
 
 @swts-icon-family: 				@swts-icon-font;
 @swts-font-family: 				@base-font-family;
-@swts-font-size:          		16px;
+@swts-font-size:          		14px;
 @swts-line-height:        		1.5em;
 
-@swts-color: 					#fff;
-@swts-selected-color: 			#ABB6C7;
+@swts-color: 					#000;
+@swts-selected-color: 			#FF4546;
 @swts-accent-color: 			#FF4546;
-@swts-warning-color: 			#FF4546;
-@swts-bg-color: 				#1B2533;
-@swts-input-color: 				@swts-color;
-@swts-input-focus-color: 	    @swts-input-bg-color;
-@swts-input-bg-color: 			lighten(@swts-bg-color, 7%);
-@swts-input-bg-focus-color: 	@swts-color;
+@swts-warning-color: 			#FF2222;
+@swts-bg-color: 				#fff;
 
+//animations
 @swts-common-transition-style:	cubic-bezier(0.660, 0.000, 0.070, 1.000);
 @swts-common-time: 				150ms;
-
 @swts-showup-transition-style:	cubic-bezier(0.660, 0.0, 0.5, 1.5);
 @swts-showup-time: 				200ms;
 
-@base-transition-style: 		@swts-common-transition-style;
+//input
+@swts-input-font-family: 		@swts-font-family;
+@swts-input-font-size: 			@swts-font-size;
+@swts-input-height: 			2*@swts-grid;
+@swts-input-width: 				10*@swts-grid;
+@swts-input-bg-color: 			@swts-bg-color;
+@swts-input-bg-focus-color: 	darken(@swts-bg-color, 2%);
+@swts-input-color: 				@swts-color;
+@swts-input-focus-color: 		@swts-color;
+@swts-input-label-color: 		@swts-selected-color;
+@swts-input-error-color: 		lighten(@swts-accent-color, 30%);
+@swts-input-uppercase: 			false;
+
 
 //components
 @import "input/input.less";
