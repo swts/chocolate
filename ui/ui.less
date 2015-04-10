@@ -23,6 +23,32 @@
 @swts-showup-transition-style:	cubic-bezier(0.660, 0.0, 0.5, 1.5);
 @swts-showup-time: 				200ms;
 
+//buttons
+@swts-button-normal-size:       @swts-grid;
+@swts-button-normal-font-size:  @swts-grid;
+@swts-button-medium-size:       2*@swts-grid;
+@swts-button-medium-font-size:  @swts-grid;
+
+//cover
+@swts-cover-login-width:        	15*@swts-grid;
+@swts-cover-login-bg-color:     	@swts-bg-color;
+@swts-cover-login-button-bg-color:  @swts-input-bg-color;
+
+//gregory (calendar)
+@swts-gregory-font-size: 		1em;
+@swts-gregory-font-family: 		@swts-font-family;
+@swts-gregory-icon-family: 		@swts-icon-family;
+@swts-gregory-color: 			@swts-color;
+@swts-gregory-active-color: 	@swts-accent-color;
+@swts-gregory-bg-color: 		@swts-bg-color;
+@swts-gregory-triangle-size: 	@swts-grid/2;
+@swts-gregory-cell-size: 		1.5*@swts-grid;
+@swts-gregory-padding: 			@swts-grid/2;
+@swts-gregory-header-height: 	2.2*@swts-grid;
+@swts-gregory-animation-style: 	@swts-showup-transition-style;
+@swts-gregory-animation-time: 	@swts-showup-time;
+@swts-gregory-uppercase: 	    false;
+
 //input
 @swts-input-font-family: 		@swts-font-family;
 @swts-input-font-size: 			@swts-font-size;
@@ -36,6 +62,36 @@
 @swts-input-error-color: 		lighten(@swts-accent-color, 30%);
 @swts-input-uppercase: 			false;
 
+//nipple
+@swts-nipple-base-font-size: 		0.9em;
+@swts-nipple-triangle-size: 		@swts-grid/2;
+@swts-nipple-radius-small: 			@swts-grid/2;
+@swts-nipple-radius-medium: 		@swts-grid;
+@swts-nipple-radius-large: 			@swts-grid*2;
+@swts-nipple-width: 				8*@swts-grid;
+@swts-nipple-item-height: 			1.5*@swts-grid;
+@swts-nipple-color: 				@swts-color;
+@swts-nipple-active-color: 			@swts-accent-color;
+@swts-nipple-bg-color: 				@swts-bg-color;
+@swts-nipple-confirmation-color: 	#f00;
+@swts-nipple-animation-style: 		@swts-showup-transition-style;
+@swts-nipple-animation-time: 		@swts-showup-time;
+
+//selecta
+@swts-selectah-font-size: 			@swts-font-size;
+@swts-selectah-font-family: 		@swts-font-family;
+@swts-selectah-text-align: 			left;
+@swts-selectah-height: 				2*@swts-grid;
+@swts-selectah-color: 				mix(@swts-color, @swts-bg-color, 50%);
+@swts-selectah-active-color: 		@swts-color;
+@swts-selectah-bg-color: 			@swts-bg-color;
+@swts-selectah-animation-style: 	@swts-common-transition-style;
+@swts-selectah-animation-time: 		2*@swts-common-time;
+
+//upload
+@swts-upload-color: 				@swts-accent-color;
+@swts-upload-stroke-width: 			15px;
+@swts-upload-progress-height:  		2px;
 
 //components
 @import "input/input.less";

@@ -1,54 +1,50 @@
-/*jshint
-    browser:true,
-    strict: false
-*/
-
-var $ = require('$'),
-	buttons = require('ui/buttons'),
-	Nipple = require('ui/nipple'),
-	Input = require('ui/input'),
-	Cover = require('ui/cover'),
-	Selectah = require('ui/selectah'),
-	Gregory = require('ui/gregory'),
-	DateInput = require('ui/gregory/dateinput'),
-	Gutenberg = require('ui/gutenberg'),
-	Upload = require('ui/upload');
+/*eslint-disable strict */
+var $ = require("$"),
+	buttons = require("ui/buttons"),
+	Nipple = require("ui/nipple"),
+	Input = require("ui/input"),
+	Cover = require("ui/cover"),
+	Selectah = require("ui/selectah"),
+	Gregory = require("ui/gregory"),
+	DateInput = require("ui/gregory/dateinput"),
+	Gutenberg = require("ui/gutenberg"),
+	Upload = require("ui/upload");
 
 $(document).ready(function() {
 
 	Nipple.defaults({
-	    items: {
-	        "tools": {
-	            item: "tools",
+		items: {
+			"tools": {
+				item: "tools",
 
-	            options: {
-	            	title: "Options",
-	            	icon: "swts-icon-dots"
-	            },
+				options: {
+					title: "Options",
+					icon: "swts-icon-dots"
+				},
 
-	            remove: {
-	                confirm: true,
-	                title: "Удалить",
-	                icon: "swts-icon-trash"
-	            }
-	        },
+				remove: {
+					confirm: true,
+					title: "Удалить",
+					icon: "swts-icon-trash"
+				}
+			},
 
-	        "active": {
+			"active": {
 				item: "toggle",
 				title: {
 					on: "Important",
 					off: "Not important"
 				}
-	        },
+			},
 
-	        "status/draft": {
-	            title: "Draft"
-	        },
+			"status/draft": {
+				title: "Draft"
+			},
 
-	        "status/published": {
-	            title: "Published"
-	        }
-	    }
+			"status/published": {
+				title: "Published"
+			}
+		}
 	});
 
 	//buttons
@@ -103,7 +99,7 @@ $(document).ready(function() {
 				"profile": {title: "Username"},
 				"logout": {title: "Logout"}
 			}
-		},{
+		}, {
 			edit: function() {
 				console.log("Edit mode");
 			},
@@ -213,9 +209,10 @@ $(document).ready(function() {
 	//gutenberg
 	var gutenberg = new Gutenberg("#gutenberg > p", {
 			tools: ["bold", "italic", "orderedList"]
-		},function(text) {
+		}, function(text) {
 			console.log("Gutenberg", text);
-	});
+		}
+	);
 
 	//upload
 	var upload = new Upload("#upload", "sponsor", {

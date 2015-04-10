@@ -1,6 +1,6 @@
-@swts-cover-login-bg-color:     @swts-bg-color;
-@swts-cover-login-width:        15*@swts-grid;
-@swts-cover-login-button-bg:    @swts-input-bg-color;
+@cover-login-width:        @swts-cover-login-width;
+@cover-login-bg-color:     @swts-cover-login-bg-color;
+@cover-login-button-bg:    @swts-cover-login-button-bg-color;
 
 .swts-cover-login {
     &, * {
@@ -10,13 +10,13 @@
     position: fixed;
     top: 0;
     left: 50%;
-    width: @swts-cover-login-width;
-    margin: 0 0 0 -(@swts-cover-login-width/2);
+    width: @cover-login-width;
+    margin: 0 0 0 -(@cover-login-width/2);
     padding: @swts-grid;
     z-index: 9000;
     opacity: 0;
 
-    background: @swts-cover-login-bg-color;
+    background: @cover-login-bg-color;
 
     .transform(translate3d(0, -101%, 0));
     .transition(all, 300ms);
@@ -27,12 +27,12 @@
     }
 
     .swts-input {
-        width: @swts-cover-login-width - (@swts-grid * 2);
+        width: @cover-login-width - (@swts-grid * 2);
     }
 
     .swts-button-m {
         margin: @swts-grid auto 0;
-        background: @swts-cover-login-button-bg;
+        background: @cover-login-button-bg;
     }
 }
 

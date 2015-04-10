@@ -1,16 +1,16 @@
-@gregory-font-size: 			1em;
-@gregory-font-family: 			@swts-font-family;
-@gregory-icon-family: 			@swts-icon-family;
-@gregory-color: 				@swts-color;
-@gregory-active-color: 			@swts-accent-color;
-@gregory-bg-color: 				@swts-bg-color;
-@gregory-triangle-size: 		@swts-grid/2;
-@gregory-cell-size: 			1.5*@swts-grid;
-@gregory-padding: 				@swts-grid/2;
-@gregory-header-height: 		2.2*@swts-grid;
-
-@gregory-animation-style: 		@swts-showup-transition-style;
-@gregory-animation-time: 		@swts-showup-time;
+@gregory-font-size: 			@swts-gregory-font-size;
+@gregory-font-family: 			@swts-gregory-font-family;
+@gregory-icon-family: 			@swts-gregory-icon-family;
+@gregory-color: 				@swts-gregory-color;
+@gregory-active-color: 			@swts-gregory-active-color;
+@gregory-bg-color: 				@swts-gregory-bg-color;
+@gregory-triangle-size: 		@swts-gregory-triangle-size;
+@gregory-cell-size: 			@swts-gregory-cell-size;
+@gregory-padding: 				@swts-gregory-padding;
+@gregory-header-height: 		@swts-gregory-header-height;
+@gregory-animation-style: 		@swts-gregory-animation-style;
+@gregory-animation-time: 		@swts-gregory-animation-time;
+@gregory-uppercase: 	 		@swts-gregory-uppercase;
 
 @gregory-width: 				(7 * @gregory-cell-size) + (2 * @gregory-padding);
 
@@ -37,6 +37,7 @@
 	z-index: 1000;
 	font: normal 1em @gregory-font-family;
 	line-height: @gregory-cell-size;
+	.uppercase(@gregory-uppercase);
 }
 
 .gregory-popup {
