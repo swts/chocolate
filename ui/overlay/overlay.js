@@ -53,7 +53,6 @@ Overlay.prototype.move = function(node, index) {
 		css.left = pos.left + parseInt(cs.getPropertyValue("margin-left"), 10);
 	}
 
-	this.$b.css(pos);
 	this.$b
 		.css(css)
 		.removeClass("swts-overlay-"+this.type)
