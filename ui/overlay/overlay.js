@@ -55,8 +55,8 @@ Overlay.prototype.move = function(node, index) {
 
 	this.$b
 		.css(css)
-		.removeClass("swts-overlay-"+this.type)
-		.addClass("swts-overlay-"+type);
+		.removeClass("swts-overlay-" + this.type)
+		.addClass("swts-overlay-" + type);
 
 	this.type = type;
 	this.frozen && this.unfreeze();
