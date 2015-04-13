@@ -9,6 +9,7 @@
 @input-label-color: 	@swts-input-label-color;
 @input-error-color: 	@swts-input-error-color;
 @input-uppercase: 		@swts-input-uppercase;
+@input-hover: 			@swts-input-hover;
 
 .swts-input {
 	position: relative;
@@ -45,7 +46,15 @@
 		.uppercase(@input-uppercase);
 	}
 
-	&:hover input {background: mix(@input-bg-color, @input-bg-focus-color, 50%)}
+	&:hover when(@input-hover = true) {
+		input {
+			color: @input-focus-color;
+			background: mix(@input-bg-color, @input-bg-focus-color, 50%);
+		}
+		span {
+			color: @input-focus-color;
+		}
+	}
 
 	input:focus {
 		background: @input-bg-focus-color;
