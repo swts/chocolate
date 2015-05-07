@@ -7,7 +7,7 @@ var $d = $(document),
 	getData = detective.getData,
 	removeData = detective.removeData,
 	cssTransform = detective.transform,
-	requestAnimationFrame = detective.requestAnimationFrame,
+	rAF = detective.requestAnimationFrame,
 
 	translate = function(el, x, y) {
 		el.style[cssTransform] = "translate(" + x + "px, " + y + "px)";
@@ -45,7 +45,7 @@ var Sorta = function(base, element, options, cb) {
 	self.dragging = false;
 
 	self.$b.on("mousedown.sorta", element, function(e) {
-			if(this === self.last) { return;}
+			if(this === self.last) { return; }
 			var button = e.button;
 			if ( button !== 0 && button !== 1 ) { return; }
 			self.dragStart( this, e);
@@ -88,7 +88,7 @@ Sorta.prototype = {
 	},
 
 	dragStart: function(el, event) {
-		if(!this.isEnabled) { return;}
+		if(!this.isEnabled) { return; }
 
 		event.preventDefault();
 		event.stopPropagation();
@@ -127,7 +127,7 @@ Sorta.prototype = {
 			target = self.target;
 
 		translate(self.dragEl, target.x, target.y);
-		requestAnimationFrame(function() {
+		rAF(function() {
 			self.dragMove();
 		});
 	},
@@ -166,10 +166,10 @@ Sorta.prototype = {
 			dx = target.x - pos.x,
 			dy = target.y - pos.y;
 
-		if(dx > 0 && dx > self.snapWidth)   { resultIndex = Math.min(num, resultIndex + 1); } //right;
-		if(dx < 0 && dx < -self.snapWidth)  { resultIndex = Math.max(0, resultIndex - 1); } //left;
-		if(dy > 0 && dy > self.snapHeight)  { resultIndex = Math.min(num, resultIndex + self.grid.steps); } //down
-		if(dy < 0 && dy < -self.snapHeight) { resultIndex = Math.max(0, resultIndex - self.grid.steps);} //up
+		if(dx > 0 && dx > self.snapWidth) { resultIndex = Math.min(num, resultIndex + 1); } //right;
+		if(dx < 0 && dx < -self.snapWidth) { resultIndex = Math.max(0, resultIndex - 1); } //left;
+		if(dy > 0 && dy > self.snapHeight) { resultIndex = Math.min(num, resultIndex + self.grid.steps); } //down
+		if(dy < 0 && dy < -self.snapHeight) { resultIndex = Math.max(0, resultIndex - self.grid.steps); } //up
 
 		return resultIndex;
 	},
@@ -206,7 +206,7 @@ Sorta.prototype = {
 		for(var i in self.order) {
 			var block = self.order[i], pos;
 
-			if(block === self.dragEl) {continue;}
+			if(block === self.dragEl) { continue; }
 
 			pos = self.getGridPosition(i);
 			translate(block, pos.x, pos.y);

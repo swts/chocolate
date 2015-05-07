@@ -1,28 +1,28 @@
-.swts-showup-out(@time: @swts-showup-time, @style: @swts-showup-transition-style) {
+.ui-showup-out(@time: @ui-showup-time, @style: @ui-showup-transition-style) {
 	visibility:hidden;
 	opacity:0;
-	.rotateX(45deg);
-	.scale(0.8);
+	.ui-rotateX(45deg);
+	.ui-scale(0.8);
 	transition:visibility 0s @style @time, all @time @style;
 }
 
-.swts-showup-in {
+.ui-showup-in {
 	visibility:visible;
 	opacity:1;
-	.rotateX(0);
-	.scale(1);
+	.ui-rotateX(0);
+	.ui-scale(1);
 	transition-delay: 0;
 }
 
-@keyframes swts-error {
-	0% {.translate(-20px, 0)}
-	20% {.translate(16px, 0)}
-	40% {.translate(-12px, 0)}
-	60% {.translate(8px, 0)}
-	80% {.translate(-4px, 0)}
-	100% {.translate(0px, 0)}
+@keyframes ui-error {
+	0% {.ui-translate(-20px, 0)}
+	20% {.ui-translate(16px, 0)}
+	40% {.ui-translate(-12px, 0)}
+	60% {.ui-translate(8px, 0)}
+	80% {.ui-translate(-4px, 0)}
+	100% {.ui-translate(0px, 0)}
 }
 
-.swts-error {
-	animation: swts-error 0.4s @swts-common-transition-style;
+.ui-error {
+	animation: ui-error 0.4s @ui-common-transition-style;
 }

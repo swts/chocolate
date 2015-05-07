@@ -1,39 +1,39 @@
-@button-normal-size:        @swts-button-normal-size;
-@button-normal-font-size:   @swts-button-normal-font-size;
-@button-medium-size:        @swts-button-medium-size;
-@button-medium-font-size:   @swts-button-medium-font-size;
+@button-normal-size:        @ui-button-normal-size;
+@button-normal-font-size:   @ui-button-normal-font-size;
+@button-medium-size:        @ui-button-medium-size;
+@button-medium-font-size:   @ui-button-medium-font-size;
 
 .swts-button-m,
 .swts-button,
 .swts-remove,
 .swts-add {
-    color: @swts-color !important;
-    background: @swts-bg-color;
+    color: @ui-color !important;
+    background: @ui-bg-color;
     display: block;
     z-index: 100;
     text-align: center !important;
     outline: none;
     text-decoration: none !important;
-    font-family: @swts-font-family;
-    .transition(all, 75ms, @swts-showup-transition-style);
-    &:hover {color: @swts-accent-color !important;}
+    font-family: @ui-font-family;
+    .ui-transition(all, 75ms, @ui-showup-transition-style);
+    &:hover {color: @ui-accent-color !important;}
 }
 
 .swts-button-m {
     font-size: @button-medium-font-size;
     line-height: @button-medium-size;
-    .circle(@button-medium-size);
+    .ui-circle(@button-medium-size);
 }
 
 .swts-button, .swts-add, .swts-remove {
     position: absolute;
     font-size: @button-normal-font-size;
     line-height: @button-normal-size;
-    .circle(@button-normal-size);
+    .ui-circle(@button-normal-size);
 }
 
 .swts-button-confirm {
-    background: @swts-warning-color;
-    &:hover {color: @swts-color !important;}
-    .scale(2.0);
+    background: @ui-warning-color;
+    &:hover {color: @ui-color !important;}
+    .ui-scale(2.0);
 }

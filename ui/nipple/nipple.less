@@ -1,22 +1,22 @@
-@nipple-base-font-size: 		@swts-nipple-base-font-size;
-@nipple-triangle-size: 			@swts-nipple-triangle-size;
-@nipple-radius-small: 			@swts-nipple-radius-small;
-@nipple-radius-medium: 			@swts-nipple-radius-medium;
-@nipple-radius-large: 			@swts-nipple-radius-large;
-@nipple-width: 					@swts-nipple-width;
-@nipple-item-height: 			@swts-nipple-item-height;
-@nipple-color: 					@swts-nipple-color;
-@nipple-active-color: 			@swts-nipple-active-color;
-@nipple-background-color: 		@swts-nipple-bg-color;
-@nipple-confirmation-color: 	@swts-nipple-confirmation-color;
-@nipple-animation-style: 		@swts-nipple-animation-style;
-@nipple-animation-time: 		@swts-nipple-animation-time;
+@nipple-base-font-size: 		@ui-nipple-base-font-size;
+@nipple-triangle-size: 			@ui-nipple-triangle-size;
+@nipple-radius-small: 			@ui-nipple-radius-small;
+@nipple-radius-medium: 			@ui-nipple-radius-medium;
+@nipple-radius-large: 			@ui-nipple-radius-large;
+@nipple-width: 					@ui-nipple-width;
+@nipple-item-height: 			@ui-nipple-item-height;
+@nipple-color: 					@ui-nipple-color;
+@nipple-active-color: 			@ui-nipple-active-color;
+@nipple-background-color: 		@ui-nipple-bg-color;
+@nipple-confirmation-color: 	@ui-nipple-confirmation-color;
+@nipple-animation-style: 		@ui-nipple-animation-style;
+@nipple-animation-time: 		@ui-nipple-animation-time;
 
 .nipple-size(@name, @size) {
 	.nipple.nipple-@{name} {
 		height: 2*@size;
 		width: 2*@size;
-		& > a {.circle(2*@size);}
+		& > a {.ui-circle(2*@size);}
 
 		&.nipple-n {
 			ul {
@@ -94,8 +94,8 @@
 		position: absolute;
 		bottom: -@nipple-triangle-size + 1;
 		left: @nipple-width/2 - @nipple-triangle-size;
-		.triangle(down, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(down, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 }
 //north west
@@ -104,8 +104,8 @@
 		position: absolute;
 		bottom: @nipple-item-height/2 - @nipple-triangle-size + @nipple-item-height/8;
 		right: -@nipple-triangle-size + 1;
-		.triangle(right, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(right, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 }
 //north east
@@ -114,8 +114,8 @@
 		position: absolute;
 		bottom: @nipple-item-height/2 - @nipple-triangle-size + @nipple-item-height/8;
 		left: -@nipple-triangle-size + 1;
-		.triangle(left, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(left, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 }
 
@@ -126,8 +126,8 @@
 		top: 50%;
 		left: -@nipple-triangle-size + 1;
 		margin-top: -@nipple-triangle-size;
-		.triangle(left, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(left, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 }
 
@@ -138,8 +138,8 @@
 		top: 50%;
 		right: -@nipple-triangle-size + 1;
 		margin-top: -@nipple-triangle-size;
-		.triangle(right, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(right, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 }
 
@@ -149,8 +149,8 @@
 		position: absolute;
 		top: -@nipple-triangle-size + 1;
 		left: @nipple-width/2 - @nipple-triangle-size;
-		.triangle(up, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(up, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 
 	.nipple-i-tools:first-child:before {
@@ -172,8 +172,8 @@
 		position: absolute;
 		top: @nipple-item-height/2 - @nipple-triangle-size + @nipple-item-height/8;
 		right: -@nipple-triangle-size + 1;
-		.triangle(right, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(right, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 
 	.nipple-i-tools:first-child:before  {
@@ -194,8 +194,8 @@
 		position: absolute;
 		top: @nipple-item-height/2 - @nipple-triangle-size + @nipple-item-height/8;
 		left: -@nipple-triangle-size + 1;
-		.triangle(left, @nipple-triangle-size, @nipple-background-color);
-		.transition(border, @nipple-animation-time, @nipple-animation-style);
+		.ui-triangle(left, @nipple-triangle-size, @nipple-background-color);
+		.ui-transition(border, @nipple-animation-time, @nipple-animation-style);
 	}
 
 	.nipple-i-tools:first-child:before {
@@ -215,19 +215,19 @@
 .nipple {
 	position: absolute;
 	font-size: @nipple-base-font-size;
-	font: @swts-font-size @swts-font-family;
+	font: @ui-font-size @ui-font-family;
 	text-align: center;
 	display: block;
 
 	a {
 		display: block;
-		.a(@nipple-color, @nipple-active-color);
+		.ui-a(@nipple-color, @nipple-active-color);
 	}
 
 	& > a {
 		// display: block;
 		background: @nipple-background-color;
-		.transition(all, @nipple-animation-time, linear);
+		.ui-transition(all, @nipple-animation-time, linear);
 	}
 
 	ul {
@@ -238,7 +238,7 @@
 		padding: 0;
 		width: @nipple-width;
 		color: @nipple-color;
-		.swts-showup-out(@nipple-animation-time, @nipple-animation-style);
+		.ui-showup-out(@nipple-animation-time, @nipple-animation-style);
 		.nipple-i-tools > a {display: none;}
 	}
 
@@ -264,7 +264,7 @@
 	&.nipple-hot {
 		z-index: 1000;
 		& > ul {
-			.swts-showup-in();
+			.ui-showup-in();
   			.nipple-i-tools > a {display: block;}
   		}
 	}
@@ -273,11 +273,11 @@
 
 .nipple-e, .nipple-w {
 	ul {
-		.transform(translateY(-50%) rotateX(45deg) scale(0.8) );
+		.ui-transform(translateY(-50%) rotateX(45deg) scale(0.8) );
 	}
 
 	&.nipple-hot > ul {
-		.transform(translateY(-50%) rotateX(0) scale(1));
+		.ui-transform(translateY(-50%) rotateX(0) scale(1));
 	}
 }
 
@@ -304,7 +304,7 @@
 }
 
 .nipple-i-tools, .nipple-i-tools a {
-	.transition(all, @nipple-animation-time, @nipple-animation-style);
+	.ui-transition(all, @nipple-animation-time, @nipple-animation-style);
 }
 
 .nipple-i-tools, .nipple-i-toggle {
@@ -316,7 +316,7 @@
 
 .nipple-i-toggle {
 	line-height: 1.4*@nipple-item-height !important;
-	.transition(all, 150ms);
+	.ui-transition(all, 150ms);
 
 	&.nipple-state-on {
 		background: @nipple-active-color;
@@ -335,7 +335,7 @@
 		padding-top: @nipple-item-height/5;
 		font-size: 1.8em;
 		box-sizing: border-box;
-		.fadein;
+		.ui-fadein;
 
 		&:first-child {padding-left: 4px;}
 		&:last-child {padding-right: 4px;}
@@ -359,17 +359,17 @@
 	}
 
 	a.nipple-hidden {
-		.fadeout;
+		.ui-fadeout;
 	}
 }
 
 .nipple-i-input {
 	height: auto !important;
-	padding: 0.5px @swts-grid/4 !important;
-	&:first-child {padding-top: @swts-grid/4 - 0.5 !important;}
-	&:last-child {padding-bottom: @swts-grid/4 - 0.5 !important;}
+	padding: 0.5px @ui-grid/4 !important;
+	&:first-child {padding-top: @ui-grid/4 - 0.5 !important;}
+	&:last-child {padding-bottom: @ui-grid/4 - 0.5 !important;}
 
-	.swts-input { width: @nipple-width - @swts-grid/2; }
+	.input { width: @nipple-width - @ui-grid/2; }
 }
 
 @import "icons.less";

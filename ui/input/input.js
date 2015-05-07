@@ -17,17 +17,26 @@ var Input = function($b, opts, cb) {
 		opts = {};
 	}
 
-	self.$b = $b || $('<label class="swts-input"><input type="' +
-			(opts.type || "text") + '" ' +
-			(opts.value ? 'value="' + opts.value + '"' : "") + "><span>" + opts.title + "</span></label>"
+	self.name = opts.name;
+	self.id = opts.id || "input-" + Math.floor(Date.now() + 10 * Math.random());
+
+	if($b && $b[0] instanceof HTMLInputElement) {
+		$b = $b.parent();
+	}
+
+	self.$b = $b || $('<label class="input" for="' + self.id + '" >' +
+			'<input type="' + (opts.type || "text") + '" ' +
+			'id="' + self.id + '" ' +
+			(opts.name ? 'name="' + opts.name + '" ' : "") +
+			(opts.value ? 'value="' + opts.value + '" ' : "") +
+			"><span>" + opts.title + "</span></label>"
 		).on("click.input", function(e) {
-			e.preventDefault();
 			e.stopPropagation();
 		});
 
 	self.$i = self.$b.find("input")
 		.on("blur.input", function() {
-			self.$b.toggleClass("swts-input-val", this.value !== "");
+			self.$b.toggleClass("input-val", this.value !== "");
 		})
 		.trigger("blur")
 		.on("keyup.input", function() {
@@ -47,7 +56,7 @@ var Input = function($b, opts, cb) {
 		self.transform = opts.transform;
 	}
 
-	self.err = opts.errorClass || "swts-error";
+	self.err = opts.errorClass || "ui-error";
 	self.cb = cb;
 
 	if(opts.onPaste) {

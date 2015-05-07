@@ -4,95 +4,98 @@
 @import "common/less/animations.less";
 
 //base
-@swts-grid: 					20px;
+@ui-grid: 							20px;
 
-@swts-icon-family: 				@swts-icon-font;
-@swts-font-family: 				@base-font-family;
-@swts-font-size:          		14px;
-@swts-line-height:        		1.5em;
+@ui-icon-family: 					@ui-icon-font;
+@ui-font-family: 					@base-font-family;
+@ui-font-size:          			14px;
+@ui-line-height:        			1.5em;
 
-@swts-color: 					#000;
-@swts-selected-color: 			#FF4546;
-@swts-accent-color: 			#FF4546;
-@swts-warning-color: 			#FF2222;
-@swts-bg-color: 				#fff;
+@ui-color: 							#000;
+@ui-selected-color: 				#FF4546;
+@ui-accent-color: 					#FF4546;
+@ui-warning-color: 					#FF2222;
+@ui-bg-color: 						#fff;
 
 //animations
-@swts-common-transition-style:	cubic-bezier(0.660, 0.000, 0.070, 1.000);
-@swts-common-time: 				150ms;
-@swts-showup-transition-style:	cubic-bezier(0.660, 0.0, 0.5, 1.5);
-@swts-showup-time: 				200ms;
+@ui-common-transition-style:		cubic-bezier(0.660, 0.000, 0.070, 1.000);
+@ui-common-time: 					150ms;
+@ui-showup-transition-style:		cubic-bezier(0.660, 0.0, 0.5, 1.5);
+@ui-showup-time: 					200ms;
 
 //buttons
-@swts-button-normal-size:       @swts-grid;
-@swts-button-normal-font-size:  @swts-grid;
-@swts-button-medium-size:       2*@swts-grid;
-@swts-button-medium-font-size:  @swts-grid;
+@ui-button-normal-size:       		@ui-grid;
+@ui-button-normal-font-size:  		@ui-grid;
+@ui-button-medium-size:       		2*@ui-grid;
+@ui-button-medium-font-size:  		@ui-grid;
 
 //cover
-@swts-cover-login-width:        	15*@swts-grid;
-@swts-cover-login-bg-color:     	@swts-bg-color;
-@swts-cover-login-button-bg-color:  @swts-input-bg-color;
+@ui-cover-login-width:        		15*@ui-grid;
+@ui-cover-login-bg-color:     		@ui-bg-color;
+@ui-cover-login-button-color:  		@ui-bg-color;
+@ui-cover-login-button-bg-color:	@ui-color;
+@ui-cover-input-addborder: 			false;
+@ui-cover-input-border: 			1px @ui-color solid;
 
 //gregory (calendar)
-@swts-gregory-font-size: 		1em;
-@swts-gregory-font-family: 		@swts-font-family;
-@swts-gregory-icon-family: 		@swts-icon-family;
-@swts-gregory-color: 			@swts-color;
-@swts-gregory-active-color: 	@swts-accent-color;
-@swts-gregory-bg-color: 		@swts-bg-color;
-@swts-gregory-triangle-size: 	@swts-grid/2;
-@swts-gregory-cell-size: 		1.5*@swts-grid;
-@swts-gregory-padding: 			@swts-grid/2;
-@swts-gregory-header-height: 	2.2*@swts-grid;
-@swts-gregory-animation-style: 	@swts-showup-transition-style;
-@swts-gregory-animation-time: 	@swts-showup-time;
-@swts-gregory-uppercase: 	    false;
+@ui-gregory-font-size: 				1em;
+@ui-gregory-font-family: 			@ui-font-family;
+@ui-gregory-icon-family: 			@ui-icon-family;
+@ui-gregory-color: 					@ui-color;
+@ui-gregory-active-color: 			@ui-accent-color;
+@ui-gregory-bg-color: 				@ui-bg-color;
+@ui-gregory-triangle-size: 			@ui-grid/2;
+@ui-gregory-cell-size: 				1.5*@ui-grid;
+@ui-gregory-padding: 				@ui-grid/2;
+@ui-gregory-header-height: 			2.2*@ui-grid;
+@ui-gregory-animation-style: 		@ui-showup-transition-style;
+@ui-gregory-animation-time: 		@ui-showup-time;
+@ui-gregory-uppercase: 	    		false;
 
 //input
-@swts-input-font-family: 		@swts-font-family;
-@swts-input-font-size: 			@swts-font-size;
-@swts-input-height: 			2*@swts-grid;
-@swts-input-width: 				10*@swts-grid;
-@swts-input-bg-color: 			@swts-bg-color;
-@swts-input-bg-focus-color: 	darken(@swts-bg-color, 2%);
-@swts-input-color: 				@swts-color;
-@swts-input-focus-color: 		@swts-color;
-@swts-input-label-color: 		@swts-selected-color;
-@swts-input-error-color: 		lighten(@swts-accent-color, 30%);
-@swts-input-uppercase: 			false;
-@swts-input-hover: 				false;
+@ui-input-font-family: 				@ui-font-family;
+@ui-input-font-size: 				@ui-font-size;
+@ui-input-height: 					2*@ui-grid;
+@ui-input-width: 					10*@ui-grid;
+@ui-input-bg-color: 				@ui-bg-color;
+@ui-input-bg-focus-color: 			darken(@ui-bg-color, 4%);
+@ui-input-color: 					@ui-color;
+@ui-input-focus-color: 				@ui-color;
+@ui-input-label-color: 				@ui-selected-color;
+@ui-input-error-color: 				lighten(@ui-accent-color, 30%);
+@ui-input-uppercase: 				false;
+@ui-input-hover: 					false;
 
 //nipple
-@swts-nipple-base-font-size: 		0.9em;
-@swts-nipple-triangle-size: 		@swts-grid/2;
-@swts-nipple-radius-small: 			@swts-grid/2;
-@swts-nipple-radius-medium: 		@swts-grid;
-@swts-nipple-radius-large: 			@swts-grid*2;
-@swts-nipple-width: 				8*@swts-grid;
-@swts-nipple-item-height: 			1.5*@swts-grid;
-@swts-nipple-color: 				@swts-color;
-@swts-nipple-active-color: 			@swts-accent-color;
-@swts-nipple-bg-color: 				@swts-bg-color;
-@swts-nipple-confirmation-color: 	#f00;
-@swts-nipple-animation-style: 		@swts-showup-transition-style;
-@swts-nipple-animation-time: 		@swts-showup-time;
+@ui-nipple-base-font-size: 			0.9em;
+@ui-nipple-triangle-size: 			@ui-grid/2;
+@ui-nipple-radius-small: 			@ui-grid/2;
+@ui-nipple-radius-medium: 			@ui-grid;
+@ui-nipple-radius-large: 			@ui-grid*2;
+@ui-nipple-width: 					8*@ui-grid;
+@ui-nipple-item-height: 			1.5*@ui-grid;
+@ui-nipple-color: 					@ui-color;
+@ui-nipple-active-color: 			@ui-accent-color;
+@ui-nipple-bg-color: 				@ui-bg-color;
+@ui-nipple-confirmation-color: 		#f00;
+@ui-nipple-animation-style: 		@ui-showup-transition-style;
+@ui-nipple-animation-time: 			@ui-showup-time;
 
 //selecta
-@swts-selectah-font-size: 			@swts-font-size;
-@swts-selectah-font-family: 		@swts-font-family;
-@swts-selectah-text-align: 			left;
-@swts-selectah-height: 				2*@swts-grid;
-@swts-selectah-color: 				mix(@swts-color, @swts-bg-color, 50%);
-@swts-selectah-active-color: 		@swts-color;
-@swts-selectah-bg-color: 			@swts-bg-color;
-@swts-selectah-animation-style: 	@swts-common-transition-style;
-@swts-selectah-animation-time: 		2*@swts-common-time;
+@ui-selectah-font-size: 			@ui-font-size;
+@ui-selectah-font-family: 			@ui-font-family;
+@ui-selectah-text-align: 			left;
+@ui-selectah-height: 				2*@ui-grid;
+@ui-selectah-color: 				mix(@ui-color, @ui-bg-color, 50%);
+@ui-selectah-active-color: 			@ui-color;
+@ui-selectah-bg-color: 				@ui-bg-color;
+@ui-selectah-animation-style: 		@ui-common-transition-style;
+@ui-selectah-animation-time: 		2*@ui-common-time;
 
 //upload
-@swts-upload-color: 				@swts-accent-color;
-@swts-upload-stroke-width: 			15px;
-@swts-upload-progress-height:  		2px;
+@ui-upload-color: 					@ui-accent-color;
+@ui-upload-stroke-width: 			15px;
+@ui-upload-progress-height:  		2px;
 
 //components
 @import "input/input.less";

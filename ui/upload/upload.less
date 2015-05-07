@@ -1,17 +1,17 @@
-@upload-color: 			 @swts-upload-color;
-@upload-stroke-width: 	 @swts-upload-stroke-width;
-@upload-progress-height: @swts-upload-progress-height;
+@upload-color: 			 @ui-upload-color;
+@upload-stroke-width: 	 @ui-upload-stroke-width;
+@upload-progress-height: @ui-upload-progress-height;
 
-.swts-upload {
+.upload {
 	background: @upload-color;
 }
 
-.swts-upload-drop {
+.upload-drop {
 	outline: @upload-color @upload-stroke-width solid !important;
 	outline-offset: -@upload-stroke-width/2 !important;
 }
 
-.swts-upload-progress {
+.upload-progress {
 	position: absolute;
 	top:0;
 	left:0;
@@ -20,9 +20,9 @@
 	background: @upload-color;
 	opacity: 0;
 	z-index: 100;
-	.transition(all, @swts-showup-time);
+	.ui-transition(all, @ui-showup-time);
 
-	&.swts-upload-uploading {
+	&.upload-uploading {
 		opacity: 1;
 	}
 }

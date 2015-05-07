@@ -1,17 +1,17 @@
 /*eslint-disable strict */
 var $ = require("$"),
-    swts = require("swts"),
-    inherits = require("util/inherits"),
+	swts = require("swts"),
+	inherits = require("util/inherits"),
 
-    Bar = require("ui/bar"),
-    Nipple = require("ui/nipple"),
+	Bar = require("ui/bar"),
+	Nipple = require("ui/nipple"),
 	Input = require("ui/input");
 
 var loginTepmlate = '<div class="swts-cover-login">' +
-        '<label class="swts-input" id="swts-cover-email"><input type="text"><span>Email</span></label>' +
-        '<label class="swts-input" id="swts-cover-password"><input type="password"><span>Password</span></label>' +
-        '<a href="#/login" class="swts-button-m">Go</a>' +
-    "</div>";
+		'<label class="input" for="swts-cover-email"><input id="swts-cover-email" type="text"><span>Email</span></label>' +
+		'<label class="input" for="swts-cover-password"><input id="swts-cover-password" type="password"><span>Password</span></label>' +
+		'<a href="#/login" class="swts-button-m">Go</a>' +
+	"</div>";
 
 var $w = $(window);
 
@@ -27,6 +27,7 @@ var Cover = function(opts) {
 
 	self.editing = false;
 	self.popup = opts.popup || "n";
+	self.profile = opts.profile;
 	self.ui = {};
 
 	if(swts.u) {
@@ -156,14 +157,14 @@ Cover.prototype.showUser = function(user) {
 			autoHide: true,
 			items: {
 				"edit": {title: "Edit"},
-				"profile": {title: user.name || user.id},
+				"profile": {title: user.name || user.email},
 				"logout": {title: "Logout"}
 			}
 		}, {
 			edit: self.edit.bind(self),
 			logout: self.logout.bind(self),
 			profile: function() {
-				console.log("User profile");
+				self.profile && self.profile(user);
 			}
 		})
 		.addClass("swts-user")

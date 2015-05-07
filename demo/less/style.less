@@ -1,20 +1,20 @@
 @import "demo/less/normalize.less";
 @import "ui/common/less/mixings.less";
 
-.font('Museo Sans', '../fonts/museosans100');
-.font('Museo Sans', '../fonts/museosans700', bold);
+.ui-font('Museo Sans', '../fonts/museosans100');
+.ui-font('Museo Sans', '../fonts/museosans700', bold);
 @museo: "Museo Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @base-font-family: @museo;
 
 @import "ui/ui.less";
 
 body {
-	background: #f3f3f3;
+	background: #eee;
 }
 
 .container {
 	width: 80%;
-	margin: 4*@swts-grid auto;
+	margin: 4*@ui-grid auto;
 }
 
 .ui-item {
@@ -26,7 +26,7 @@ body {
 	padding: 10px;
 	position: relative;
 	margin-bottom: 4px;
-	font:normal 1em @swts-font-family;
+	font:normal 1em @ui-font-family;
 
 	& > h2 {
 		font-size: 1em;
@@ -57,14 +57,14 @@ body {
     height: 20px;
     width: 20px;
     content: "\e004";
-    font: normal normal @swts-grid @swts-icon-family;
+    font: normal normal @ui-grid @ui-icon-family;
     line-height: 20px;
     speak: none;
     display: inline-block;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: absolute;
-    color: @swts-color;
+    color: @ui-color;
 }
 
 .selectah.simple {
@@ -74,7 +74,7 @@ body {
 }
 
 .selectah.multi {
-	.selectah(1.5*@swts-grid, lighten(#000, 50%), #000, transparent, 1em, @selectah-font-family, center);
+	.selectah(1.5*@ui-grid, lighten(#000, 50%), #000, transparent, 1em, @selectah-font-family, center);
 
 	position: absolute;
 	left: 120px;

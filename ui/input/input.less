@@ -1,17 +1,17 @@
-@input-font-family: 	@swts-input-font-family;
-@input-font-size: 		@swts-input-font-size;
-@input-height: 			@swts-input-height;
-@input-width: 			@swts-input-width;
-@input-bg-color: 		@swts-input-bg-color;
-@input-bg-focus-color: 	@swts-input-bg-focus-color;
-@input-color: 			@swts-input-color;
-@input-focus-color: 	@swts-input-focus-color;
-@input-label-color: 	@swts-input-label-color;
-@input-error-color: 	@swts-input-error-color;
-@input-uppercase: 		@swts-input-uppercase;
-@input-hover: 			@swts-input-hover;
+@input-font-family: 	@ui-input-font-family;
+@input-font-size: 		@ui-input-font-size;
+@input-height: 			@ui-input-height;
+@input-width: 			@ui-input-width;
+@input-bg-color: 		@ui-input-bg-color;
+@input-bg-focus-color: 	@ui-input-bg-focus-color;
+@input-color: 			@ui-input-color;
+@input-focus-color: 	@ui-input-focus-color;
+@input-label-color: 	@ui-input-label-color;
+@input-error-color: 	@ui-input-error-color;
+@input-uppercase: 		@ui-input-uppercase;
+@input-hover: 			@ui-input-hover;
 
-.swts-input {
+.input {
 	position: relative;
 	display: block;
 	height: @input-height;
@@ -21,7 +21,7 @@
 	cursor: text;
 	margin-bottom: 1px;
 
-	input, span { .transition(all, 2*@swts-common-time);}
+	input, span { .ui-transition(all, 2*@ui-common-time);}
 
 	input {
 		font: @input-font-size @input-font-family;
@@ -42,8 +42,8 @@
 		display: block;
 		width: 100%;
 		color: @input-color;
-		.translate(0, @input-height / 2 - @input-font-size / 2);
-		.uppercase(@input-uppercase);
+		.ui-translate(0, @input-height / 2 - @input-font-size / 2);
+		.ui-uppercase(@input-uppercase);
 	}
 
 	&:hover when(@input-hover = true) {
@@ -61,14 +61,14 @@
 		color: @input-focus-color;
 	}
 
-	&.swts-input-val span, input:focus + span {
+	&.input-val span, input:focus + span {
 		font-size: 0.563em;
 		font-weight: bold;
-		.translate(0, 2px);
-		.uppercase(@input-uppercase);
+		.ui-translate(0, 2px);
+		.ui-uppercase(@input-uppercase);
 	}
 
-	&.swts-input-val span {
+	&.input-val span {
 		color: mix(@input-color, @input-bg-color, 25%);
 	}
 
@@ -76,7 +76,7 @@
 		color: @input-label-color;
 	}
 
-	&.swts-error input {
+	&.ui-error input {
 		background: @input-error-color;
 		color: @input-bg-color;
 	}

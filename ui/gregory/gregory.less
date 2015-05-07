@@ -1,16 +1,16 @@
-@gregory-font-size: 			@swts-gregory-font-size;
-@gregory-font-family: 			@swts-gregory-font-family;
-@gregory-icon-family: 			@swts-gregory-icon-family;
-@gregory-color: 				@swts-gregory-color;
-@gregory-active-color: 			@swts-gregory-active-color;
-@gregory-bg-color: 				@swts-gregory-bg-color;
-@gregory-triangle-size: 		@swts-gregory-triangle-size;
-@gregory-cell-size: 			@swts-gregory-cell-size;
-@gregory-padding: 				@swts-gregory-padding;
-@gregory-header-height: 		@swts-gregory-header-height;
-@gregory-animation-style: 		@swts-gregory-animation-style;
-@gregory-animation-time: 		@swts-gregory-animation-time;
-@gregory-uppercase: 	 		@swts-gregory-uppercase;
+@gregory-font-size: 			@ui-gregory-font-size;
+@gregory-font-family: 			@ui-gregory-font-family;
+@gregory-icon-family: 			@ui-gregory-icon-family;
+@gregory-color: 				@ui-gregory-color;
+@gregory-active-color: 			@ui-gregory-active-color;
+@gregory-bg-color: 				@ui-gregory-bg-color;
+@gregory-triangle-size: 		@ui-gregory-triangle-size;
+@gregory-cell-size: 			@ui-gregory-cell-size;
+@gregory-padding: 				@ui-gregory-padding;
+@gregory-header-height: 		@ui-gregory-header-height;
+@gregory-animation-style: 		@ui-gregory-animation-style;
+@gregory-animation-time: 		@ui-gregory-animation-time;
+@gregory-uppercase: 	 		@ui-gregory-uppercase;
 
 @gregory-width: 				(7 * @gregory-cell-size) + (2 * @gregory-padding);
 
@@ -37,17 +37,17 @@
 	z-index: 1000;
 	font: normal 1em @gregory-font-family;
 	line-height: @gregory-cell-size;
-	.uppercase(@gregory-uppercase);
+	.ui-uppercase(@gregory-uppercase);
 }
 
 .gregory-popup {
 	position: absolute;
 	left: 50%;
 	margin-left: -@gregory-width/2;
-	.swts-showup-out(@gregory-animation-time, @gregory-animation-style);
+	.ui-showup-out(@gregory-animation-time, @gregory-animation-style);
 
 	&.gregory-hot {
-		.swts-showup-in;
+		.ui-showup-in;
 	}
 
 	&.gregory-up {
@@ -58,7 +58,7 @@
 			position: absolute;
 			bottom: -@nipple-triangle-size + 1;
 			left: @gregory-width/2 - @nipple-triangle-size;
-			.triangle(down, @gregory-triangle-size, @gregory-bg-color);
+			.ui-triangle(down, @gregory-triangle-size, @gregory-bg-color);
 		}
 	}
 
@@ -70,7 +70,7 @@
 			position: absolute;
 			top: -@nipple-triangle-size + 1;
 			left: @gregory-width/2 - @nipple-triangle-size;
-			.triangle(up, @gregory-triangle-size, @gregory-bg-color);
+			.ui-triangle(up, @gregory-triangle-size, @gregory-bg-color);
 		}
 	}
 }

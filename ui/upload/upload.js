@@ -5,27 +5,31 @@ var $ = require("$"),
 
 var $active;
 
-var Upload = function($b, resource, options) {
+var Upload = function($b, job, options) {
 	var self = this;
 
 	self.$b = $($b);
-	self.$progress = $('<div class="swts-upload-progress"></div>');
+	self.$progress = $('<div class="upload-progress"></div>');
+	self.job = job;
+	self.resource = options.resource || "file";
 	self.delay = options.progressDelay || 500;
-	self.resource = resource;
 	self.start = options.start;
 	self.done = options.done;
 	self.progress = options.progress;
+	self.mouseover = options.mouseover;
+	self.mouseout = options.mouseout;
 	self.maxFiles = options.maxFiles || 1;
 
 	self.$b.on({
 		"dragover.upload": function () {
-			$active && $active.removeClass("swts-upload-drop");
-			$active = self.$b.addClass("swts-upload-drop");
+			$active && $active.removeClass("upload-drop");
+			$active = self.$b.addClass("upload-drop");
+			self.mouseover && self.mouseover();
 			return false;
 		},
 		"drop.upload": function (e) {
 			e.preventDefault();
-			self.$b.removeClass("swts-upload-drop");
+			self.$b.removeClass("upload-drop");
 			$active = undefined;
 
 			var files = e.originalEvent.dataTransfer.files;
@@ -33,9 +37,11 @@ var Upload = function($b, resource, options) {
 			if(files.length && files.length <= self.maxFiles) {
 				self.upload(files, e.target);
 			}
+			self.mouseout && self.mouseout();
 		},
 		"mouseout.upload": function () {
-			self.$b.removeClass("swts-upload-drop");
+			self.$b.removeClass("upload-drop");
+			self.mouseout && self.mouseout();
 			$active = undefined;
 		}
 	});
@@ -44,9 +50,9 @@ var Upload = function($b, resource, options) {
 Upload.prototype.upload = function(files, target) {
 	var self = this,
 		r = {
-			resource: "file",
+			resource: self.resource,
 			method: "create",
-			body: {resource: self.resource},
+			body: {job: self.job},
 			files: files,
 			onprogress: function(e) {
 				var pc = e.loaded / e.total * 100;
@@ -56,7 +62,7 @@ Upload.prototype.upload = function(files, target) {
 		};
 	self.$b.append(self.$progress);
 	self.startTimeout = setTimeout(function() {
-		self.$progress.addClass("swts-upload-uploading");
+		self.$progress.addClass("upload-uploading");
 	}, self.delay);
 
 	self.start && self.start();
@@ -64,7 +70,7 @@ Upload.prototype.upload = function(files, target) {
 	swts.c(r, function(err, result) {
 		clearTimeout(self.startTimeout);
 
-		self.$progress.removeClass("swts-upload-uploading");
+		self.$progress.removeClass("upload-uploading");
 		setTimeout(function() {
 			self.$progress.detach();
 		}, self.delay);

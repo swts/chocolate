@@ -1,12 +1,12 @@
-@selectah-font-size: 				@swts-selectah-font-size;
-@selectah-font-family: 				@swts-selectah-font-family;
-@selectah-text-align: 				@swts-selectah-text-align;
-@selectah-height: 					@swts-selectah-height;
-@selectah-color: 					@swts-selectah-color;
-@selectah-active-color: 			@swts-selectah-active-color;
-@selectah-background-color: 		@swts-selectah-bg-color;
-@selectah-animation-style: 			@swts-selectah-animation-style;
-@selectah-animation-time: 			@swts-selectah-animation-time;
+@selectah-font-size: 				@ui-selectah-font-size;
+@selectah-font-family: 				@ui-selectah-font-family;
+@selectah-text-align: 				@ui-selectah-text-align;
+@selectah-height: 					@ui-selectah-height;
+@selectah-color: 					@ui-selectah-color;
+@selectah-active-color: 			@ui-selectah-active-color;
+@selectah-background-color: 		@ui-selectah-bg-color;
+@selectah-animation-style: 			@ui-selectah-animation-style;
+@selectah-animation-time: 			@ui-selectah-animation-time;
 
 .selectah(	@height: @selectah-height,
 			@color: @selectah-color,
@@ -33,7 +33,7 @@
 
 .selectah {
 	// display: inline-block;
-	.transform(translateZ(0));
+	.ui-transform(translateZ(0));
 	&:hover {z-index: 10;}
 
 	li.selectah-active { z-index: 1;}
@@ -42,11 +42,11 @@
 		margin: 0;
 		height: 0;
 		overflow: hidden;
-		.transition(all, @selectah-animation-time, @selectah-animation-style);
+		.ui-transition(all, @selectah-animation-time, @selectah-animation-style);
 	}
 
 	&.no-transition li {
-		.clear-transition();
+		.ui-clear-transition();
 	}
 
 	a {

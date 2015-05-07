@@ -1,56 +1,67 @@
-@cover-login-width:        @swts-cover-login-width;
-@cover-login-bg-color:     @swts-cover-login-bg-color;
-@cover-login-button-bg:    @swts-cover-login-button-bg-color;
+@cover-login-width:			@ui-cover-login-width;
+@cover-login-bg-color:		@ui-cover-login-bg-color;
+@cover-login-button-color:	@ui-cover-login-button-color;
+@cover-login-button-bg:		@ui-cover-login-button-bg-color;
+@cover-input-addborder:		@ui-cover-input-addborder;
+@cover-input-border:		@ui-cover-input-border;
 
 .swts-cover-login {
-    &, * {
-        box-sizing: border-box;
-    }
+	&, * {
+		box-sizing: border-box;
+	}
 
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: @cover-login-width;
-    margin: 0 0 0 -(@cover-login-width/2);
-    padding: @swts-grid;
-    z-index: 9000;
-    opacity: 0;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	width: @cover-login-width;
+	margin: 0 0 0 -(@cover-login-width/2);
+	padding: @ui-grid;
+	z-index: 9000;
+	opacity: 0;
 
-    background: @cover-login-bg-color;
+	background: @cover-login-bg-color;
 
-    .transform(translate3d(0, -101%, 0));
-    .transition(all, 300ms);
+	.ui-transform(translate3d(0, -101%, 0));
+	.ui-transition(all, 300ms);
 
-    &.active {
-        opacity: 1;
-        .transform(translate3d(0, 0, 0));
-    }
+	&.active {
+		opacity: 1;
+		.ui-transform(translate3d(0, 0, 0));
+	}
 
-    .swts-input {
-        width: @cover-login-width - (@swts-grid * 2);
-    }
+	.input {
+		width: @cover-login-width - (@ui-grid * 2);
 
-    .swts-button-m {
-        margin: @swts-grid auto 0;
-        background: @cover-login-button-bg;
-    }
+		& when(@cover-input-addborder = true) {
+			margin-bottom: -1px;
+			input {
+				border: @cover-input-border;
+			}
+		}
+	}
+
+	.swts-button-m {
+		margin: @ui-grid auto 0;
+		background: @cover-login-button-bg;
+		color: @cover-login-button-color !important;
+	}
 }
 
 //user panel
 .swts-user > a:before {
-    left: 0;
-    height: 40px;
-    width: 40px;
-    content: "s";
-    font: normal normal (2*@swts-grid) @swts-icon-family;
-    line-height: 43px;
-    speak: none;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: absolute;
+	left: 0;
+	height: 40px;
+	width: 40px;
+	content: "s";
+	font: normal normal (2*@ui-grid) @ui-icon-family;
+	line-height: 43px;
+	speak: none;
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	position: absolute;
 }
 
 .swts-editing > a {
-    color: @swts-accent-color !important;
+	color: @ui-accent-color !important;
 }

@@ -1,4 +1,4 @@
-.clearfix() {
+.ui-clearfix() {
   &:before,
   &:after {
     content: " ";
@@ -9,7 +9,7 @@
 }
 
 
-.font (@font-name, @font-file, @font-weight: normal, @font-style: normal) {
+.ui-font (@font-name, @font-file, @font-weight: normal, @font-style: normal) {
   @font-face {
     font-family: @font-name;
     src: url('@{font-file}.woff2') format('woff2'),
@@ -20,44 +20,44 @@
   }
 }
 
-.transition(@property, @duration, @style: cubic-bezier(0.860, 0.000, 0.070, 1.000)) {
+.ui-transition(@property, @duration, @style: cubic-bezier(0.860, 0.000, 0.070, 1.000)) {
   transition+: @property @duration @style;
 }
 
-.transition-transform (@duration, @style: cubic-bezier(0.860, 0.000, 0.070, 1.000)) {
+.ui-transition-transform (@duration, @style: cubic-bezier(0.860, 0.000, 0.070, 1.000)) {
   transition+: transform @duration @style;
 }
-.clear-transition () { transition: none; }
+.ui-clear-transition () { transition: none; }
 
 // Transform Tools
-.transform (...) {
+.ui-transform (...) {
   transform+_: @arguments;
 }
 
-.rotate (@deg) { .transform(rotate(@deg)); }
-.rotateX (@deg) { .transform(rotateX(@deg)); }
-.rotateY (@deg) { .transform(rotateY(@deg)); }
-.rotateZ (@deg) { .transform(rotateZ(@deg)); }
+.ui-rotate (@deg) { .ui-transform(rotate(@deg)); }
+.ui-rotateX (@deg) { .ui-transform(rotateX(@deg)); }
+.ui-rotateY (@deg) { .ui-transform(rotateY(@deg)); }
+.ui-rotateZ (@deg) { .ui-transform(rotateZ(@deg)); }
 
-.scale (@ratio) { .transform(scale(@ratio));}
-.scaleX (@ratio) { .transform(scaleX(@ratio)); }
-.scaleY (@ratio) { .transform(scaleY(@ratio)); }
+.ui-scale (@ratio) { .ui-transform(scale(@ratio));}
+.ui-scaleX (@ratio) { .ui-transform(scaleX(@ratio)); }
+.ui-scaleY (@ratio) { .ui-transform(scaleY(@ratio)); }
 
-.translate (@x, @y) { .transform(translate(@x, @y)); }
-.translateX (@x:0) { .transform(translateX(@x)); }
-.translateY (@y:0) { .transform(translateY(@y)); }
-.translateZ (@z:0) { .transform(translateZ(@z)); }
+.ui-translate (@x, @y) { .ui-transform(translate(@x, @y)); }
+.ui-translateX (@x:0) { .ui-transform(translateX(@x)); }
+.ui-translateY (@y:0) { .ui-transform(translateY(@y)); }
+.ui-translateZ (@z:0) { .ui-transform(translateZ(@z)); }
 
-.clearTransform () { transform: none !important; }
+.ui-clearTransform () { transform: none !important; }
 
 
-.fadein (@delay: 0.3s) {
+.ui-fadein (@delay: 0.3s) {
   visibility:visible;
   opacity:1;
   transition:visibility 0s ease-in-out @delay, all @delay ease-in-out;
 }
 
-.fadeout (@delay: 0.3s) {
+.ui-fadeout (@delay: 0.3s) {
   visibility:hidden;
   opacity:0;
   transition:visibility 0s ease-in-out @delay, all @delay ease-in-out;
@@ -65,11 +65,11 @@
 
 //Typography
 //conditional uppercase
-.uppercase (@is) when (@is = true) {
+.ui-uppercase (@is) when (@is = true) {
   text-transform: uppercase;
 }
 
-.hyphenation() {
+.ui-hyphenation() {
   word-break: break-all;
   word-break: break-word;
   hyphens: auto;
@@ -78,26 +78,26 @@
   hyphenate-lines: 3;
 }
 
-.ligatures() {
+.ui-ligatures() {
   font-feature-settings: "liga", "dlig";
 }
 
 // Other stuff
 
-.circle(@diameter: 20px) {
+.ui-circle(@diameter: 20px) {
   width: @diameter;
   height: @diameter;
   border-radius: 50%;
 }
 
-.placeholder(@color) {
+.ui-placeholder(@color) {
   &:-moz-placeholder { color: @color; }
   &:-ms-input-placeholder { color: @color; }
   &::-webkit-input-placeholder { color: @color;}
 }
 
-.a(@color, @hover, @text-decoration: none, @text-decoration-hover: none) {
-  & { .transition(all, 150ms) }
+.ui-a(@color, @hover, @text-decoration: none, @text-decoration-hover: none) {
+  & { .ui-transition(all, 150ms) }
   &:link, &:visited { color: @color; text-decoration: @text-decoration;}
   &:hover, &:focus { color: @hover; text-decoration: @text-decoration-hover;}
 }
