@@ -16,11 +16,11 @@
 	top:0;
 	left:0;
 	width: 0;
-	height: 100%;
+	height: @upload-progress-height;
 	background: @upload-color;
 	opacity: 0;
 	z-index: 100;
-	.ui-transition(all, @ui-showup-time);
+	.ui-transition(all, 2*@ui-showup-time, @ui-simple-transition-style);
 
 	&.upload-uploading {
 		opacity: 1;

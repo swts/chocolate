@@ -47,6 +47,7 @@ var Nipple = function(opts, cbs) {
 	self._popup = opts.popup || defaults.popup || "s";
 	self.autoHide = opts.autoHide || defaults.autoHide;
 	self.menu = opts.menu || defaults.menu;
+	self.willOpen = opts.willOpen;
 	self.cbs = cbs;
 	self.items = {};
 
@@ -93,6 +94,11 @@ Nipple.prototype.build = function(items, size) {
 	self.$a = self.$b.children("a").on("click.nipple", function(e) {
 		e.preventDefault();
 		e.stopPropagation();
+
+		if(!self.active && self.willOpen && !self.willOpen()) {
+			return;
+		}
+
 		self.toggle();
 	});
 

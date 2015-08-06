@@ -14,10 +14,10 @@ var Bar = function() {};
 
 Bar.prototype = {
 	error: function(errorClass) {
-		var $b = this.$b.addClass(errorClass || "swts-error");
+		var $b = this.$b.addClass(errorClass || "ui-error");
 
 		setTimeout(function () {
-			$b.removeClass(errorClass || "swts-error");
+			$b.removeClass(errorClass || "ui-error");
 		}, 600);
 	},
 

@@ -46,7 +46,6 @@ Cover.prototype.load = function() {
 	script.onload = function() {
 		if(window.Chocolate) {
 			self.choco = new window.Chocolate(swts);
-			self.choco.on();
 			self.edit();
 		}
 	};
@@ -138,9 +137,9 @@ Cover.prototype.login = function() {
 
 Cover.prototype.error = function() {
 	var self = this;
-	self.$l.addClass("swts-error");
+	self.$l.addClass("ui-error");
 	setTimeout(function() {
-		self.$l.removeClass("swts-error");
+		self.$l.removeClass("ui-error");
 	}, 500);
 };
 

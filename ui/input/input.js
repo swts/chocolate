@@ -18,15 +18,14 @@ var Input = function($b, opts, cb) {
 	}
 
 	self.name = opts.name;
-	self.id = opts.id || "input-" + Math.floor(Date.now() + 10 * Math.random());
 
 	if($b && $b[0] instanceof HTMLInputElement) {
 		$b = $b.parent();
 	}
 
-	self.$b = $b || $('<label class="input" for="' + self.id + '" >' +
+	self.$b = $b || $('<label class="input">' +
 			'<input type="' + (opts.type || "text") + '" ' +
-			'id="' + self.id + '" ' +
+			(opts.id ? 'id="' + self.id + '" ' : "") +
 			(opts.name ? 'name="' + opts.name + '" ' : "") +
 			(opts.value ? 'value="' + opts.value + '" ' : "") +
 			"><span>" + opts.title + "</span></label>"
