@@ -25,6 +25,7 @@ var js = {
     'ui/input/slugify.js',
     'ui/input/input.js',
 
+    'ui/nipple/item.js',
     'ui/nipple/input.js',
     'ui/nipple/tools.js',
     'ui/nipple/toggle.js',

@@ -10,17 +10,6 @@ $(document).on('click.nipple', function() {
   openedNipple && openedNipple.hide();
 });
 
-var nippleItems = {
-  input: require('ui/nipple/input'),
-  tools: require('ui/nipple/tools'),
-  toggle: require('ui/nipple/toggle'),
-  item: function($parent, action, opts) {
-    return {
-      $b: $('<a href="#/' + action + '">' + opts.title + '</a>')
-    };
-  }
-};
-
 var Nipple = function(opts, cbs) {
   var self = this;
 
@@ -68,7 +57,7 @@ Nipple.prototype.build = function(items, size) {
     var type = item.item || 'item';
     var $li = $('<li class="nipple-i-' + type + '"></li>');
 
-    newItem = nippleItems[type]($li, i, items[i], cbs[i] && cbs[i].bind(self));
+    newItem = self.getItem(type)($li, i, items[i], cbs[i] && cbs[i].bind(self));
     $li.append(newItem.$b);
     $ul.append($li);
     self.items[i] = newItem;
@@ -89,6 +78,10 @@ Nipple.prototype.build = function(items, size) {
   });
 
   self.$items = self.$b.find('.nipple-i-item');
+};
+
+Nipple.prototype.getItem = function(type) {
+  return require('ui/nipple/' + type);
 };
 
 Nipple.prototype.val = function(val) {
