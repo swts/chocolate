@@ -1,28 +1,31 @@
-@upload-color: 			 @ui-upload-color;
-@upload-stroke-width: 	 @ui-upload-stroke-width;
-@upload-progress-height: @ui-upload-progress-height;
+@upload-color:            @ui-upload-color;
+@upload-stroke-width:     @ui-upload-stroke-width;
+@upload-progress-height:  @ui-upload-progress-height;
 
 .upload {
-	background: @upload-color;
+  background: @upload-color;
 }
 
 .upload-drop {
-	outline: @upload-color @upload-stroke-width solid !important;
-	outline-offset: -@upload-stroke-width/2 !important;
+  outline: @upload-color @upload-stroke-width solid !important;
+  outline-offset: -@upload-stroke-width/2 !important;
 }
 
 .upload-progress {
-	position: absolute;
-	top:0;
-	left:0;
-	width: 0;
-	height: @upload-progress-height;
-	background: @upload-color;
-	opacity: 0;
-	z-index: 100;
-	.ui-transition(all, 2*@ui-showup-time, @ui-simple-transition-style);
-
-	&.upload-uploading {
-		opacity: 1;
-	}
+  position: absolute;
+  top:0;
+  left:0;
+  width: 0;
+  height: @upload-progress-height;
+  background: @upload-color;
+  opacity: 0;
+  z-index: 100;
+  .ui-transition(all, 2*@ui-showup-time, @ui-simple-transition-style);
 }
+
+.upload-uploading {
+  .upload-progress {
+    opacity: 1;
+  }
+}
+

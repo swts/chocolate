@@ -1,15 +1,15 @@
-@input-font-family: 	@ui-input-font-family;
-@input-font-size: 		@ui-input-font-size;
-@input-height: 			@ui-input-height;
-@input-width: 			@ui-input-width;
-@input-bg-color: 		@ui-input-bg-color;
-@input-bg-focus-color: 	@ui-input-bg-focus-color;
-@input-color: 			@ui-input-color;
-@input-focus-color: 	@ui-input-focus-color;
-@input-label-color: 	@ui-input-label-color;
-@input-error-color: 	@ui-input-error-color;
-@input-uppercase: 		@ui-input-uppercase;
-@input-hover: 			@ui-input-hover;
+@input-font-family:     @ui-input-font-family;
+@input-font-size:       @ui-input-font-size;
+@input-height:          @ui-input-height;
+@input-width:           @ui-input-width;
+@input-bg-color:        @ui-input-bg-color;
+@input-bg-focus-color:  @ui-input-bg-focus-color;
+@input-color:           @ui-input-color;
+@input-focus-color:     @ui-input-focus-color;
+@input-label-color:     @ui-input-label-color;
+@input-error-color:     @ui-input-error-color;
+@input-uppercase:       @ui-input-uppercase;
+@input-hover:           @ui-input-hover;
 
 .input {
 	position: relative;
@@ -45,6 +45,11 @@
 		color: @input-color;
 		.ui-translate(0, @input-height / 2 - @input-font-size / 2);
 		.ui-uppercase(@input-uppercase);
+
+    i {
+      font-style: normal;
+      opacity: 0.4;
+    }
 	}
 
 	&:hover when(@input-hover = true) {

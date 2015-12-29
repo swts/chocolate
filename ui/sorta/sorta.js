@@ -1,291 +1,301 @@
 /*eslint-disable strict */
-var $ = require("$"),
-	detective = require("util/detective");
+var $ = require('$');
+var detective = require('util/detective');
 
-var $d = $(document),
-	addData = detective.addData,
-	getData = detective.getData,
-	removeData = detective.removeData,
-	cssTransform = detective.transform,
-	rAF = detective.requestAnimationFrame,
+var $d = $(document);
+var addData = detective.addData;
+var getData = detective.getData;
+var removeData = detective.removeData;
+var cssTransform = detective.transform;
+var rAF = detective.requestAnimationFrame;
 
-	translate = function(el, x, y) {
-		el.style[cssTransform] = "translate(" + x + "px, " + y + "px)";
-	},
-	resizeTimeout;
+var translate = function(el, x, y) {
+  el.style[cssTransform] = 'translate(' + x + 'px, ' + y + 'px)';
+};
+var resizeTimeout;
 
 var Sorta = function(base, element, options, cb) {
-	var self = this;
+  var self = this;
 
-	self.$b = $(base);
+  self.$b = $(base);
 
-	self.grid = {
-		width: options.gridWidth,
-		height: options.gridHeight,
-		steps: undefined //calcs in resize;
-	};
-	self.snapWidth = self.grid.width - (options.snapWidth || 0);
-	self.snapHeight = self.grid.height - (options.snapHeight || 0);
-	self.element = element;
+  self.grid = {
+    width: options.gridWidth,
+    height: options.gridHeight,
+    steps: undefined //calcs in resize;
+  };
+  self.snapWidth = self.grid.width - (options.snapWidth || 0);
+  self.snapHeight = self.grid.height - (options.snapHeight || 0);
+  self.element = element;
 
-	self.stickyLast = options.stickyLast;
-	self.last;
+  self.stickyLast = options.stickyLast;
+  self.handle = options.handle;
+  self.cb = cb;
+  self.changed = false;
 
-	self.handle = options.handle;
-	self.cb = cb;
-	self.changed = false;
+  self.mapping = options.mapping;
+  self.order = [];
+  self.update(true);
 
-	self.mapping = options.mapping;
-	self.order = [];
-	self.update(true);
+  self.target = undefined;
+  self.isEnabled = true;
+  self.isDragging = false;
+  self.dragging = false;
 
-	self.target = undefined;
-	self.isEnabled = true;
-	self.isDragging = false;
-	self.dragging = false;
+  self.$b.on('mousedown.sorta', element, function(e) {
+    if (this === self.last) {
+      return;
+    }
 
-	self.$b.on("mousedown.sorta", element, function(e) {
-			if(this === self.last) { return; }
-			var button = e.button;
-			if ( button !== 0 && button !== 1 ) { return; }
-			self.dragStart( this, e);
-		}).on("dragstart.sorta", element, function(e) {
-			e.preventDefault();
-		});
+    var button = e.button;
+    if ( button !== 0 && button !== 1 ) {
+      return;
+    }
+    self.dragStart( this, e);
+  }).on('dragstart.sorta', element, function(e) {
+    e.preventDefault();
+  });
 
-	$(window).on("resize", function() {
-		if(resizeTimeout) {
-			clearTimeout(resizeTimeout);
-		}
+  $(window).on('resize', function() {
+    if (resizeTimeout) {
+      clearTimeout(resizeTimeout);
+    }
 
-		resizeTimeout = setTimeout(function() {
-			self.resize();
-		}, options.resizeDelay || 100);
-	});
+    resizeTimeout = setTimeout(function() {
+      self.resize();
+    }, options.resizeDelay || 100);
+  });
 
-	self.resize();
+  self.resize();
 };
 
 Sorta.prototype = {
-	update: function(notMove) {
-		var self = this,
-			order = self.order = [];
+  update: function(notMove) {
+    var self = this;
+    var order = self.order = [];
 
-		self.$b.find(self.element).each(function(i, el) {
-			el.style.position = "absolute";
+    self.$b.find(self.element).each(function(i, el) {
+      el.style.position = 'absolute';
 
-			addData(el, "sortaOriginalIndex", i);
-			order[i] = el;
-		});
+      addData(el, 'sortaOriginalIndex', i);
+      order[i] = el;
+    });
 
-		if(self.stickyLast) {
-			self.last = order[order.length - 1];
-		}
+    if (self.stickyLast) {
+      self.last = order[order.length - 1];
+    }
 
-		if(!notMove) {
-			self.moveBlocks();
-		}
-	},
+    if (!notMove) {
+      self.moveBlocks();
+    }
+  },
 
-	dragStart: function(el, event) {
-		if(!this.isEnabled) { return; }
+  dragStart: function(el, event) {
+    if (!this.isEnabled) {
+      return;
+    }
 
-		event.preventDefault();
-		event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-		var self = this,
-			pos = self.getGridPosition(self.order.indexOf(el)),
-			start = {
-				x: event.pageX,
-				y: event.pageY
-			};
+    var self = this;
+    var pos = self.getGridPosition(self.order.indexOf(el));
+    var start = {
+      x: event.pageX,
+      y: event.pageY
+    };
 
-		el.classList.add("dragging");
-		self.target = pos;
-		self.isDragging = true;
-		self.dragEl = el;
-		self.dragMove();
+    el.classList.add('dragging');
+    self.target = pos;
+    self.isDragging = true;
+    self.dragEl = el;
+    self.dragMove();
 
-		$d.on("mousemove.sorta", function(e) {
-				self.dragging = true;
-				self.target = {
-					x: e.pageX - start.x + pos.x,
-					y: e.pageY - start.y + pos.y
-				};
+    $d.on('mousemove.sorta', function(e) {
+      self.dragging = true;
+      self.target = {
+        x: e.pageX - start.x + pos.x,
+        y: e.pageY - start.y + pos.y
+      };
 
-				self.rearrange();
-			})
-			.one("mouseup.sorta", function() {
-				self.dragEnd();
-			});
-	},
+      self.rearrange();
+    })
+    .one('mouseup.sorta', function() {
+      self.dragEnd();
+    });
+  },
 
-	dragMove: function() {
-		if(!this.isDragging) { return; }
+  dragMove: function() {
+    if (!this.isDragging) {
+      return;
+    }
 
-		var self = this,
-			target = self.target;
+    var self = this;
+    var target = self.target;
 
-		translate(self.dragEl, target.x, target.y);
-		rAF(function() {
-			self.dragMove();
-		});
-	},
+    translate(self.dragEl, target.x, target.y);
+    rAF(function() {
+      self.dragMove();
+    });
+  },
 
-	dragEnd:  function() {
-		var self = this;
-		$d.off("mousemove.sorta");
-		self.dragEl.classList.remove("dragging");
-		self.dragEl = undefined;
-		self.moveBlocks();
-		if(self.changed) {
-			var res = self.order.map(function(el) {
-				return getData(el, self.mapping ? "sortaMapping" : "sortaOriginalIndex");
-			});
+  dragEnd: function() {
+    var self = this;
+    $d.off('mousemove.sorta');
+    self.dragEl.classList.remove('dragging');
+    self.dragEl = undefined;
+    self.moveBlocks();
+    if (self.changed) {
+      var res = self.order.map(function(el) {
+        return getData(el, self.mapping ? 'sortaMapping' : 'sortaOriginalIndex');
+      });
 
-			if(self.stickyLast) {
-				res.pop();
-			}
+      if (self.stickyLast) {
+        res.pop();
+      }
 
-			self.cb(res);
-		}
-		self.changed = false;
-		self.isDragging = false;
+      self.cb(res);
+    }
+    self.changed = false;
+    self.isDragging = false;
 
-		setTimeout(function() {
-			self.dragging = false;
-		}, 1);
-	},
+    setTimeout(function() {
+      self.dragging = false;
+    }, 1);
+  },
 
-	calcSnap: function(index) {
-		var self = this,
-			resultIndex = index,
-			num = self.order.length - (self.stickyLast ? 2 : 1),
-			pos = self.getGridPosition(index),
-			target = self.target,
-			dx = target.x - pos.x,
-			dy = target.y - pos.y;
+  calcSnap: function(index) {
+    var self = this;
+    var resultIndex = index;
+    var num = self.order.length - (self.stickyLast ? 2 : 1);
+    var pos = self.getGridPosition(index);
+    var target = self.target;
+    var dx = target.x - pos.x;
+    var dy = target.y - pos.y;
 
-		if(dx > 0 && dx > self.snapWidth) { resultIndex = Math.min(num, resultIndex + 1); } //right;
-		if(dx < 0 && dx < -self.snapWidth) { resultIndex = Math.max(0, resultIndex - 1); } //left;
-		if(dy > 0 && dy > self.snapHeight) { resultIndex = Math.min(num, resultIndex + self.grid.steps); } //down
-		if(dy < 0 && dy < -self.snapHeight) { resultIndex = Math.max(0, resultIndex - self.grid.steps); } //up
+    if (dx > 0 && dx > self.snapWidth) { resultIndex = Math.min(num, resultIndex + 1); } //right;
+    if (dx < 0 && dx < -self.snapWidth) { resultIndex = Math.max(0, resultIndex - 1); } //left;
+    if (dy > 0 && dy > self.snapHeight) { resultIndex = Math.min(num, resultIndex + self.grid.steps); } //down
+    if (dy < 0 && dy < -self.snapHeight) { resultIndex = Math.max(0, resultIndex - self.grid.steps); } //up
 
-		return resultIndex;
-	},
+    return resultIndex;
+  },
 
-	getGridPosition: function(index) {
-		var self = this, x, y;
+  getGridPosition: function(index) {
+    var self = this
+    var x;
+    var y;
 
-		if(index < self.grid.steps - 1) {
-			x = index * self.grid.width;
-			y = 0;
-		} else {
-			y = Math.floor(index / self.grid.steps);
-			x = (index - self.grid.steps * y) * self.grid.width;
-			y *= self.grid.height;
-		}
+    if (index < self.grid.steps - 1) {
+      x = index * self.grid.width;
+      y = 0;
+    } else {
+      y = Math.floor(index / self.grid.steps);
+      x = (index - self.grid.steps * y) * self.grid.width;
+      y *= self.grid.height;
+    }
 
-		return { x:x, y:y };
-	},
+    return { x: x, y: y };
+  },
 
-	rearrange: function() {
-		var self = this,
-			index = self.order.indexOf(self.dragEl),
-			newIndex = self.calcSnap(index);
+  rearrange: function() {
+    var self = this;
+    var index = self.order.indexOf(self.dragEl);
+    var newIndex = self.calcSnap(index);
 
-		if(newIndex !== index) {
-			self.changed = true;
-			self.order.splice(newIndex, 0, this.order.splice(index, 1)[0]);
-			self.moveBlocks();
-		}
-	},
+    if (newIndex !== index) {
+      self.changed = true;
+      self.order.splice(newIndex, 0, this.order.splice(index, 1)[0]);
+      self.moveBlocks();
+    }
+  },
 
-	moveBlocks: function() {
-		var self = this;
-		for(var i in self.order) {
-			var block = self.order[i], pos;
+  moveBlocks: function() {
+    var self = this;
+    for (var i in self.order) {
+      var block = self.order[i];
+      var pos;
 
-			if(block === self.dragEl) { continue; }
+      if (block === self.dragEl) { continue; }
 
-			pos = self.getGridPosition(i);
-			translate(block, pos.x, pos.y);
-		}
-	},
+      pos = self.getGridPosition(i);
+      translate(block, pos.x, pos.y);
+    }
+  },
 
-	resize: function() {
-		var self = this;
-		self.width = self.$b.innerWidth();
-		self.grid.steps = Math.floor(self.width / self.grid.width);
-		self.moveBlocks();
-	},
+  resize: function() {
+    var self = this;
+    self.width = self.$b.innerWidth();
+    self.grid.steps = Math.floor(self.width / self.grid.width);
+    self.moveBlocks();
+  },
 
-	addElement: function(el, index, mappingValue) {
-		var self = this,
-			order = self.order,
-			mapping = self.mapping;
+  addElement: function(el, index, mappingValue) {
+    var self = this;
+    var order = self.order;
+    var mapping = self.mapping;
 
-		el.style.position = "absolute";
+    el.style.position = 'absolute';
 
-		if(self.stickyLast && (index === undefined || index === order.length)) {
-			index = order.length - 1;
-		}
+    if (self.stickyLast && (index === undefined || index === order.length)) {
+      index = order.length - 1;
+    }
 
-		if(index === undefined || index === order.length) {
-			order.push(el);
-			addData(el, "sortaOriginalIndex", order.length);
-		} else {
-			order.splice(index, 0, el);
-			for(var i = index, l = order.length; i < l; i++) {
-				addData(order[i], "sortaOriginalIndex", i);
-			}
-		}
+    if (index === undefined || index === order.length) {
+      order.push(el);
+      addData(el, 'sortaOriginalIndex', order.length);
+    } else {
+      order.splice(index, 0, el);
+      for (var i = index, l = order.length; i < l; i++) {
+        addData(order[i], 'sortaOriginalIndex', i);
+      }
+    }
 
-		if(mapping) {
-			addData(el, "sortaMapping", mappingValue);
-		}
+    if (mapping) {
+      addData(el, 'sortaMapping', mappingValue);
+    }
 
-		self.moveBlocks();
-	},
+    self.moveBlocks();
+  },
 
-	removeElement: function(el) {
-		var order = this.order,
-			index = this.order.indexOf(el);
+  removeElement: function(el) {
+    var order = this.order;
+    var index = this.order.indexOf(el);
 
-		order.splice(index, 1);
-		for(var i = index, l = order.length; i < l; i++) {
-			addData(order[i], "sortaOriginalIndex", i);
-		}
+    order.splice(index, 1);
+    for (var i = index, l = order.length; i < l; i++) {
+      addData(order[i], 'sortaOriginalIndex', i);
+    }
 
-		this.moveBlocks();
-	},
+    this.moveBlocks();
+  },
 
-	enable: function() {
-		this.isEnabled = true;
-	},
+  enable: function() {
+    this.isEnabled = true;
+  },
 
-	disable: function() {
-		this.isEnabled = false;
-		if ( this.isDragging ) {
-			this.dragEnd();
-		}
-	},
+  disable: function() {
+    this.isEnabled = false;
+    if ( this.isDragging ) {
+      this.dragEnd();
+    }
+  },
 
-	remove: function() {
-		this.$b.off(".sorta");
-		this.disable();
+  remove: function() {
+    this.$b.off('.sorta');
+    this.disable();
 
-		var order = this.order;
+    var order = this.order;
 
-		for (var i in order) {
-			var el = order[i];
+    for (var i in order) {
+      var el = order[i];
 
-			removeData(el, "sortaOriginalIndex");
-			this.mapping && removeData(el, "sortaMapping");
-		}
+      removeData(el, 'sortaOriginalIndex');
+      this.mapping && removeData(el, 'sortaMapping');
+    }
 
-		this.order = [];
-	}
+    this.order = [];
+  }
 };
 
-exports("ui/sorta", Sorta);
+exports('ui/sorta', Sorta);
