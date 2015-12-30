@@ -30,7 +30,7 @@ var Cover = function(opts) {
   self.profile = opts.profile;
   self.ui = {};
 
-  if (swts.u && swts.u.isStaff()) {
+  if (swts.u) {
     self.showUser(swts.u);
   } else {
     self.buildLogin();
